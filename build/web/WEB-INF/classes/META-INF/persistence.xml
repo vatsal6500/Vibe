@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="VibePU" transaction-type="JTA">
+      <jta-data-source>jndivibe</jta-data-source>
+    <class>entity.Events</class>
+    <class>entity.State</class>
+    <class>entity.Country</class>
+    <class>entity.Groups</class>
+    <class>entity.UserWork</class>
+    <class>entity.FriendRequest</class>
+    <class>entity.User</class>
+    <class>entity.ActivityFeed</class>
+    <class>entity.UserContactInfo</class>
+    <class>entity.UserSkills</class>
+    <class>entity.FriendList</class>
+    <class>entity.Likes</class>
+    <class>entity.Comments</class>
+    <class>entity.UserEducation</class>
+    <class>entity.City</class>
+    <class>entity.AdsUser</class>
+    <class>entity.Ads</class>
+    <class>entity.GroupMembers</class>
+    <class>entity.Post</class>
+    <class>entity.Chat</class>
+    <class>entity.EventUsercount</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+    </properties>
+  </persistence-unit>
+</persistence>
