@@ -38,18 +38,18 @@ public class GenericResource {
     public GenericResource() {
     }
     
-    @Path("countryadd/{countryId}/{countryName}/{isActive}")
+    @Path("countryadd/{countryId}/{sortName}/{countryName}/{phoneCode}/{isActive}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String countryInsert(@PathParam("countryId")int countryId, @PathParam("countryName")String countryName, @PathParam("isActive")boolean isActive) {
-        return vibe.countryInsert(countryId, countryName, isActive);
+    public String countryInsert(@PathParam("countryId")int countryId, @PathParam("sortName")String sortName, @PathParam("countryName")String countryName, @PathParam("phoneCode")int phoneCode, @PathParam("isActive")boolean isActive) {
+        return vibe.countryInsert(countryId, sortName, countryName, phoneCode, isActive);
     }
     
-    @Path("countryupdate/{countryId}/{countryName}/{isActive}")
+    @Path("countryupdate/{countryId}/{sortName}/{countryName}/{phoneCode}/{isActive}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String countryUpdate(@PathParam("countryId")int countryId, @PathParam("countryName")String countryName, @PathParam("isActive")boolean isActive) {
-        return vibe.countryUpdate(countryId, countryName, isActive);
+    public String countryUpdate(@PathParam("countryId")int countryId, @PathParam("sortName")String sortName, @PathParam("countryName")String countryName, @PathParam("phoneCode")int phoneCode, @PathParam("isActive")boolean isActive) {
+        return vibe.countryUpdate(countryId, sortName, countryName, phoneCode, isActive);
     }
     
     @Path("countrydelete/{countryId}")

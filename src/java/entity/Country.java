@@ -7,7 +7,6 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,8 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c"),
     @NamedQuery(name = "Country.findByCountryid", query = "SELECT c FROM Country c WHERE c.countryid = :countryid"),
+    @NamedQuery(name = "Country.findBySortname", query = "SELECT c FROM Country c WHERE c.sortname = :sortname"),
     @NamedQuery(name = "Country.findByCountryname", query = "SELECT c FROM Country c WHERE c.countryname = :countryname"),
-    @NamedQuery(name = "Country.findIdByCountryname", query = "SELECT c.countryid FROM Country c WHERE c.countryname = :countryname"),
+    @NamedQuery(name = "Country.findByPhonecode", query = "SELECT c FROM Country c WHERE c.phonecode = :phonecode"),
     @NamedQuery(name = "Country.findByIsactive", query = "SELECT c FROM Country c WHERE c.isactive = :isactive")})
 public class Country implements Serializable {
 
@@ -47,9 +47,18 @@ public class Country implements Serializable {
     private Integer countryid;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 3)
+    @Column(name = "sortname", nullable = false, length = 3)
+    private String sortname;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 1000)
     @Column(name = "countryname", nullable = false, length = 1000)
     private String countryname;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "phonecode", nullable = false)
+    private int phonecode;
     @Basic(optional = false)
     @NotNull
     @Column(name = "isactive", nullable = false)
@@ -66,9 +75,11 @@ public class Country implements Serializable {
         this.countryid = countryid;
     }
 
-    public Country(Integer countryid, String countryname, boolean isactive) {
+    public Country(Integer countryid, String sortname, String countryname, int phonecode, boolean isactive) {
         this.countryid = countryid;
+        this.sortname = sortname;
         this.countryname = countryname;
+        this.phonecode = phonecode;
         this.isactive = isactive;
     }
 
@@ -80,12 +91,28 @@ public class Country implements Serializable {
         this.countryid = countryid;
     }
 
+    public String getSortname() {
+        return sortname;
+    }
+
+    public void setSortname(String sortname) {
+        this.sortname = sortname;
+    }
+
     public String getCountryname() {
         return countryname;
     }
 
     public void setCountryname(String countryname) {
         this.countryname = countryname;
+    }
+
+    public int getPhonecode() {
+        return phonecode;
+    }
+
+    public void setPhonecode(int phonecode) {
+        this.phonecode = phonecode;
     }
 
     public boolean getIsactive() {
@@ -97,7 +124,6 @@ public class Country implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<State> getStateCollection() {
         return stateCollection;
     }
@@ -107,7 +133,6 @@ public class Country implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<User> getUserCollection() {
         return userCollection;
     }

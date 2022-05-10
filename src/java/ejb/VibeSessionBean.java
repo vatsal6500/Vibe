@@ -9,6 +9,7 @@ import entity.City;
 import entity.Country;
 import entity.State;
 import entity.User;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -26,7 +27,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     EntityManager em;
     
     @Override
-    public String countryInsert(int countryId, String countryName, boolean isActive) {
+    public String countryInsert(int countryId, String sortName, String countryName, int phoneCode, boolean isActive) {
         
         Object id = null;
         
@@ -41,7 +42,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     
             } catch (Exception e) {
                 
-                Country c = new Country(countryId,countryName,isActive);
+                Country c = new Country(countryId,sortName,countryName,phoneCode, isActive);
                 em.persist(c);
                 
             }
@@ -68,7 +69,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public String countryUpdate(int countryId, String countryName, boolean isActive) {
+    public String countryUpdate(int countryId, String sortName, String countryName, int phoneCode, boolean isActive) {
         
         try {
             
@@ -79,7 +80,9 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             }
             
             c.setCountryid(countryId);
+            c.setSortname(sortName);
             c.setCountryname(countryName);
+            c.setPhonecode(phoneCode);
             c.setIsactive(isActive);
             
             em.merge(c);
@@ -184,32 +187,145 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String stateInsert(int stateId, String stateName, boolean isActive, int countryId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Country c = em.find(Country.class, countryId);
+            Collection<State> sc = c.getStateCollection();
+            
+            State s = new State();
+            
+            s.setStateid(stateId);
+            s.setStatename(stateName);
+            s.setIsactive(isActive);
+            s.setCountryid(c);
+            
+            sc.add(s);
+            c.setStateCollection(sc);
+            
+            em.persist(s);
+            em.merge(c);
+            
+            return "State Inserted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String stateUpdate(int stateId, String stateName, boolean isActive, int countryId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Country c = em.find(Country.class, countryId);
+            Collection<State> sc = c.getStateCollection();
+            
+            State s = em.find(State.class, stateId);
+            
+            s.setStateid(stateId);
+            s.setStatename(stateName);
+            s.setIsactive(isActive);
+            s.setCountryid(c);
+            
+            sc.add(s);
+            c.setStateCollection(sc);
+            
+            em.persist(s);
+            em.merge(c);
+            
+            return "State Updated";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String stateDelete(int stateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            State s = em.find(State.class, stateId);
+            s.setIsactive(false);
+            em.merge(s);
+            
+            return "State Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Country stateFindById(int stateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public State stateFindById(int stateId) {
+        
+        try {
+            
+            State s = em.find(State.class, stateId);
+            
+            return s;
+            
+        } catch (Exception e) {
+            
+            e.getMessage();
+            return null;
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<State> stateShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<State> s = em.createNamedQuery("State.findAll")
+                    .getResultList();
+            
+            return s;
+            
+        } catch (Exception e) {
+            
+            e.getMessage();
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    public List<Country> stateShowActive() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<State> stateShowActive() {
+        
+        try {
+            
+            List<State> s = em.createNamedQuery("State.findByIsactive")
+                    .setParameter("isactive", true)
+                    .getResultList();
+            
+            return s;
+            
+        } catch (Exception e) {
+            
+            e.getMessage();
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -228,7 +344,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public Country cityFindById(int cityId) {
+    public City cityFindById(int cityId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -238,7 +354,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
     
     @Override
-    public List<Country> cityShowActive() {
+    public List<City> cityShowActive() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -258,7 +374,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public String userFindById(int userId) {
+    public User userFindById(int userId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
