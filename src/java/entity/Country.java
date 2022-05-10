@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c"),
     @NamedQuery(name = "Country.findByCountryid", query = "SELECT c FROM Country c WHERE c.countryid = :countryid"),
     @NamedQuery(name = "Country.findByCountryname", query = "SELECT c FROM Country c WHERE c.countryname = :countryname"),
+    @NamedQuery(name = "Country.findIdByCountryname", query = "SELECT c.countryid FROM Country c WHERE c.countryname = :countryname"),
     @NamedQuery(name = "Country.findByIsactive", query = "SELECT c FROM Country c WHERE c.isactive = :isactive")})
 public class Country implements Serializable {
 
@@ -95,6 +97,7 @@ public class Country implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<State> getStateCollection() {
         return stateCollection;
     }
@@ -104,6 +107,7 @@ public class Country implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<User> getUserCollection() {
         return userCollection;
     }
