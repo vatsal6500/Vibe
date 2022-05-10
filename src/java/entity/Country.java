@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -124,6 +125,7 @@ public class Country implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<State> getStateCollection() {
         return stateCollection;
     }
@@ -133,6 +135,7 @@ public class Country implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<User> getUserCollection() {
         return userCollection;
     }

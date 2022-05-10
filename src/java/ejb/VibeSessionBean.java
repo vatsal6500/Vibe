@@ -146,10 +146,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         try {
             
-            List<Country> c = em.createNamedQuery("Country.findAll")
+            return em.createNamedQuery("Country.findAll")
                     .getResultList();
-            
-            return c;
             
         } catch (Exception e) {
             
@@ -166,11 +164,9 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         try {
             
-            List<Country> c = em.createNamedQuery("Country.findByIsactive")
+            return em.createNamedQuery("Country.findByIsactive")
                     .setParameter("isactive", true)
                     .getResultList();
-            
-            return c;
             
         } catch (Exception e) {
             
@@ -274,9 +270,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         try {
             
-            State s = em.find(State.class, stateId);
-            
-            return s;
+            return em.find(State.class, stateId);
             
         } catch (Exception e) {
             
@@ -292,10 +286,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         try {
             
-            List<State> s = em.createNamedQuery("State.findAll")
+            return em.createNamedQuery("State.findAll")
                     .getResultList();
-            
-            return s;
             
         } catch (Exception e) {
             
@@ -312,11 +304,9 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         try {
             
-            List<State> s = em.createNamedQuery("State.findByIsactive")
+            return em.createNamedQuery("State.findByIsactive")
                     .setParameter("isactive", true)
                     .getResultList();
-            
-            return s;
             
         } catch (Exception e) {
             
@@ -330,32 +320,135 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String cityInsert(int cityId, String cityName, boolean isActive, int stateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            State s = em.find(State.class, stateId);
+            Collection<City> cc = s.getCityCollection();
+            
+            City c = new City();
+            
+            c.setCityid(cityId);
+            c.setCityname(cityName);
+            c.setIsactive(isActive);
+            c.setStateid(s);
+            
+            cc.add(c);
+            s.setCityCollection(cc);
+            
+            em.persist(c);
+            em.merge(s);
+            
+            return "City Inserted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String cityUpdate(int cityId, String cityName, boolean isActive, int stateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            State s = em.find(State.class, stateId);
+            Collection<City> cc = s.getCityCollection();
+            
+            City c = em.find(City.class, cityId);
+            
+            c.setCityid(cityId);
+            c.setCityname(cityName);
+            c.setIsactive(isActive);
+            c.setStateid(s);
+            
+            cc.add(c);
+            s.setCityCollection(cc);
+            
+            em.persist(c);
+            em.merge(s);
+            
+            return "City Updated";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String cityDelete(int cityId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            City c = em.find(City.class, cityId);
+            em.remove(c);
+            return "City Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public City cityFindById(int cityId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            return em.find(City.class, cityId);
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<City> cityShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            return em.createNamedQuery("City.findAll")
+                    .getResultList();
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
     public List<City> cityShowActive() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            return em.createNamedQuery("City.findByIsactive")
+                    .setParameter("isactive", true)
+                    .getResultList();
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
