@@ -25,6 +25,7 @@ public interface VibeSessionBeanLocal {
     public String countryUpdate(int countryId, String sortName, String countryName, int phoneCode, boolean isActive);
     public String countryDelete(int countryId);
     public Country countryFindById(int countryId);
+    public Country countryFindByName(String countryName);
     public List<Country> countryShowAll();
     public List<Country> countryShowActive();
     
@@ -33,6 +34,7 @@ public interface VibeSessionBeanLocal {
     public String stateUpdate(int stateId, String stateName, boolean isActive, int countryId);
     public String stateDelete(int stateId);
     public State stateFindById(int stateId);
+    public State stateFindByName(String stateName);
     public List<State> stateShowAll();
     public List<State> stateShowActive();
     
@@ -41,14 +43,16 @@ public interface VibeSessionBeanLocal {
     public String cityUpdate(int cityId, String cityName, boolean isActive, int stateId);
     public String cityDelete(int cityId);
     public City cityFindById(int cityId);
+    public City cityFindByName(String cityName);
     public List<City> cityShowAll();
     public List<City> cityShowActive();
     
     //User
-    public String userInsert(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, String mobile, String profilePhoto, String coverPhoto, String isActive, String isAdmin, String access, Date regDate, int countyrId, int stateId, int cityId);
-    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, String mobile, String profilePhoto, String coverPhoto, String isActive, String isAdmin, String access, Date regDate, int countyrId, int stateId, int cityId);
+    public String userInsert(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, Date regDate, int countyrId, int stateId, int cityId);
+    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, Date regDate, int countyrId, int stateId, int cityId);
     public String userDelete(int userId);
     public User userFindById(int userId);
+    public List<User> userFindByName(String userName);
     public List<User> userShowAll();
     public List<User> adminShowAll();
     

@@ -9,12 +9,14 @@ import entity.City;
 import entity.Country;
 import entity.State;
 import entity.User;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import utility.HashUtility;
 
 /**
  *
@@ -136,6 +138,24 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             e.getMessage();
             return null;
             
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public Country countryFindByName(String countryName) {
+        
+        try {
+                
+            return (Country) em.createNamedQuery("Country.findByCountryname")
+                .setParameter("countryname", countryName)
+                .getSingleResult();
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            return null;
         }
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -280,6 +300,23 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public State stateFindByName(String stateName) {
+        
+        try {
+            
+            return  (State) em.createNamedQuery("State.findByStatename")
+                    .setParameter("statename", stateName)
+                    .getSingleResult();
+            
+        } catch (Exception e) {
+            
+            return null;
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public List<State> stateShowAll() {
@@ -415,6 +452,23 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public City cityFindByName(String cityName) {
+        
+        try {
+            
+            return  (City) em.createNamedQuery("City.findByCityname")
+                    .setParameter("cityname", cityName)
+                    .getSingleResult();
+            
+        } catch (Exception e) {
+            
+            return null;
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public List<City> cityShowAll() {
@@ -452,32 +506,245 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public String userInsert(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, String mobile, String profilePhoto, String coverPhoto, String isActive, String isAdmin, String access, Date regDate, int countyrId, int stateId, int cityId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String userInsert(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, Date regDate, int countyrId, int stateId, int cityId) {
+        
+        boolean userRegister = false;
+        
+        try {
+            
+            List<User> u = em.createNamedQuery("User.findAllEmail")
+                    .getResultList();
+            
+            if(!u.isEmpty()) {
+                for (User ul : u) {
+                    if(email.equals(ul.getEmail())) {
+                        return "Email Already used.";
+                    } else {
+                        userRegister = true;
+                    }
+                }
+            }
+            
+            if(userRegister || u.isEmpty()) {
+                
+                Country country = em.find(Country.class, countyrId);
+                State state = em.find(State.class, stateId);
+                City city = em.find(City.class, cityId);
+
+                Collection<User> userCountryCollection = country.getUserCollection();
+                Collection<User> userStateCollection = state.getUserCollection();
+                Collection<User> userCityCollection = city.getUserCollection();
+
+                User user = new User();
+                HashUtility hashpassword = new HashUtility();
+
+                user.setUserid(userId);
+                user.setFirstname(firstName);
+                user.setMiddlename(middleName);
+                user.setLastname(lastName);
+                user.setGender(gender);
+                user.setDob(dob);
+                user.setPincode(pincode);
+                user.setEmail(email);
+                user.setUsername(username);
+                user.setPassword(hashpassword.getHashPassword(password));
+                user.setMobile(mobile);
+                user.setProfilephoto(profilePhoto);
+                user.setCoverphoto(coverPhoto);
+                user.setIsactive(isActive);
+                user.setIsadmin(isAdmin);
+                user.setAccess(access);
+                user.setRegDate(regDate);
+
+                user.setCountryid(country);
+                user.setStateid(state);
+                user.setCityid(city);
+
+                userCountryCollection.add(user);
+                userStateCollection.add(user);
+                userCityCollection.add(user);
+
+                country.setUserCollection(userCountryCollection);
+                state.setUserCollection(userStateCollection);
+                city.setUserCollection(userCityCollection);
+
+
+                em.persist(user);
+                em.merge(country);
+                em.merge(state);
+                em.merge(city);
+
+                return "User Inserted";
+                
+            }
+            
+            return "Registration Failed";
+            
+        } catch (Exception e) {
+            
+            return Arrays.toString(e.getStackTrace());
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, String mobile, String profilePhoto, String coverPhoto, String isActive, String isAdmin, String access, Date regDate, int countyrId, int stateId, int cityId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, Date regDate, int countyrId, int stateId, int cityId) {
+        
+        try {
+            
+            Country country = em.find(Country.class, countyrId);
+            State state = em.find(State.class, stateId);
+            City city = em.find(City.class, cityId);
+            
+            Collection<User> userCountryCollection = country.getUserCollection();
+            Collection<User> userStateCollection = state.getUserCollection();
+            Collection<User> userCityCollection = city.getUserCollection();
+            
+            User user = em.find(User.class, userId);
+            
+            user.setUserid(userId);
+            user.setFirstname(firstName);
+            user.setMiddlename(middleName);
+            user.setLastname(lastName);
+            user.setGender(gender);
+            user.setDob(dob);
+            user.setPincode(pincode);
+            user.setEmail(email);
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setMobile(mobile);
+            user.setProfilephoto(profilePhoto);
+            user.setCoverphoto(coverPhoto);
+            user.setIsactive(isActive);
+            user.setIsadmin(isAdmin);
+            user.setAccess(access);
+            user.setRegDate(regDate);
+            
+            user.setCountryid(country);
+            user.setStateid(state);
+            user.setCityid(city);
+            
+            userCountryCollection.add(user);
+            userStateCollection.add(user);
+            userCityCollection.add(user);
+            
+            country.setUserCollection(userCountryCollection);
+            state.setUserCollection(userStateCollection);
+            city.setUserCollection(userCityCollection);
+            
+            
+            em.persist(user);
+            em.merge(country);
+            em.merge(state);
+            em.merge(city);
+            
+            return "User Inserted";
+            
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String userDelete(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User user = em.find(User.class, userId);
+            user.setIsactive(false);
+            em.merge(user);
+            
+            return "User Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public User userFindById(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User user = em.find(User.class,userId);
+            
+            return user;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<User> userShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<User> user = em.createNamedQuery("User.findAll")
+                    .getResultList();
+            
+            return user;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
     public List<User> adminShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<User> user = em.createNamedQuery("User.findByIsadmin")
+                    .setParameter("isadmin", true)
+                    .getResultList();
+            return user;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<User> userFindByName(String userName) {
+        
+        try {
+            
+            return em.createNamedQuery("User.findByFirstname")
+                    .setParameter("firstname", userName)
+                    .getResultList();
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
