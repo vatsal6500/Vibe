@@ -37,4 +37,17 @@ public class HashUtility {
         
         return generatedHashPassword;
     }
+    
+    public boolean checkPassword(String hashPassword, String password) {
+        
+        if(!hashPassword.isEmpty() && !password.isEmpty()) {
+            String enteredPassword = getHashPassword(password);
+            
+            if(enteredPassword.equals(hashPassword)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
