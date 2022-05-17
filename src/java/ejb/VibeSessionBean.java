@@ -9,6 +9,10 @@ import entity.City;
 import entity.Country;
 import entity.State;
 import entity.User;
+import entity.UserContactInfo;
+import entity.UserEducation;
+import entity.UserSkills;
+import entity.UserWork;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -206,21 +210,21 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         try {
             
-            Country c = em.find(Country.class, countryId);
-            Collection<State> sc = c.getStateCollection();
+            Country country = em.find(Country.class, countryId);
+            Collection<State> sc = country.getStateCollection();
             
             State s = new State();
             
             s.setStateid(stateId);
             s.setStatename(stateName);
             s.setIsactive(isActive);
-            s.setCountryid(c);
+            s.setCountryid(country);
             
             sc.add(s);
-            c.setStateCollection(sc);
+            country.setStateCollection(sc);
             
             em.persist(s);
-            em.merge(c);
+            em.merge(country);
             
             return "State Inserted";
             
@@ -506,95 +510,72 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public String userInsert(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, Date regDate, int countyrId, int stateId, int cityId) {
-        
-        boolean userRegister = false;
+    public String userRegister(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, int countryId, int stateId, int cityId) {
         
         try {
-            
-            List<User> u = em.createNamedQuery("User.findAllEmail")
-                    .getResultList();
-            
-            if(!u.isEmpty()) {
-                for (User ul : u) {
-                    if(email.equals(ul.getEmail())) {
-                        return "Email Already used.";
-                    } else {
-                        userRegister = true;
-                    }
-                }
-            }
-            
-            if(userRegister || u.isEmpty()) {
-                
-                Country country = em.find(Country.class, countyrId);
-                State state = em.find(State.class, stateId);
-                City city = em.find(City.class, cityId);
+            Country country = em.find(Country.class, countryId);
+            State state = em.find(State.class, stateId);
+            City city = em.find(City.class, cityId);
 
-                Collection<User> userCountryCollection = country.getUserCollection();
-                Collection<User> userStateCollection = state.getUserCollection();
-                Collection<User> userCityCollection = city.getUserCollection();
+            Collection<User> userCountryCollection = country.getUserCollection();
+            Collection<User> userStateCollection = state.getUserCollection();
+            Collection<User> userCityCollection = city.getUserCollection();
 
-                User user = new User();
-                HashUtility hashpassword = new HashUtility();
+            User user = new User();
+            //HashUtility hashpassword = new HashUtility();
 
-                user.setUserid(userId);
-                user.setFirstname(firstName);
-                user.setMiddlename(middleName);
-                user.setLastname(lastName);
-                user.setGender(gender);
-                user.setDob(dob);
-                user.setPincode(pincode);
-                user.setEmail(email);
-                user.setUsername(username);
-                user.setPassword(hashpassword.getHashPassword(password));
-                user.setMobile(mobile);
-                user.setProfilephoto(profilePhoto);
-                user.setCoverphoto(coverPhoto);
-                user.setIsactive(isActive);
-                user.setIsadmin(isAdmin);
-                user.setAccess(access);
-                user.setRegDate(regDate);
+            user.setUserid(userId);
+            user.setFirstname(firstName);
+            user.setMiddlename(middleName);
+            user.setLastname(lastName);
+            user.setGender(gender);
+            user.setDob(dob);
+            user.setPincode(pincode);
+            user.setEmail(email);
+            user.setUsername(username);
+            //user.setPassword(hashpassword.getHashPassword(password));
+            user.setPassword(password);
+            user.setMobile(mobile);
+            user.setProfilephoto(profilePhoto);
+            user.setCoverphoto(coverPhoto);
+            user.setIsactive(isActive);
+            user.setIsadmin(isAdmin);
+            user.setAccess(access);
+            user.setRegDate(new Date());
 
-                user.setCountryid(country);
-                user.setStateid(state);
-                user.setCityid(city);
+            user.setCountryid(country);
+            user.setStateid(state);
+            user.setCityid(city);
 
-                userCountryCollection.add(user);
-                userStateCollection.add(user);
-                userCityCollection.add(user);
+            userCountryCollection.add(user);
+            userStateCollection.add(user);
+            userCityCollection.add(user);
 
-                country.setUserCollection(userCountryCollection);
-                state.setUserCollection(userStateCollection);
-                city.setUserCollection(userCityCollection);
+            country.setUserCollection(userCountryCollection);
+            state.setUserCollection(userStateCollection);
+            city.setUserCollection(userCityCollection);
 
 
-                em.persist(user);
-                em.merge(country);
-                em.merge(state);
-                em.merge(city);
+            em.persist(user);
+            em.merge(country);
+            em.merge(state);
+            em.merge(city);
 
-                return "User Inserted";
-                
-            }
-            
-            return "Registration Failed";
-            
+            return "User Inserted";
         } catch (Exception e) {
             
-            return Arrays.toString(e.getStackTrace());
+            return "error " + e.getMessage();  
             
         }
-        
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, Date regDate, int countyrId, int stateId, int cityId) {
+    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, int countryId, int stateId, int cityId) {
         
         try {
             
-            Country country = em.find(Country.class, countyrId);
+            Country country = em.find(Country.class, countryId);
             State state = em.find(State.class, stateId);
             City city = em.find(City.class, cityId);
             
@@ -620,7 +601,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             user.setIsactive(isActive);
             user.setIsadmin(isAdmin);
             user.setAccess(access);
-            user.setRegDate(regDate);
             
             user.setCountryid(country);
             user.setStateid(state);
@@ -745,6 +725,106 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_contact_info_Insert(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_contact_info_Update(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_contact_info_Delete(int uciId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UserContactInfo user_contact_info_FindById(int uciId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<UserContactInfo> user_contact_info_ShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_education_Insert(int ueId, String instituteName, Date joiningDate, Date endingDate, String instituteAddress, int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_education_Update(int ueId, String instituteName, Date joiningDate, Date endingDate, String instituteAddress, int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_education_Delete(int ueId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UserEducation user_education_FindById(int ueId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<UserEducation> user_education_ShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_skills_Insert(int usId, String skillName, String skillInfo, String skillPortfolio, int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_skills_Update(int usId, String skillName, String skillInfo, String skillPortfolio, int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_skills_Delete(int usId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UserSkills user_skills_FindById(int usId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<UserSkills> user_skills_ShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_work_Insert(int uwId, String companyName, Date joiningDate, Date endingDate, String companyAddress, int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_work_Update(int uwId, String companyName, Date joiningDate, Date endingDate, String companyAddress, int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String user_work_Delete(int uwId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UserWork user_work_FindById(int uwId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<UserWork> user_work_ShowALl() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
