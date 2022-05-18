@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "GroupMembers.findAll", query = "SELECT g FROM GroupMembers g"),
     @NamedQuery(name = "GroupMembers.findByGmId", query = "SELECT g FROM GroupMembers g WHERE g.gmId = :gmId"),
-    @NamedQuery(name = "GroupMembers.findByIsMember", query = "SELECT g FROM GroupMembers g WHERE g.isMember = :isMember")})
+    @NamedQuery(name = "GroupMembers.findByIsMember", query = "SELECT g FROM GroupMembers g WHERE g.isMember = :isMember"),
+    @NamedQuery(name = "GroupMembers.findByBecamemember", query = "SELECT g FROM GroupMembers g WHERE g.becamemember = :becamemember")})
 public class GroupMembers implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +47,11 @@ public class GroupMembers implements Serializable {
     @NotNull
     @Column(name = "is_member", nullable = false)
     private boolean isMember;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "becamemember", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date becamemember;
     @JoinColumn(name = "groupid", referencedColumnName = "groupid", nullable = false)
     @ManyToOne(optional = false)
     private Groups groupid;
@@ -57,9 +66,10 @@ public class GroupMembers implements Serializable {
         this.gmId = gmId;
     }
 
-    public GroupMembers(Integer gmId, boolean isMember) {
+    public GroupMembers(Integer gmId, boolean isMember, Date becamemember) {
         this.gmId = gmId;
         this.isMember = isMember;
+        this.becamemember = becamemember;
     }
 
     public Integer getGmId() {
@@ -76,6 +86,14 @@ public class GroupMembers implements Serializable {
 
     public void setIsMember(boolean isMember) {
         this.isMember = isMember;
+    }
+
+    public Date getBecamemember() {
+        return becamemember;
+    }
+
+    public void setBecamemember(Date becamemember) {
+        this.becamemember = becamemember;
     }
 
     public Groups getGroupid() {
