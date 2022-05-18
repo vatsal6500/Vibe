@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -149,6 +150,7 @@ public class Groups implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<GroupMembers> getGroupMembersCollection() {
         return groupMembersCollection;
     }
@@ -166,6 +168,7 @@ public class Groups implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<Post> getPostCollection() {
         return postCollection;
     }
@@ -175,6 +178,7 @@ public class Groups implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<ActivityFeed> getActivityFeedCollection() {
         return activityFeedCollection;
     }

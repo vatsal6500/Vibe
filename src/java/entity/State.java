@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -104,6 +105,7 @@ public class State implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<City> getCityCollection() {
         return cityCollection;
     }
@@ -121,6 +123,7 @@ public class State implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<User> getUserCollection() {
         return userCollection;
     }
