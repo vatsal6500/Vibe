@@ -5,18 +5,10 @@
  */
 package ejb;
 
-import entity.City;
-import entity.Country;
-import entity.State;
-import entity.User;
-import entity.UserContactInfo;
-import entity.UserEducation;
-import entity.UserSkills;
-import entity.UserWork;
+import entity.*;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -91,6 +83,93 @@ public interface VibeSessionBeanLocal {
     
     
     //Groups
+    public String groupInsert(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId);
+    public String groupUpdate(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId);
+    public String groupDelete(int groupId);
+    public Groups groupFindById(int groupId);
+    public List<Groups> groupShowAll(); //admin 
     
+    //Group Members
+    public String group_member_Insert(int gmId, boolean isMember, Date becameMember, int groupId, int memberId);
+    public String group_member_Update(int gmId, boolean isMember, Date becameMember, int groupId, int memberId);
+    public String group_member_Delete(int gmId);
+    public GroupMembers group_member_FindById(int gmId);
+    public List<GroupMembers> group_member_ShowAll(); //admin
+    
+    //Post
+    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId, int groupId);
+    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId, int groupId);
+    public String postDelete(int postId);
+    public Post postFindById(int postId);
+    public List<Post> postShowAll(); //admin
+    
+    //Likes
+    public String likeInsert(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId);
+    public String likeUpdate(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId);
+    public String likeDelete(int likeId);
+    public Likes likeFindById(int likeId);
+    public List<Likes> likeShowAll(); //admin
+    
+    //Friend Request
+    public String friend_request_Insert(int frId, String status, int senderId, int receiverId);
+    public String friend_request_Update(int frId, String status, int senderId, int receiverId);
+    public String friend_request_Delete(int frId);
+    public FriendRequest friend_request_FindById(int frId);
+    public List<FriendRequest> friend_request_ShowAll(); //admin
+    
+    //Friend List
+    public String friend_list_Insert(int flId, String acceptedDateTime, boolean friendStatus, int userId, int friendId);
+    public String friend_list_Update(int flId, String acceptedDateTime, boolean friendStatus, int userId, int friendId);
+    public String friend_list_Delete(int flId);
+    public FriendList friend_list_FindById(int flId);
+    public List<FriendList> friend_list_ShowAll();  //admin
+    
+    //Events
+    public String eventInsert(int eventId, String eventName, String post, Date eventStartDate, Date eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId);
+    public String eventUpdate(int eventId, String eventName, String post, Date eventStartDate, Date eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId);
+    public String eventDelete(int eventId);
+    public Events eventFindById(int eventId);
+    public List<Events> eventShowAll();  //admin
+    
+    //Event Usercount
+    public String event_usercount_Insert(int euc_Id, boolean isIntrested, int eventId, int userId);
+    public String event_usercount_Update(int euc_Id, boolean isIntrested, int eventId, int userId);
+    public String event_usercount_Delete(int euc_Id);
+    public EventUsercount event_usercount_FindById(int euc_Id);
+    public List<EventUsercount> event_usercount_ShowAll();  //admin
+    
+    //Comments
+    public String commentsInsert(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId);
+    public String commentsUpdate(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId);
+    public String commentsdelete(int commentId);
+    public Comments commentsFindById(int commentId);
+    public List<Comments> commentsInsert(); //admin
+    
+    //Chat
+    public String chatInsert(int chatId, String message, boolean isDelevered, boolean isRead, boolean isDeleted, int senderId, int receiverId);
+    public String chatDelete(int chatId);
+    //    public Chat chatFindById(int chatId);
+    //    public List<Chat> chatShowAll(); //admin
+
+    //Ads User
+    public String ads_user_Insert(int auId, String adsConcent, String description, String link, String endDate, boolean isRemoved, boolean isExpried, int userId, int adsId);
+    public String ads_user_Update(int auId, String adsConcent, String description, String link, String endDate, boolean isRemoved, boolean isExpried, int userId, int adsId);
+    public String ads_user_Delete(int auId);
+    public AdsUser ads_user_FindById(int auId);
+    public List<AdsUser> ads_user_ShowAll();  //admin
+    
+    //Ads
+    public String adsInsert(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved);
+    public String adsUpdate(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved);
+    public String adsDelete(int adsId);
+    public Ads adsFindById(int adsId);
+    public List<Ads> adsShowAll(); //admin
+    
+    //Activity Feed
+    public String activity_feed_Insert(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId);
+    public String activity_feed_Update(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId);
+    public String activity_feed_Delete(int afId);
+    public ActivityFeed activity_feed_FindById(int afId);
+    public List<ActivityFeed> activity_feed_ShowAll();  //admin
     
 }

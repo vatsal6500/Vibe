@@ -5,8 +5,20 @@
  */
 package ejb;
 
+import entity.ActivityFeed;
+import entity.Ads;
+import entity.AdsUser;
 import entity.City;
+import entity.Comments;
 import entity.Country;
+import entity.EventUsercount;
+import entity.Events;
+import entity.FriendList;
+import entity.FriendRequest;
+import entity.GroupMembers;
+import entity.Groups;
+import entity.Likes;
+import entity.Post;
 import entity.State;
 import entity.User;
 import entity.UserContactInfo;
@@ -31,6 +43,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @PersistenceContext(unitName = "VibePU")
     EntityManager em;
+    
+    
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    
+    
+    
+    //Country
     
     @Override
     public String countryInsert(int countryId, String sortName, String countryName, int phoneCode, boolean isActive) {
@@ -201,9 +221,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
+    
+    
+    //State
 
     @Override
     public String stateInsert(int stateId, String stateName, boolean isActive, int countryId) {
@@ -359,6 +380,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+    
+    //City
+    
     @Override
     public String cityInsert(int cityId, String cityName, boolean isActive, int stateId) {
         
@@ -508,6 +533,9 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    //User
 
     @Override
     public String userRegister(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, int countryId, int stateId, int cityId) {
@@ -726,6 +754,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    
+    //User_Contact_Info
 
     @Override
     public String user_contact_info_Insert(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio) {
@@ -751,6 +783,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     public List<UserContactInfo> user_contact_info_ShowAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    
+    //User_Education
 
     @Override
     public String user_education_Insert(int ueId, String instituteName, Date joiningDate, Date endingDate, String instituteAddress, int userId) {
@@ -776,6 +812,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     public List<UserEducation> user_education_ShowAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    
+    //User_Skills
 
     @Override
     public String user_skills_Insert(int usId, String skillName, String skillInfo, String skillPortfolio, int userId) {
@@ -801,6 +841,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     public List<UserSkills> user_skills_ShowAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    
+    //User_Work
 
     @Override
     public String user_work_Insert(int uwId, String companyName, Date joiningDate, Date endingDate, String companyAddress, int userId) {
@@ -824,6 +868,370 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public List<UserWork> user_work_ShowALl() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    //Groups
+
+    @Override
+    public String groupInsert(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String groupUpdate(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String groupDelete(int groupId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Groups groupFindById(int groupId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Groups> groupShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    //Group_Members
+
+    @Override
+    public String group_member_Insert(int gmId, boolean isMember, Date becameMember, int groupId, int memberId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String group_member_Update(int gmId, boolean isMember, Date becameMember, int groupId, int memberId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String group_member_Delete(int gmId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public GroupMembers group_member_FindById(int gmId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<GroupMembers> group_member_ShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    //Posts
+
+    @Override
+    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId, int groupId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId, int groupId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String postDelete(int postId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Post postFindById(int postId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Post> postShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    //Likes
+
+    @Override
+    public String likeInsert(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String likeUpdate(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String likeDelete(int likeId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Likes likeFindById(int likeId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Likes> likeShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    
+    //Friend_Request
+
+    @Override
+    public String friend_request_Insert(int frId, String status, int senderId, int receiverId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String friend_request_Update(int frId, String status, int senderId, int receiverId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String friend_request_Delete(int frId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public FriendRequest friend_request_FindById(int frId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<FriendRequest> friend_request_ShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    
+    //Friend_List
+
+    @Override
+    public String friend_list_Insert(int flId, String acceptedDateTime, boolean friendStatus, int userId, int friendId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String friend_list_Update(int flId, String acceptedDateTime, boolean friendStatus, int userId, int friendId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String friend_list_Delete(int flId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public FriendList friend_list_FindById(int flId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<FriendList> friend_list_ShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    //Events
+
+    @Override
+    public String eventInsert(int eventId, String eventName, String post, Date eventStartDate, Date eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String eventUpdate(int eventId, String eventName, String post, Date eventStartDate, Date eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String eventDelete(int eventId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Events eventFindById(int eventId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Events> eventShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    //Events_UserCount
+    
+    @Override
+    public String event_usercount_Insert(int euc_Id, boolean isIntrested, int eventId, int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String event_usercount_Update(int euc_Id, boolean isIntrested, int eventId, int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String event_usercount_Delete(int euc_Id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public EventUsercount event_usercount_FindById(int euc_Id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<EventUsercount> event_usercount_ShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    //Comments
+
+    @Override
+    public String commentsInsert(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String commentsUpdate(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String commentsdelete(int commentId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Comments commentsFindById(int commentId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Comments> commentsInsert() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    //Chats
+
+    @Override
+    public String chatInsert(int chatId, String message, boolean isDelevered, boolean isRead, boolean isDeleted, int senderId, int receiverId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String chatDelete(int chatId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    //Ads_User
+
+    @Override
+    public String ads_user_Insert(int auId, String adsConcent, String description, String link, String endDate, boolean isRemoved, boolean isExpried, int userId, int adsId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String ads_user_Update(int auId, String adsConcent, String description, String link, String endDate, boolean isRemoved, boolean isExpried, int userId, int adsId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String ads_user_Delete(int auId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AdsUser ads_user_FindById(int auId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<AdsUser> ads_user_ShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    
+    //Ads
+
+    @Override
+    public String adsInsert(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String adsUpdate(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String adsDelete(int adsId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Ads adsFindById(int adsId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Ads> adsShowAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    //Activity_Feed
+    
+    @Override
+    public String activity_feed_Insert(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String activity_feed_Update(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String activity_feed_Delete(int afId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ActivityFeed activity_feed_FindById(int afId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ActivityFeed> activity_feed_ShowAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
