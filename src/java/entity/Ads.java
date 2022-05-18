@@ -57,8 +57,9 @@ public class Ads implements Serializable {
     private int price;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "timelimit", nullable = false)
-    private int timelimit;
+    @Size(min = 1, max = 255)
+    @Column(name = "timelimit", nullable = false, length = 255)
+    private String timelimit;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1000)
@@ -78,7 +79,7 @@ public class Ads implements Serializable {
         this.adsId = adsId;
     }
 
-    public Ads(Integer adsId, String adstype, int price, int timelimit, String description, boolean isRemoved) {
+    public Ads(Integer adsId, String adstype, int price, String timelimit, String description, boolean isRemoved) {
         this.adsId = adsId;
         this.adstype = adstype;
         this.price = price;
@@ -111,11 +112,11 @@ public class Ads implements Serializable {
         this.price = price;
     }
 
-    public int getTimelimit() {
+    public String getTimelimit() {
         return timelimit;
     }
 
-    public void setTimelimit(int timelimit) {
+    public void setTimelimit(String timelimit) {
         this.timelimit = timelimit;
     }
 

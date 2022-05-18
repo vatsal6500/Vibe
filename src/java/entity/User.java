@@ -8,7 +8,6 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,9 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "user", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+    
     //Find all Emails
     @NamedQuery(name = "User.findAllEmail", query = "SELECT u.email FROM User u"),
+    
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByUserid", query = "SELECT u FROM User u WHERE u.userid = :userid"),
     @NamedQuery(name = "User.findByFirstname", query = "SELECT u FROM User u WHERE u.firstname = :firstname"),
     @NamedQuery(name = "User.findByMiddlename", query = "SELECT u FROM User u WHERE u.middlename = :middlename"),
@@ -359,7 +360,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<UserContactInfo> getUserContactInfoCollection() {
         return userContactInfoCollection;
     }
@@ -369,7 +369,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Comments> getCommentsCollection() {
         return commentsCollection;
     }
@@ -379,7 +378,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Comments> getCommentsCollection1() {
         return commentsCollection1;
     }
@@ -389,7 +387,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<FriendList> getFriendListCollection() {
         return friendListCollection;
     }
@@ -399,7 +396,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<FriendList> getFriendListCollection1() {
         return friendListCollection1;
     }
@@ -409,7 +405,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<GroupMembers> getGroupMembersCollection() {
         return groupMembersCollection;
     }
@@ -419,7 +414,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<UserEducation> getUserEducationCollection() {
         return userEducationCollection;
     }
@@ -429,7 +423,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Groups> getGroupsCollection() {
         return groupsCollection;
     }
@@ -439,7 +432,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<AdsUser> getAdsUserCollection() {
         return adsUserCollection;
     }
@@ -449,7 +441,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Post> getPostCollection() {
         return postCollection;
     }
@@ -459,7 +450,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Chat> getChatCollection() {
         return chatCollection;
     }
@@ -469,7 +459,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Chat> getChatCollection1() {
         return chatCollection1;
     }
@@ -479,7 +468,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<EventUsercount> getEventUsercountCollection() {
         return eventUsercountCollection;
     }
@@ -489,7 +477,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<ActivityFeed> getActivityFeedCollection() {
         return activityFeedCollection;
     }
@@ -499,7 +486,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<ActivityFeed> getActivityFeedCollection1() {
         return activityFeedCollection1;
     }
@@ -509,7 +495,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<FriendRequest> getFriendRequestCollection() {
         return friendRequestCollection;
     }
@@ -519,7 +504,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<FriendRequest> getFriendRequestCollection1() {
         return friendRequestCollection1;
     }
@@ -529,7 +513,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<UserWork> getUserWorkCollection() {
         return userWorkCollection;
     }
@@ -563,7 +546,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<UserSkills> getUserSkillsCollection() {
         return userSkillsCollection;
     }
@@ -573,7 +555,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Events> getEventsCollection() {
         return eventsCollection;
     }
@@ -583,7 +564,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Likes> getLikesCollection() {
         return likesCollection;
     }
@@ -593,7 +573,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<Likes> getLikesCollection1() {
         return likesCollection1;
     }

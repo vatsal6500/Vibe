@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByPost", query = "SELECT p FROM Post p WHERE p.post = :post"),
     @NamedQuery(name = "Post.findByCaption", query = "SELECT p FROM Post p WHERE p.caption = :caption"),
     @NamedQuery(name = "Post.findByUploadDate", query = "SELECT p FROM Post p WHERE p.uploadDate = :uploadDate"),
-    @NamedQuery(name = "Post.findByIsDeleted", query = "SELECT p FROM Post p WHERE p.isDeleted = :isDeleted")})
+    @NamedQuery(name = "Post.findByIsDeleted", query = "SELECT p FROM Post p WHERE p.isDeleted = :isDeleted"),
+    @NamedQuery(name = "Post.findByLikecount", query = "SELECT p FROM Post p WHERE p.likecount = :likecount")})
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,6 +70,8 @@ public class Post implements Serializable {
     @NotNull
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
+    @Column(name = "likecount")
+    private Integer likecount;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postid")
     private Collection<Comments> commentsCollection;
     @JoinColumn(name = "groupid", referencedColumnName = "groupid", nullable = false)
@@ -133,6 +136,14 @@ public class Post implements Serializable {
 
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Integer getLikecount() {
+        return likecount;
+    }
+
+    public void setLikecount(Integer likecount) {
+        this.likecount = likecount;
     }
 
     @XmlTransient

@@ -46,8 +46,8 @@ public class FriendRequest implements Serializable {
     private Integer frId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "status", nullable = false, length = 1000)
+    @Size(min = 1, max = 100)
+    @Column(name = "status", nullable = false, length = 100)
     private String status;
     @Basic(optional = false)
     @NotNull

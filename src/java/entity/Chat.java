@@ -35,8 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Chat.findAll", query = "SELECT c FROM Chat c"),
     @NamedQuery(name = "Chat.findByChatid", query = "SELECT c FROM Chat c WHERE c.chatid = :chatid"),
-    @NamedQuery(name = "Chat.findByTime", query = "SELECT c FROM Chat c WHERE c.time = :time"),
-    @NamedQuery(name = "Chat.findByDate", query = "SELECT c FROM Chat c WHERE c.date = :date"),
+    @NamedQuery(name = "Chat.findByDatetime", query = "SELECT c FROM Chat c WHERE c.datetime = :datetime"),
     @NamedQuery(name = "Chat.findByIsDelevered", query = "SELECT c FROM Chat c WHERE c.isDelevered = :isDelevered"),
     @NamedQuery(name = "Chat.findByIsRead", query = "SELECT c FROM Chat c WHERE c.isRead = :isRead"),
     @NamedQuery(name = "Chat.findByIsDeleted", query = "SELECT c FROM Chat c WHERE c.isDeleted = :isDeleted")})
@@ -56,14 +55,9 @@ public class Chat implements Serializable {
     private String message;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "time", nullable = false)
+    @Column(name = "datetime", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date time;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Date datetime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_delevered", nullable = false)
@@ -90,11 +84,10 @@ public class Chat implements Serializable {
         this.chatid = chatid;
     }
 
-    public Chat(Integer chatid, String message, Date time, Date date, boolean isDelevered, boolean isRead, boolean isDeleted) {
+    public Chat(Integer chatid, String message, Date datetime, boolean isDelevered, boolean isRead, boolean isDeleted) {
         this.chatid = chatid;
         this.message = message;
-        this.time = time;
-        this.date = date;
+        this.datetime = datetime;
         this.isDelevered = isDelevered;
         this.isRead = isRead;
         this.isDeleted = isDeleted;
@@ -116,20 +109,12 @@ public class Chat implements Serializable {
         this.message = message;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getDatetime() {
+        return datetime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
     }
 
     public boolean getIsDelevered() {

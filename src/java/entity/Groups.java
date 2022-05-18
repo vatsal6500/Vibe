@@ -53,13 +53,13 @@ public class Groups implements Serializable {
     private Integer groupid;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "groupname", nullable = false, length = 1000)
+    @Size(min = 1, max = 100)
+    @Column(name = "groupname", nullable = false, length = 100)
     private String groupname;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "description", nullable = false, length = 1000)
+    @Size(min = 1, max = 2000)
+    @Column(name = "description", nullable = false, length = 2000)
     private String description;
     @Basic(optional = false)
     @NotNull

@@ -7,7 +7,6 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,10 +33,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "city", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    
+    //Find ID by City Name
+    @NamedQuery(name = "City.findIdByCityname", query = "SELECT c.cityid FROM City c WHERE c.cityname = :cityname"),
+    
     @NamedQuery(name = "City.findAll", query = "SELECT c FROM City c"),
     @NamedQuery(name = "City.findByCityid", query = "SELECT c FROM City c WHERE c.cityid = :cityid"),
     @NamedQuery(name = "City.findByCityname", query = "SELECT c FROM City c WHERE c.cityname = :cityname"),
-    @NamedQuery(name = "City.findIdByCityname", query = "SELECT c.cityid FROM City c WHERE c.cityname = :cityname"),
     @NamedQuery(name = "City.findByIsactive", query = "SELECT c FROM City c WHERE c.isactive = :isactive")})
 public class City implements Serializable {
 
@@ -108,7 +110,6 @@ public class City implements Serializable {
     }
 
     @XmlTransient
-    @JsonbTransient
     public Collection<User> getUserCollection() {
         return userCollection;
     }

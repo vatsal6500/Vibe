@@ -6,7 +6,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "FriendList.findAll", query = "SELECT f FROM FriendList f"),
     @NamedQuery(name = "FriendList.findByFlId", query = "SELECT f FROM FriendList f WHERE f.flId = :flId"),
-    @NamedQuery(name = "FriendList.findByAcceptedDate", query = "SELECT f FROM FriendList f WHERE f.acceptedDate = :acceptedDate"),
+    @NamedQuery(name = "FriendList.findByAcceptedDatetime", query = "SELECT f FROM FriendList f WHERE f.acceptedDatetime = :acceptedDatetime"),
     @NamedQuery(name = "FriendList.findByFriendStatus", query = "SELECT f FROM FriendList f WHERE f.friendStatus = :friendStatus")})
 public class FriendList implements Serializable {
 
@@ -45,9 +43,9 @@ public class FriendList implements Serializable {
     private Integer flId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "accepted_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date acceptedDate;
+    @Size(min = 1, max = 100)
+    @Column(name = "accepted_datetime", nullable = false, length = 100)
+    private String acceptedDatetime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "friend_status", nullable = false)
@@ -66,9 +64,9 @@ public class FriendList implements Serializable {
         this.flId = flId;
     }
 
-    public FriendList(Integer flId, Date acceptedDate, boolean friendStatus) {
+    public FriendList(Integer flId, String acceptedDatetime, boolean friendStatus) {
         this.flId = flId;
-        this.acceptedDate = acceptedDate;
+        this.acceptedDatetime = acceptedDatetime;
         this.friendStatus = friendStatus;
     }
 
@@ -80,12 +78,12 @@ public class FriendList implements Serializable {
         this.flId = flId;
     }
 
-    public Date getAcceptedDate() {
-        return acceptedDate;
+    public String getAcceptedDatetime() {
+        return acceptedDatetime;
     }
 
-    public void setAcceptedDate(Date acceptedDate) {
-        this.acceptedDate = acceptedDate;
+    public void setAcceptedDatetime(String acceptedDatetime) {
+        this.acceptedDatetime = acceptedDatetime;
     }
 
     public boolean getFriendStatus() {
