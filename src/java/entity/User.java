@@ -48,7 +48,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByLastname", query = "SELECT u FROM User u WHERE u.lastname = :lastname"),
     @NamedQuery(name = "User.findByGender", query = "SELECT u FROM User u WHERE u.gender = :gender"),
     @NamedQuery(name = "User.findByDob", query = "SELECT u FROM User u WHERE u.dob = :dob"),
-    @NamedQuery(name = "User.findByPincode", query = "SELECT u FROM User u WHERE u.pincode = :pincode"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
@@ -72,10 +71,8 @@ public class User implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "firstname", nullable = false, length = 1000)
     private String firstname;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "middlename", nullable = false, length = 1000)
+    @Size(max = 1000)
+    @Column(name = "middlename", length = 1000)
     private String middlename;
     @Basic(optional = false)
     @NotNull
@@ -92,39 +89,27 @@ public class User implements Serializable {
     @Column(name = "dob", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dob;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "pincode", nullable = false)
-    private int pincode;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1000)
     @Column(name = "email", nullable = false, length = 1000)
     private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "username", nullable = false, length = 1000)
+    @Size(max = 1000)
+    @Column(name = "username", length = 1000)
     private String username;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1000)
     @Column(name = "password", nullable = false, length = 1000)
     private String password;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "mobile", nullable = false)
+    @Column(name = "mobile")
     private long mobile;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "profilephoto", nullable = false, length = 1000)
+    @Size(max = 1000)
+    @Column(name = "profilephoto", length = 1000)
     private String profilephoto;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "coverphoto", nullable = false, length = 1000)
+    @Size(max = 1000)
+    @Column(name = "coverphoto", length = 1000)
     private String coverphoto;
     @Basic(optional = false)
     @NotNull
@@ -179,14 +164,14 @@ public class User implements Serializable {
     private Collection<FriendRequest> friendRequestCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
     private Collection<UserWork> userWorkCollection;
-    @JoinColumn(name = "cityid", referencedColumnName = "cityid", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "cityid", referencedColumnName = "cityid")
+    @ManyToOne
     private City cityid;
-    @JoinColumn(name = "countryid", referencedColumnName = "countryid", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "countryid", referencedColumnName = "countryid")
+    @ManyToOne
     private Country countryid;
-    @JoinColumn(name = "stateid", referencedColumnName = "stateid", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "stateid", referencedColumnName = "stateid")
+    @ManyToOne
     private State stateid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
     private Collection<UserSkills> userSkillsCollection;
@@ -204,20 +189,14 @@ public class User implements Serializable {
         this.userid = userid;
     }
 
-    public User(Integer userid, String firstname, String middlename, String lastname, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilephoto, String coverphoto, boolean isactive, boolean isadmin, boolean access, Date regDate) {
+    public User(Integer userid, String firstname, String lastname, String gender, Date dob, String email, String password, boolean isactive, boolean isadmin, boolean access, Date regDate) {
         this.userid = userid;
         this.firstname = firstname;
-        this.middlename = middlename;
         this.lastname = lastname;
         this.gender = gender;
         this.dob = dob;
-        this.pincode = pincode;
         this.email = email;
-        this.username = username;
         this.password = password;
-        this.mobile = mobile;
-        this.profilephoto = profilephoto;
-        this.coverphoto = coverphoto;
         this.isactive = isactive;
         this.isadmin = isadmin;
         this.access = access;
@@ -270,14 +249,6 @@ public class User implements Serializable {
 
     public void setDob(Date dob) {
         this.dob = dob;
-    }
-
-    public int getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(int pincode) {
-        this.pincode = pincode;
     }
 
     public String getEmail() {

@@ -558,7 +558,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             user.setLastname(lastName);
             user.setGender(gender);
             user.setDob(dob);
-            user.setPincode(pincode);
             user.setEmail(email);
             user.setUsername(username);
             //user.setPassword(hashpassword.getHashPassword(password));
@@ -619,7 +618,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             user.setLastname(lastName);
             user.setGender(gender);
             user.setDob(dob);
-            user.setPincode(pincode);
             user.setEmail(email);
             user.setUsername(username);
             user.setPassword(password);
