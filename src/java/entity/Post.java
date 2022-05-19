@@ -62,9 +62,7 @@ public class Post implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "caption", nullable = false, length = 1000)
     private String caption;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "upload_date", nullable = false)
+    @Column(name = "upload_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date uploadDate;
     @Basic(optional = false)
@@ -91,11 +89,10 @@ public class Post implements Serializable {
         this.postid = postid;
     }
 
-    public Post(Integer postid, String post, String caption, Date uploadDate, boolean isDeleted) {
+    public Post(Integer postid, String post, String caption, boolean isDeleted) {
         this.postid = postid;
         this.post = post;
         this.caption = caption;
-        this.uploadDate = uploadDate;
         this.isDeleted = isDeleted;
     }
 

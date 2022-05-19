@@ -53,9 +53,7 @@ public class Chat implements Serializable {
     @Size(min = 1, max = 16777215)
     @Column(name = "message", nullable = false, length = 16777215)
     private String message;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "datetime", nullable = false)
+    @Column(name = "datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date datetime;
     @Basic(optional = false)
@@ -84,10 +82,9 @@ public class Chat implements Serializable {
         this.chatid = chatid;
     }
 
-    public Chat(Integer chatid, String message, Date datetime, boolean isDelevered, boolean isRead, boolean isDeleted) {
+    public Chat(Integer chatid, String message, boolean isDelevered, boolean isRead, boolean isDeleted) {
         this.chatid = chatid;
         this.message = message;
-        this.datetime = datetime;
         this.isDelevered = isDelevered;
         this.isRead = isRead;
         this.isDeleted = isDeleted;

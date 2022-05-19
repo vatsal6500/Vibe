@@ -107,9 +107,7 @@ public class Events implements Serializable {
     @NotNull
     @Column(name = "guestcount", nullable = false)
     private int guestcount;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "reg_date", nullable = false)
+    @Column(name = "reg_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date regDate;
     @Basic(optional = false)
@@ -129,7 +127,7 @@ public class Events implements Serializable {
         this.eventid = eventid;
     }
 
-    public Events(Integer eventid, String eventname, String post, Date eventstartdate, Date eventenddate, String eventinfo, String venue, String type, int fees, String mode, int guestcount, Date regDate, boolean isRemoved) {
+    public Events(Integer eventid, String eventname, String post, Date eventstartdate, Date eventenddate, String eventinfo, String venue, String type, int fees, String mode, int guestcount, boolean isRemoved) {
         this.eventid = eventid;
         this.eventname = eventname;
         this.post = post;
@@ -141,7 +139,6 @@ public class Events implements Serializable {
         this.fees = fees;
         this.mode = mode;
         this.guestcount = guestcount;
-        this.regDate = regDate;
         this.isRemoved = isRemoved;
     }
 

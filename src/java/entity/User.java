@@ -79,7 +79,7 @@ public class User implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "lastname", nullable = false, length = 1000)
     private String lastname;
-    @Size(min = 1, max = 1000)
+    @Size(max = 1000)
     @Column(name = "gender", length = 1000)
     private String gender;
     @Basic(optional = false)
@@ -121,9 +121,7 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "access", nullable = false)
     private boolean access;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "reg_date", nullable = false)
+    @Column(name = "reg_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date regDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
@@ -187,7 +185,7 @@ public class User implements Serializable {
         this.userid = userid;
     }
 
-    public User(Integer userid, String firstname, String lastname, Date dob, String email, String password, boolean isactive, boolean isadmin, boolean access, Date regDate) {
+    public User(Integer userid, String firstname, String lastname, Date dob, String email, String password, boolean isactive, boolean isadmin, boolean access) {
         this.userid = userid;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -197,7 +195,6 @@ public class User implements Serializable {
         this.isactive = isactive;
         this.isadmin = isadmin;
         this.access = access;
-        this.regDate = regDate;
     }
 
     public Integer getUserid() {

@@ -70,7 +70,7 @@ public class Country implements Serializable {
     private boolean isactive;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "countryid")
     private Collection<State> stateCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "countryid")
+    @OneToMany(mappedBy = "countryid")
     private Collection<User> userCollection;
 
     public Country() {

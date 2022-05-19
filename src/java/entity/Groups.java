@@ -66,9 +66,7 @@ public class Groups implements Serializable {
     @NotNull
     @Column(name = "memberscount", nullable = false)
     private int memberscount;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "create_date", nullable = false)
+    @Column(name = "create_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
     @Basic(optional = false)
@@ -92,12 +90,11 @@ public class Groups implements Serializable {
         this.groupid = groupid;
     }
 
-    public Groups(Integer groupid, String groupname, String description, int memberscount, Date createDate, boolean isDeleted) {
+    public Groups(Integer groupid, String groupname, String description, int memberscount, boolean isDeleted) {
         this.groupid = groupid;
         this.groupname = groupname;
         this.description = description;
         this.memberscount = memberscount;
-        this.createDate = createDate;
         this.isDeleted = isDeleted;
     }
 

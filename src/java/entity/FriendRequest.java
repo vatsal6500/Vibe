@@ -49,9 +49,7 @@ public class FriendRequest implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "status", nullable = false, length = 100)
     private String status;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "requestdate", nullable = false)
+    @Column(name = "requestdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date requestdate;
     @JoinColumn(name = "receiverid", referencedColumnName = "userid", nullable = false)
@@ -68,10 +66,9 @@ public class FriendRequest implements Serializable {
         this.frId = frId;
     }
 
-    public FriendRequest(Integer frId, String status, Date requestdate) {
+    public FriendRequest(Integer frId, String status) {
         this.frId = frId;
         this.status = status;
-        this.requestdate = requestdate;
     }
 
     public Integer getFrId() {

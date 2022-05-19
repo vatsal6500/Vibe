@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -62,7 +61,7 @@ public class City implements Serializable {
     @JoinColumn(name = "stateid", referencedColumnName = "stateid", nullable = false)
     @ManyToOne(optional = false)
     private State stateid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cityid")
+    @OneToMany(mappedBy = "cityid")
     private Collection<User> userCollection;
 
     public City() {

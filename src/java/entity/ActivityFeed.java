@@ -63,9 +63,7 @@ public class ActivityFeed implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "target_url", nullable = false, length = 1000)
     private String targetUrl;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "activity_date", nullable = false)
+    @Column(name = "activity_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date activityDate;
     @Basic(optional = false)
@@ -93,12 +91,11 @@ public class ActivityFeed implements Serializable {
         this.afId = afId;
     }
 
-    public ActivityFeed(Integer afId, String sendermessage, String receivermessage, String targetUrl, Date activityDate, boolean isRead, boolean isDeleted) {
+    public ActivityFeed(Integer afId, String sendermessage, String receivermessage, String targetUrl, boolean isRead, boolean isDeleted) {
         this.afId = afId;
         this.sendermessage = sendermessage;
         this.receivermessage = receivermessage;
         this.targetUrl = targetUrl;
-        this.activityDate = activityDate;
         this.isRead = isRead;
         this.isDeleted = isDeleted;
     }

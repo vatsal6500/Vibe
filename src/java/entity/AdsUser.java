@@ -64,9 +64,7 @@ public class AdsUser implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "link", nullable = false, length = 1000)
     private String link;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "startdate", nullable = false)
+    @Column(name = "startdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startdate;
     @Basic(optional = false)
@@ -96,12 +94,11 @@ public class AdsUser implements Serializable {
         this.auId = auId;
     }
 
-    public AdsUser(Integer auId, String adscontent, String description, String link, Date startdate, String enddate, boolean isRemoved, boolean isExpried) {
+    public AdsUser(Integer auId, String adscontent, String description, String link, String enddate, boolean isRemoved, boolean isExpried) {
         this.auId = auId;
         this.adscontent = adscontent;
         this.description = description;
         this.link = link;
-        this.startdate = startdate;
         this.enddate = enddate;
         this.isRemoved = isRemoved;
         this.isExpried = isExpried;

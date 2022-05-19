@@ -50,9 +50,7 @@ public class Comments implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "comment", nullable = false, length = 1000)
     private String comment;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "comment_date", nullable = false)
+    @Column(name = "comment_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date commentDate;
     @Basic(optional = false)
@@ -76,10 +74,9 @@ public class Comments implements Serializable {
         this.commentid = commentid;
     }
 
-    public Comments(Integer commentid, String comment, Date commentDate, boolean isRemoved) {
+    public Comments(Integer commentid, String comment, boolean isRemoved) {
         this.commentid = commentid;
         this.comment = comment;
-        this.commentDate = commentDate;
         this.isRemoved = isRemoved;
     }
 

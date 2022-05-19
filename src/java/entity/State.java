@@ -64,7 +64,7 @@ public class State implements Serializable {
     @JoinColumn(name = "countryid", referencedColumnName = "countryid", nullable = false)
     @ManyToOne(optional = false)
     private Country countryid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stateid")
+    @OneToMany(mappedBy = "stateid")
     private Collection<User> userCollection;
 
     public State() {
