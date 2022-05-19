@@ -79,10 +79,8 @@ public class User implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "lastname", nullable = false, length = 1000)
     private String lastname;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 1000)
-    @Column(name = "gender", nullable = false, length = 1000)
+    @Column(name = "gender", length = 1000)
     private String gender;
     @Basic(optional = false)
     @NotNull
@@ -189,11 +187,10 @@ public class User implements Serializable {
         this.userid = userid;
     }
 
-    public User(Integer userid, String firstname, String lastname, String gender, Date dob, String email, String password, boolean isactive, boolean isadmin, boolean access, Date regDate) {
+    public User(Integer userid, String firstname, String lastname, Date dob, String email, String password, boolean isactive, boolean isadmin, boolean access, Date regDate) {
         this.userid = userid;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.gender = gender;
         this.dob = dob;
         this.email = email;
         this.password = password;
