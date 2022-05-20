@@ -10,7 +10,6 @@ import entity.City;
 import entity.Country;
 import entity.State;
 import entity.User;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -197,12 +196,11 @@ public class GenericResource {
         return vibe.cityShowActive();
     }
     
-    
-    @Path("userregister/{userId}/{firstName}/{middleName}/{lastName}/{gender}/{dob}/{pincode}/{email}/{username}/{password}/{mobile}/{profilePhoto}/{coverPhoto}/{isActive}/{isAdmin}/{access}/{countryId}/{stateId}/{cityId}")
+    @Path("userregister/{userId}/{firstName}/{lastName}/{dob}/{email}/{password}/{isActive}/{isAdmin}/{access}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String userRegister(@PathParam("userId")int userId, @PathParam("firstName")String firstName, @PathParam("middleName")String middleName, @PathParam("lastName")String lastName, @PathParam("gender")String gender, @PathParam("dob")Date dob, @PathParam("pincode")int pincode, @PathParam("email")String email, @PathParam("username")String username, @PathParam("password")String password, @PathParam("mobile")long mobile, @PathParam("profilePhoto")String profilePhoto, @PathParam("coverPhoto")String coverPhoto, @PathParam("isActive")boolean isActive, @PathParam("isAdmin")boolean isAdmin, @PathParam("access")boolean access, @PathParam("countryId")int countryId, @PathParam("stateId")int stateId, @PathParam("cityId")int cityId) {
-        return vibe.userRegister(userId, firstName, middleName, lastName, gender, dob, pincode, email, username, password, mobile, profilePhoto, coverPhoto, isActive, isAdmin, access, countryId, stateId, cityId);
+    public String userRegister(@PathParam("userId")int userId, @PathParam("firstName")String firstName, @PathParam("lastName")String lastName, @PathParam("dob")String dob, @PathParam("email")String email, @PathParam("password")String password, @PathParam("isActive")boolean isActive , @PathParam("isAdmin")boolean isAdmin, @PathParam("access")boolean access) {
+        return vibe.userRegister(userId, firstName, lastName, dob, email, password, isActive, isAdmin, access);
     }
     
     @Path("userupdate/{userId}/{firstName}/{middleName}/{lastName}/{gender}/{dob}/{pincode}/{email}/{username}/{password}/{mobile}/{profilePhoto}/{coverPhoto}/{isActive}/{isAdmin}/{access}/{countryId}/{stateId}/{cityId}")

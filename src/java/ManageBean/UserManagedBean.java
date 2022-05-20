@@ -42,7 +42,7 @@ public class UserManagedBean {
     private String firstName, middleName, lastName, gender, email, userName, password, profilePhoto, coverPhoto;
     private String dob;
     private String isActive, isAdmin, access;
-    
+        
     private List<Country> countryList;
     private List<State> stateList;
     private List<City> cityList;
@@ -304,11 +304,11 @@ public class UserManagedBean {
     public String userInsert() {
         try {
             
-            vibeClient.userRegister(userId, firstName, middleName, lastName, gender, dob, pincode, email, userName, password, mobile, profilePhoto, coverPhoto, isActive, isAdmin, access, countryId, stateId, cityId);
+            vibeClient.userRegister(userId, firstName, lastName, dob, email, password, isActive, isAdmin, access);
             return "User Inserted";
         } catch (ClientErrorException e) {
             
-            return "Error";
+            return "Error:-    " + e.getMessage();
             
         }
     }

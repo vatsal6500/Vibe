@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     
     //Find all Emails
-    @NamedQuery(name = "User.findAllEmail", query = "SELECT u.email FROM User u"),
+    @NamedQuery(name = "User.findAllEmail", query = "SELECT u FROM User u"),
     
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByUserid", query = "SELECT u FROM User u WHERE u.userid = :userid"),

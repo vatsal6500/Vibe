@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Firstname:" for="firstname" />
+                    <h:inputText id="firstname" value="#{userManagedBean.user.firstname}" title="Firstname" required="true" requiredMessage="The Firstname field is required."/>
+                    <h:outputLabel value="Lastname:" for="lastname" />
+                    <h:inputText id="lastname" value="#{userManagedBean.user.lastname}" title="Lastname" required="true" requiredMessage="The Lastname field is required."/>
+                    <h:outputLabel value="Dob:" for="dob" />
+                    <h:inputText id="dob" value="#{userManagedBean.user.dob}" title="Dob" required="true" requiredMessage="The Dob field is required.">
+                        <f:convertDateTime pattern="yyyy/MM/dd" />
+                    </h:inputText>
+                    <h:outputLabel value="Email:" for="email" />
+                    <h:inputText id="email" value="#{userManagedBean.user.email}" title="Email" required="true" requiredMessage="The Email field is required."/>
+
+                    <h:outputLabel value="Password:" for="password" />
+                    <h:inputText id="password" value="#{userManagedBean.user.password}" title="Password" required="true" requiredMessage="The Password field is required."/>
+                    
+                    <h:commandButton value="Add" action="#{userManagedBean.userInsert()}" ></h:commandButton>
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+
+    </h:body>
+</html>
+

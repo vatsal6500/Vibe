@@ -25,10 +25,12 @@ import entity.UserContactInfo;
 import entity.UserEducation;
 import entity.UserSkills;
 import entity.UserWork;
-import java.util.Arrays;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,6 +45,13 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @PersistenceContext(unitName = "VibePU")
     EntityManager em;
+    HashUtility hashPassword;
+    
+    
+    @PostConstruct
+    public void init() {
+        hashPassword = new HashUtility();
+    }
     
     
     // Add business logic below. (Right-click in editor and choose
@@ -538,62 +547,44 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //User
 
     @Override
-    public String userRegister(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, int countryId, int stateId, int cityId) {
+    public String userRegister(int userId, String firstName, String lastName, String dob, String email, String password, boolean isActive, boolean isAdmin, boolean access) {
         
         try {
-            Country country = em.find(Country.class, countryId);
-            State state = em.find(State.class, stateId);
-            City city = em.find(City.class, cityId);
-
-            Collection<User> userCountryCollection = country.getUserCollection();
-            Collection<User> userStateCollection = state.getUserCollection();
-            Collection<User> userCityCollection = city.getUserCollection();
-
-            User user = new User();
-            //HashUtility hashpassword = new HashUtility();
-
-            user.setUserid(userId);
-            user.setFirstname(firstName);
-            user.setMiddlename(middleName);
-            user.setLastname(lastName);
-            user.setGender(gender);
-            user.setDob(dob);
-            user.setEmail(email);
-            user.setUsername(username);
-            //user.setPassword(hashpassword.getHashPassword(password));
-            user.setPassword(password);
-            user.setMobile(mobile);
-            user.setProfilephoto(profilePhoto);
-            user.setCoverphoto(coverPhoto);
-            user.setIsactive(isActive);
-            user.setIsadmin(isAdmin);
-            user.setAccess(access);
-            user.setRegDate(new Date());
-
-            user.setCountryid(country);
-            user.setStateid(state);
-            user.setCityid(city);
-
-            userCountryCollection.add(user);
-            userStateCollection.add(user);
-            userCityCollection.add(user);
-
-            country.setUserCollection(userCountryCollection);
-            state.setUserCollection(userStateCollection);
-            city.setUserCollection(userCityCollection);
-
-
-            em.persist(user);
-            em.merge(country);
-            em.merge(state);
-            em.merge(city);
-
-            return "User Inserted";
-        } catch (Exception e) {
             
-            return "error " + e.getMessage();  
+            List<User> emailList = em.createNamedQuery("User.findAllEmail")
+                    .getResultList();
+                        
+            if(!emailList.isEmpty()) {
+                
+                System.out.println(emailList);
+                
+                for(User userMail : emailList) {
+                    
+                    if(email.equals(userMail.getEmail())) {
+                        return "Email Already used";
+                    }
+                    
+                }
+            }
+            
+            if(emailList.isEmpty()) {
+                
+                //parsing string-date to Date
+                Date DOB = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
+                
+                User user = new User(userId,firstName,lastName,DOB,email,hashPassword.getHashPassword(password),isActive,isAdmin,access);
+                em.persist(user);
+                return "User Registered";
+            }
+            
+            return "Not Registered";
+            
+        } catch (ParseException e) {
+            
+            return "error:-   " + e.getMessage();
             
         }
+        
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -602,52 +593,9 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         try {
             
-            Country country = em.find(Country.class, countryId);
-            State state = em.find(State.class, stateId);
-            City city = em.find(City.class, cityId);
-            
-            Collection<User> userCountryCollection = country.getUserCollection();
-            Collection<User> userStateCollection = state.getUserCollection();
-            Collection<User> userCityCollection = city.getUserCollection();
-            
-            User user = em.find(User.class, userId);
-            
-            user.setUserid(userId);
-            user.setFirstname(firstName);
-            user.setMiddlename(middleName);
-            user.setLastname(lastName);
-            user.setGender(gender);
-            user.setDob(dob);
-            user.setEmail(email);
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setMobile(mobile);
-            user.setProfilephoto(profilePhoto);
-            user.setCoverphoto(coverPhoto);
-            user.setIsactive(isActive);
-            user.setIsadmin(isAdmin);
-            user.setAccess(access);
-            
-            user.setCountryid(country);
-            user.setStateid(state);
-            user.setCityid(city);
-            
-            userCountryCollection.add(user);
-            userStateCollection.add(user);
-            userCityCollection.add(user);
-            
-            country.setUserCollection(userCountryCollection);
-            state.setUserCollection(userStateCollection);
-            city.setUserCollection(userCityCollection);
             
             
-            em.persist(user);
-            em.merge(country);
-            em.merge(state);
-            em.merge(city);
-            
-            return "User Inserted";
-            
+            return "User Updated";
             
         } catch (Exception e) {
             
