@@ -549,6 +549,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     @Override
     public String userRegister(int userId, String firstName, String lastName, String dob, String email, String password, boolean isActive, boolean isAdmin, boolean access) {
         
+        boolean userRegister = false;
+        
         try {
             
             List<User> emailList = em.createNamedQuery("User.findAllEmail")
@@ -562,12 +564,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     
                     if(email.equals(userMail.getEmail())) {
                         return "Email Already used";
+                    } else {
+                        userRegister = true;
                     }
                     
                 }
             }
             
-            if(emailList.isEmpty()) {
+            if(userRegister) {
                 
                 //parsing string-date to Date
                 Date DOB = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
