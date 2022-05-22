@@ -11,6 +11,8 @@ import entity.City;
 import entity.Country;
 import entity.State;
 import entity.User;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -19,6 +21,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -37,11 +43,50 @@ public class UserManagedBean {
     private User user = new User();
     private final VibeClient vibeClient = new VibeClient();
     
-    private String userId, pincode, countryId,stateId,cityId;
+    private String userId;
+    private String pincode;
+    private String countryId;
+    private String stateId;
+    private String cityId;
     private String mobile;
-    private String firstName, middleName, lastName, gender, email, userName, password, profilePhoto, coverPhoto;
-    private String dob;
-    private String isActive, isAdmin, access;
+    
+    @NotNull(message = "FirstName Required")
+    @Pattern(regexp = "[a-zA-Z]{3,30}", message = "Invalid First Name")
+    private String firstName;
+    private String middleName;
+    
+    @NotNull(message = "LastName Required")
+    @Pattern(regexp = "[a-zA-Z]{3,30}", message = "Invalid Last Name")
+    private String lastName;
+    private String gender;
+    
+    @NotNull(message = "Email Required")
+    @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "Invalid Email")
+    private String email;
+    
+    
+    private String userName;
+    
+    @NotNull(message = "Password Required")
+    private String password;
+    
+    private String profilePhoto;
+    
+    
+    private String coverPhoto;
+    
+    @NotNull(message = "Date Required")
+    @Past(message = "Invalid DOB")
+    private Date dob;
+    
+    private String isActive;
+    private String isAdmin;
+    private String access;
+    
+    @AssertTrue(message = "Check Terms and Condition")
+    private boolean accept;
+    
+    private boolean register;
         
     private List<Country> countryList;
     private List<State> stateList;
@@ -58,9 +103,11 @@ public class UserManagedBean {
     @PostConstruct
     public void init() {
         isActive = "true";
-        isAdmin = "true";
+        isAdmin = "false";
         access = "true";
         userId = "0";
+        accept = false;
+        register = false;
         userList = vibe.userShowAll();
         countryList = vibe.countryShowActive();
         stateList = vibe.stateShowActive();
@@ -203,11 +250,11 @@ public class UserManagedBean {
         this.coverPhoto = coverPhoto;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
@@ -267,7 +314,30 @@ public class UserManagedBean {
         this.userList = userList;
     }
 
+    public boolean isAccept() {
+        return accept;
+    }
+
+    public void setAccept(boolean accept) {
+        this.accept = accept;
+    }
+
+    public boolean isRegister() {
+        return register;
+    }
+
+    public void setRegister(boolean register) {
+        this.register = register;
+    }
     
+    private void clearAll() {
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setDob(null);
+        setAccept(false);
+    } 
     
     //ManageBeans Methods
     
@@ -301,15 +371,35 @@ public class UserManagedBean {
         return cityArrayList;
     }
     
-    public String userInsert() {
+    public boolean userRegister() {
         try {
+//            System.out.println(firstName);
+//            System.out.println(lastName);
+//            System.out.println(email);
+//            System.out.println(password);
+//            System.out.println(isActive);
+//            System.out.println(access);
+//            System.out.println(isAdmin);
+//            System.out.println(dob);
+//            System.out.println(userId);
+//            System.out.println(accept);
+            if(accept) {
+                
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String DOB = dateFormat.format(dob);
+                //System.out.println(DOB);
+                vibeClient.userRegister(userId, firstName, lastName, DOB, email, password, isActive, isAdmin, access);
+                clearAll();
+                return register = true;
+                
+            } else {
+                return accept = false;
+            }
             
-            vibeClient.userRegister(userId, firstName, lastName, dob, email, password, isActive, isAdmin, access);
-            return "User Inserted";
         } catch (ClientErrorException e) {
             
-            return "Error:-    " + e.getMessage();
-            
+            System.out.println("Error:- " + e.getMessage());
+            return register = false;
         }
     }
     

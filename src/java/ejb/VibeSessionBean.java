@@ -561,7 +561,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                 System.out.println(emailList);
                 
                 for(User userMail : emailList) {
-                    
                     if(email.equals(userMail.getEmail())) {
                         return "Email Already used";
                     } else {
@@ -572,18 +571,17 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             }
             
             if(userRegister) {
-                
                 //parsing string-date to Date
                 Date DOB = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
-                
                 User user = new User(userId,firstName,lastName,DOB,email,hashPassword.getHashPassword(password),isActive,isAdmin,access);
                 em.persist(user);
+                System.out.println("User Registered");
                 return "User Registered";
             }
-            
+            System.out.println("Not Registered");
             return "Not Registered";
             
-        } catch (ParseException e) {
+        } catch (Exception e) {
             
             return "error:-   " + e.getMessage();
             
