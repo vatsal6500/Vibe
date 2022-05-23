@@ -562,7 +562,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                 
                 for(User userMail : emailList) {
                     if(email.equals(userMail.getEmail())) {
-                        return "Email Already used";
+                        return "false";
                     } else {
                         userRegister = true;
                     }

@@ -86,7 +86,8 @@ public class UserManagedBean {
     @AssertTrue(message = "Check Terms and Condition")
     private boolean accept;
     
-    private boolean register;
+    //checking value
+    private boolean register,notRegister,usedEmail;
         
     private List<Country> countryList;
     private List<State> stateList;
@@ -108,6 +109,8 @@ public class UserManagedBean {
         userId = "0";
         accept = false;
         register = false;
+        notRegister = false;
+        usedEmail = false;
         userList = vibe.userShowAll();
         countryList = vibe.countryShowActive();
         stateList = vibe.stateShowActive();
@@ -329,6 +332,24 @@ public class UserManagedBean {
     public void setRegister(boolean register) {
         this.register = register;
     }
+
+    public boolean isNotRegister() {
+        return notRegister;
+    }
+
+    public void setNotRegister(boolean notRegister) {
+        this.notRegister = notRegister;
+    }
+
+    public boolean isUsedEmail() {
+        return usedEmail;
+    }
+
+    public void setUsedEmail(boolean usedEmail) {
+        this.usedEmail = usedEmail;
+    }
+    
+    
     
     private void clearAll() {
         setFirstName("");
@@ -385,10 +406,15 @@ public class UserManagedBean {
 //            System.out.println(accept);
             if(accept) {
                 
+                //Parsing Date to String
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String DOB = dateFormat.format(dob);
-                //System.out.println(DOB);
-                vibeClient.userRegister(userId, firstName, lastName, DOB, email, password, isActive, isAdmin, access);
+                
+                String Register = vibeClient.userRegister(userId, firstName, lastName, DOB, email, password, isActive, isAdmin, access);
+                if(Register.equals("false")) {
+                    setEmail("");
+                    return usedEmail = true;
+                }
                 clearAll();
                 return register = true;
                 
@@ -399,7 +425,7 @@ public class UserManagedBean {
         } catch (ClientErrorException e) {
             
             System.out.println("Error:- " + e.getMessage());
-            return register = false;
+            return notRegister = true;
         }
     }
     

@@ -40,7 +40,7 @@
                 <div class="container p-0">
                     <div class="row no-gutters">
                         <div class="col-md-6 text-center pt-5">
-                            <c:if test="#{userManagedBean.register eq true}">
+                            <c:if test="#{userManagedBean.register}">
                                 <div class="alert alert-solid alert-success alert-dismissible fade show mb-3" role="alert">
                                     <span><i class="fas fa-thumbs-up"></i></span>
                                     <span> Registered!! Go to Login page to Login</span>
@@ -48,10 +48,18 @@
                                           aria-label="Close"></button>
                                 </div>
                             </c:if>
-                            <c:if test="#{userManagedBean.register eq false}">
+                            <c:if test="#{userManagedBean.notRegister}">
                                 <div class="alert alert-solid alert-danger alert-dismissible fade show mb-3" role="alert">
                                     <span><i class="fas fa-thumbs-up"></i></span>
                                     <span> Register Failed </span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                          aria-label="Close"></button>
+                                </div>
+                            </c:if>
+                            <c:if test="#{userManagedBean.usedEmail}">
+                                <div class="alert alert-solid alert-danger alert-dismissible fade show mb-3" role="alert">
+                                    <span><i class="fas fa-thumbs-up"></i></span>
+                                    <span> Email Already Used!! </span>
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                                           aria-label="Close"></button>
                                 </div>
