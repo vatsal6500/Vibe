@@ -54,8 +54,8 @@ public interface VibeSessionBeanLocal {
     public List<User> adminShowAll(); //admin
     
     //User_Contact_Info
-    public String user_contact_info_Insert(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio);
-    public String user_contact_info_Update(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio);
+    public String user_contact_info_Insert(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, int userId);
+    public String user_contact_info_Update(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, int userId);
     public String user_contact_info_Delete(int uciId);
     public UserContactInfo user_contact_info_FindById(int uciId);
     public List<UserContactInfo> user_contact_info_ShowAll(); //admin
