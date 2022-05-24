@@ -832,28 +832,123 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //User_Education
 
     @Override
-    public String user_education_Insert(int ueId, String instituteName, Date joiningDate, Date endingDate, String instituteAddress, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String user_education_Insert(int ueId, String instituteName, String joiningDate, String endingDate, String instituteAddress, int userId) {
+        
+        try {
+            
+            Date jdate = new SimpleDateFormat("yyyy-MM-dd").parse(joiningDate);
+            Date edate = new SimpleDateFormat("yyyy-MM-dd").parse(endingDate);
+            
+            User u = em.find(User.class, userId);
+            Collection<UserEducation> uec = u.getUserEducationCollection();
+            
+            UserEducation ue = new UserEducation();
+            
+            ue.setUeId(ueId);
+            ue.setUserid(u);
+            ue.setInstitutename(instituteName);
+            ue.setJoiningdate(jdate);
+            ue.setEndingdate(edate);
+            ue.setInstituteaddress(instituteAddress);
+            
+            uec.add(ue);
+            u.setUserEducationCollection(uec);
+           
+            em.persist(ue);
+            em.merge(u);
+            
+            return "User Education Info Inserted";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String user_education_Update(int ueId, String instituteName, Date joiningDate, Date endingDate, String instituteAddress, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String user_education_Update(int ueId, String instituteName, String joiningDate, String endingDate, String instituteAddress, int userId) {
+        
+        try {
+            
+            Date jdate = new SimpleDateFormat("yyyy-MM-dd").parse(joiningDate);
+            Date edate = new SimpleDateFormat("yyyy-MM-dd").parse(endingDate);
+            
+            User u = em.find(User.class, userId);
+            Collection<UserEducation> uec = u.getUserEducationCollection();
+            
+            UserEducation ue = em.find(UserEducation.class, ueId);
+            
+            ue.setUeId(ueId);
+            ue.setUserid(u);
+            ue.setInstitutename(instituteName);
+            ue.setJoiningdate(jdate);
+            ue.setEndingdate(edate);
+            ue.setInstituteaddress(instituteAddress);
+            
+            uec.add(ue);
+            u.setUserEducationCollection(uec);
+           
+            em.persist(ue);
+            em.merge(u);
+            
+            return "User Education Info Updated";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String user_education_Delete(int ueId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         try {
+            
+            UserEducation ue = em.find(UserEducation.class, ueId);
+            em.remove(ue);
+            return "User Education Info Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public UserEducation user_education_FindById(int ueId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            UserEducation ue = em.find(UserEducation.class,ueId);
+            
+            return ue;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<UserEducation> user_education_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         try {
+            
+            List<UserEducation> user = em.createNamedQuery("UserEducation.findAll")
+                    .getResultList();
+            
+            return user;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

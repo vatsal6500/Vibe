@@ -11,6 +11,7 @@ import entity.Country;
 import entity.State;
 import entity.User;
 import entity.UserContactInfo;
+import entity.UserEducation;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -284,6 +285,44 @@ public class GenericResource {
         return vibe.user_contact_info_ShowAll();
     }
     
+    
+    //User Education
+    
+     @Path("user_education_insert/{ueId}/{instituteName}/{joiningDate}/{endingDate}/{instituteAddress}/{userid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_education_Insert(@PathParam("ueId")int ueId, @PathParam("instituteName")String instituteName, @PathParam("joiningDate")String joiningDate, @PathParam("endingDate")String endingDate, @PathParam("instituteAddress")String instituteAddress, @PathParam("userid")int userid) {
+        return vibe.user_education_Insert(ueId, instituteName, joiningDate, endingDate, instituteAddress, userid);
+    }
+    
+    @Path("user_education_update/{ueId}/{instituteName}/{joiningDate}/{endingDate}/{instituteAddress}/{userid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_education_Update(@PathParam("ueId")int ueId, @PathParam("instituteName")String instituteName, @PathParam("joiningDate")String joiningDate, @PathParam("endingDate")String endingDate, @PathParam("instituteAddress")String instituteAddress, @PathParam("userid")int userid) {
+        return vibe.user_education_Update(ueId, instituteName, joiningDate, endingDate, instituteAddress, userid);
+    }
+    
+    @Path("user_education_delete/{ueId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_education_Delete(@PathParam("ueId")int ueId) {
+        return vibe.user_education_Delete(ueId);
+    }
+    
+    @Path("user_education_findbyid/{ueId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public UserEducation user_education_FindById(@PathParam("ueId")int ueId) {
+        return vibe.user_education_FindById(ueId);
+    }
+    
+    
+    @Path("user_education_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserEducation> user_education_ShowAll() {
+        return vibe.user_education_ShowAll();
+    }
     
     
 }

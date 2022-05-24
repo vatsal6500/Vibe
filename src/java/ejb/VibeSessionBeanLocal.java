@@ -61,8 +61,8 @@ public interface VibeSessionBeanLocal {
     public List<UserContactInfo> user_contact_info_ShowAll(); //admin
     
     //User_Education
-    public String user_education_Insert(int ueId, String instituteName, Date joiningDate, Date endingDate, String instituteAddress, int userId);
-    public String user_education_Update(int ueId, String instituteName, Date joiningDate, Date endingDate, String instituteAddress, int userId);
+    public String user_education_Insert(int ueId, String instituteName, String joiningDate, String endingDate, String instituteAddress, int userId);
+    public String user_education_Update(int ueId, String instituteName, String joiningDate, String endingDate, String instituteAddress, int userId);
     public String user_education_Delete(int ueId);
     public UserEducation user_education_FindById(int ueId);
     public List<UserEducation> user_education_ShowAll(); //admin
