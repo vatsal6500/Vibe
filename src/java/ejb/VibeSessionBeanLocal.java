@@ -17,10 +17,6 @@ import javax.ejb.Local;
 @Local
 public interface VibeSessionBeanLocal {
     
-    //Login
-    public String login(String email, String password);
-    
-    
     //Country
     public String countryInsert(int countryId, String sortName, String countryName, int phoneCode, boolean isActive);
     public String countryUpdate(int countryId, String sortName, String countryName, int phoneCode, boolean isActive);

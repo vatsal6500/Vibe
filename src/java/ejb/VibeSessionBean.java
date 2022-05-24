@@ -58,23 +58,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     // "Insert Code > Add Business Method")
     
     
-    @Override
-    public String login(String email, String password) {
-        
-        try {
-            
-            return "login";
-            
-        } catch (Exception e) {
-            
-            System.out.println(e.getMessage());
-            return "error";
-            
-        }
-        
-    }
-    
-    
+    //DONE
     //Country
     
     @Override
