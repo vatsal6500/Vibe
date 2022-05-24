@@ -957,27 +957,114 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String user_skills_Insert(int usId, String skillName, String skillInfo, String skillPortfolio, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User u = em.find(User.class, userId);
+            Collection<UserSkills> usc = u.getUserSkillsCollection();
+            
+            UserSkills us = new UserSkills();
+            
+            us.setUsId(usId);
+            us.setUserid(u);
+            us.setSkillname(skillName);
+            us.setSkillinfo(skillInfo);
+            us.setSkillportfolio(skillPortfolio);
+            
+            usc.add(us);
+            u.setUserSkillsCollection(usc);
+           
+            em.persist(us);
+            em.merge(u);
+            
+            return "User Skill Inserted";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String user_skills_Update(int usId, String skillName, String skillInfo, String skillPortfolio, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User u = em.find(User.class, userId);
+            Collection<UserSkills> usc = u.getUserSkillsCollection();
+            
+            UserSkills us = em.find(UserSkills.class, usId);
+            
+            us.setUsId(usId);
+            us.setUserid(u);
+            us.setSkillname(skillName);
+            us.setSkillinfo(skillInfo);
+            us.setSkillportfolio(skillPortfolio);
+            
+            usc.add(us);
+            u.setUserSkillsCollection(usc);
+           
+            em.persist(us);
+            em.merge(u);
+            
+            return "User Skill Updated";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String user_skills_Delete(int usId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            UserSkills us = em.find(UserSkills.class, usId);
+            em.remove(us);
+            return "User Skill Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public UserSkills user_skills_FindById(int usId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            UserSkills us = em.find(UserSkills.class,usId);
+            
+            return us;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<UserSkills> user_skills_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<UserSkills> user = em.createNamedQuery("UserSkills.findAll")
+                    .getResultList();
+            
+            return user;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

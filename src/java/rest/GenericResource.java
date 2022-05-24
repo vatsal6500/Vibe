@@ -12,6 +12,7 @@ import entity.State;
 import entity.User;
 import entity.UserContactInfo;
 import entity.UserEducation;
+import entity.UserSkills;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -288,7 +289,7 @@ public class GenericResource {
     
     //User Education
     
-     @Path("user_education_insert/{ueId}/{instituteName}/{joiningDate}/{endingDate}/{instituteAddress}/{userid}")
+    @Path("user_education_insert/{ueId}/{instituteName}/{joiningDate}/{endingDate}/{instituteAddress}/{userid}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String user_education_Insert(@PathParam("ueId")int ueId, @PathParam("instituteName")String instituteName, @PathParam("joiningDate")String joiningDate, @PathParam("endingDate")String endingDate, @PathParam("instituteAddress")String instituteAddress, @PathParam("userid")int userid) {
@@ -324,5 +325,43 @@ public class GenericResource {
         return vibe.user_education_ShowAll();
     }
     
+    
+    //User Skills
+    
+    @Path("user_skills_insert/{usId}/{skillname}/{skillinfo}/{skillportfolio}/{userid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_skills_Insert(@PathParam("usId")int usId, @PathParam("skillname")String skillname, @PathParam("skillinfo")String skillinfo, @PathParam("skillportfolio")String skillportfolio, @PathParam("userid")int userid) {
+        return vibe.user_skills_Insert(usId, skillname, skillinfo, skillportfolio, userid);
+    }
+    
+    @Path("user_skills_update/{usId}/{skillname}/{skillinfo}/{skillportfolio}/{userid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_skills_Update(@PathParam("usId")int usId, @PathParam("skillname")String skillname, @PathParam("skillinfo")String skillinfo, @PathParam("skillportfolio")String skillportfolio, @PathParam("userid")int userid) {
+        return vibe.user_skills_Update(usId, skillname, skillinfo, skillportfolio, userid);
+    }
+    
+    @Path("user_skills_delete/{usId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_skills_Delete(@PathParam("usId")int usId) {
+        return vibe.user_skills_Delete(usId);
+    }
+    
+    @Path("user_skills_findbyid/{usId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public UserSkills user_skills_FindById(@PathParam("usId")int usId) {
+        return vibe.user_skills_FindById(usId);
+    }
+    
+    
+    @Path("user_skills_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserSkills> user_skills_ShowAll() {
+        return vibe.user_skills_ShowAll();
+    }
     
 }

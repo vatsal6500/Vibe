@@ -38,6 +38,10 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public String user_skills_Delete(String usId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("user_skills_delete/{0}", new Object[]{usId})).request().post(null, String.class);
+    }
+
     public String stateDelete(String stateId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("statedelete/{0}", new Object[]{stateId})).request().post(null, String.class);
     }
@@ -51,6 +55,12 @@ public class VibeClient {
     public <T> T cityShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("cityshowall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T user_skills_FindById(Class<T> responseType, String usId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("user_skills_findbyid/{0}", new Object[]{usId}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -90,6 +100,10 @@ public class VibeClient {
 
     public String userRegister(String userId, String firstName, String lastName, String dob, String email, String password, String isActive, String isAdmin, String access) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("userregister/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}", new Object[]{userId, firstName, lastName, dob, email, password, isActive, isAdmin, access})).request().post(null, String.class);
+    }
+
+    public String user_skills_Update(String usId, String skillname, String skillinfo, String skillportfolio, String userid) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("user_skills_update/{0}/{1}/{2}/{3}/{4}", new Object[]{usId, skillname, skillinfo, skillportfolio, userid})).request().post(null, String.class);
     }
 
     public String countryInsert(String countryId, String sortName, String countryName, String phoneCode, String isActive) throws ClientErrorException {
@@ -202,6 +216,10 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public String user_skills_Insert(String usId, String skillname, String skillinfo, String skillportfolio, String userid) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("user_skills_insert/{0}/{1}/{2}/{3}/{4}", new Object[]{usId, skillname, skillinfo, skillportfolio, userid})).request().post(null, String.class);
+    }
+
     public String countryUpdate(String countryId, String sortName, String countryName, String phoneCode, String isActive) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("countryupdate/{0}/{1}/{2}/{3}/{4}", new Object[]{countryId, sortName, countryName, phoneCode, isActive})).request().post(null, String.class);
     }
@@ -221,6 +239,12 @@ public class VibeClient {
     public <T> T user_education_FindById(Class<T> responseType, String ueId) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("user_education_findbyid/{0}", new Object[]{ueId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T user_skills_ShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("user_skills_showall");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
