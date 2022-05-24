@@ -5,6 +5,9 @@
  */
 package ejb;
 
+
+//master
+
 import entity.ActivityFeed;
 import entity.Ads;
 import entity.AdsUser;
