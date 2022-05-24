@@ -75,8 +75,8 @@ public interface VibeSessionBeanLocal {
     public List<UserSkills> user_skills_ShowAll(); //admin
     
     //User_Work
-    public String user_work_Insert(int uwId, String companyName, Date joiningDate, Date endingDate, String companyAddress, int userId);
-    public String user_work_Update(int uwId, String companyName, Date joiningDate, Date endingDate, String companyAddress, int userId);
+    public String user_work_Insert(int uwId, String companyName, String joiningDate, String endingDate, String companyAddress, int userId);
+    public String user_work_Update(int uwId, String companyName, String joiningDate, String endingDate, String companyAddress, int userId);
     public String user_work_Delete(int uwId);
     public UserWork user_work_FindById(int uwId);
     public List<UserWork> user_work_ShowALl();  //admin

@@ -13,6 +13,7 @@ import entity.User;
 import entity.UserContactInfo;
 import entity.UserEducation;
 import entity.UserSkills;
+import entity.UserWork;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -362,6 +363,45 @@ public class GenericResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<UserSkills> user_skills_ShowAll() {
         return vibe.user_skills_ShowAll();
+    }
+    
+    
+    //User Work
+    
+    @Path("user_work_insert/{uwId}/{companyname}/{joiningDate}/{endingDate}/{companyaddress}/{userid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_work_Insert(@PathParam("uwId")int uwId, @PathParam("companyname")String companyname, @PathParam("joiningDate")String joiningDate, @PathParam("endingDate")String endingDate, @PathParam("companyaddress")String companyaddress, @PathParam("userid")int userid) {
+        return vibe.user_work_Insert(uwId, companyname, joiningDate, endingDate, companyaddress, userid);
+    }
+    
+    @Path("user_work_update/{uwId}/{companyname}/{joiningDate}/{endingDate}/{companyaddress}/{userid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_work_Update(@PathParam("uwId")int uwId, @PathParam("companyname")String companyname, @PathParam("joiningDate")String joiningDate, @PathParam("endingDate")String endingDate, @PathParam("companyaddress")String companyaddress, @PathParam("userid")int userid) {
+        return vibe.user_work_Update(uwId, companyname, joiningDate, endingDate, companyaddress, userid);
+    }
+    
+    @Path("user_work_delete/{uwId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_work_Delete(@PathParam("uwId")int uwId) {
+        return vibe.user_work_Delete(uwId);
+    }
+    
+    @Path("user_work_findbyid/{uwId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public UserWork user_work_FindById(@PathParam("uwId")int uwId) {
+        return vibe.user_work_FindById(uwId);
+    }
+    
+    
+    @Path("user_work_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserWork> user_work_ShowALl() {
+        return vibe.user_work_ShowALl();
     }
     
 }

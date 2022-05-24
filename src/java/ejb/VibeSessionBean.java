@@ -1072,28 +1072,123 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //User_Work
 
     @Override
-    public String user_work_Insert(int uwId, String companyName, Date joiningDate, Date endingDate, String companyAddress, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String user_work_Insert(int uwId, String companyName, String joiningDate, String endingDate, String companyAddress, int userId) {
+        
+        try {
+            
+            Date jdate = new SimpleDateFormat("yyyy-MM-dd").parse(joiningDate);
+            Date edate = new SimpleDateFormat("yyyy-MM-dd").parse(endingDate);
+            
+            User u = em.find(User.class, userId);
+            Collection<UserWork> uwc = u.getUserWorkCollection();
+            
+            UserWork uw = new UserWork();
+            
+            uw.setUwId(uwId);
+            uw.setUserid(u);
+            uw.setCompanyname(companyName);
+            uw.setJoiningdate(jdate);
+            uw.setEndingdate(edate);
+            uw.setCompanyaddress(companyAddress);
+            
+            uwc.add(uw);
+            u.setUserWorkCollection(uwc);
+           
+            em.persist(uw);
+            em.merge(u);
+            
+            return "User Work Inserted";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String user_work_Update(int uwId, String companyName, Date joiningDate, Date endingDate, String companyAddress, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String user_work_Update(int uwId, String companyName, String joiningDate, String endingDate, String companyAddress, int userId) {
+        
+        try {
+            
+            Date jdate = new SimpleDateFormat("yyyy-MM-dd").parse(joiningDate);
+            Date edate = new SimpleDateFormat("yyyy-MM-dd").parse(endingDate);
+            
+            User u = em.find(User.class, userId);
+            Collection<UserWork> uwc = u.getUserWorkCollection();
+            
+            UserWork uw = em.find(UserWork.class, uwId);
+            
+            uw.setUwId(uwId);
+            uw.setUserid(u);
+            uw.setCompanyname(companyName);
+            uw.setJoiningdate(jdate);
+            uw.setEndingdate(edate);
+            uw.setCompanyaddress(companyAddress);
+            
+            uwc.add(uw);
+            u.setUserWorkCollection(uwc);
+           
+            em.persist(uw);
+            em.merge(u);
+            
+            return "User Work Updated";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String user_work_Delete(int uwId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            UserWork uw = em.find(UserWork.class, uwId);
+            em.remove(uw);
+            return "User Work Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public UserWork user_work_FindById(int uwId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         try {
+            
+            UserWork uw = em.find(UserWork.class,uwId);
+            
+            return uw;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<UserWork> user_work_ShowALl() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<UserWork> user = em.createNamedQuery("UserWork.findAll")
+                    .getResultList();
+            
+            return user;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
