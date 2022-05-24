@@ -360,6 +360,12 @@ public class UserManagedBean {
         setAccept(false);
     } 
     
+    private void setFalse() {
+        setRegister(false);
+        setNotRegister(false);
+        setUsedEmail(false);
+    }
+    
     //ManageBeans Methods
     
     public List<Country> countryShowActive() {
@@ -413,18 +419,22 @@ public class UserManagedBean {
                 String Register = vibeClient.userRegister(userId, firstName, lastName, DOB, email, password, isActive, isAdmin, access);
                 if(Register.equals("false")) {
                     setEmail("");
+                    setFalse();
                     return usedEmail = true;
                 }
                 clearAll();
+                setFalse();
                 return register = true;
                 
             } else {
+                setFalse();
                 return accept = false;
             }
             
         } catch (ClientErrorException e) {
             
             System.out.println("Error:- " + e.getMessage());
+            setFalse();
             return notRegister = true;
         }
     }
