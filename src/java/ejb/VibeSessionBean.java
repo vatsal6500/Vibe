@@ -709,27 +709,122 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String user_contact_info_Insert(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User u = em.find(User.class, userId);
+            Collection<UserContactInfo> ucic = u.getUserContactInfoCollection();
+            
+            UserContactInfo uci = new UserContactInfo();
+            
+            uci.setUciId(uciId);
+            uci.setUserid(u);
+            uci.setWebsite(website);
+            uci.setLanguage(language);
+            uci.setIntrestedIn(intrested_in);
+            uci.setFbLink(fb_link);
+            uci.setInstaLink(insta_link);
+            uci.setBio(bio);
+            
+            ucic.add(uci);
+            u.setUserContactInfoCollection(ucic);
+           
+            
+            em.persist(uci);
+            em.merge(u);
+            
+            return "User Contact Info Inserted";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String user_contact_info_Update(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User u = em.find(User.class, userId);
+            Collection<UserContactInfo> ucic = u.getUserContactInfoCollection();
+            
+            UserContactInfo uci = em.find(UserContactInfo.class, uciId);
+            
+            uci.setUciId(uciId);
+            uci.setUserid(u);
+            uci.setWebsite(website);
+            uci.setLanguage(language);
+            uci.setIntrestedIn(intrested_in);
+            uci.setFbLink(fb_link);
+            uci.setInstaLink(insta_link);
+            uci.setBio(bio);
+            
+            ucic.add(uci);
+            u.setUserContactInfoCollection(ucic);
+           
+            
+            em.persist(uci);
+            em.merge(u);
+            
+            return "User Contact Info Updated";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String user_contact_info_Delete(int uciId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            UserContactInfo uci = em.find(UserContactInfo.class, uciId);
+            em.remove(uci);
+            return "User Contact Info Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public UserContactInfo user_contact_info_FindById(int uciId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            UserContactInfo uci = em.find(UserContactInfo.class,uciId);
+            
+            return uci;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<UserContactInfo> user_contact_info_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<UserContactInfo> user = em.createNamedQuery("UserContactInfo.findAll")
+                    .getResultList();
+            
+            return user;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

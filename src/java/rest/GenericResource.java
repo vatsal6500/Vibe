@@ -10,6 +10,7 @@ import entity.City;
 import entity.Country;
 import entity.State;
 import entity.User;
+import entity.UserContactInfo;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -244,5 +245,45 @@ public class GenericResource {
     public List<User> adminShowAll() {
         return vibe.adminShowAll();
     }
+    
+    //User Contact Info
+    
+    @Path("user_contact_info_insert/{uci_id}/{website}/{language}/{intrested_in}/{fb_link}/{insta_link}/{bio}/{userid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_contact_info_Insert(@PathParam("uci_id")int uci_id, @PathParam("website")String website, @PathParam("language")String language, @PathParam("intrested_in")String intrested_in, @PathParam("fb_link")String fb_link, @PathParam("insta_link")String insta_link, @PathParam("bio")String bio, @PathParam("userid")int userid) {
+        return vibe.user_contact_info_Insert(uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid);
+    }
+    
+    @Path("user_contact_info_update/{uci_id}/{website}/{language}/{intrested_in}/{fb_link}/{insta_link}/{bio}/{userid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_contact_info_Update(@PathParam("uci_id")int uci_id, @PathParam("website")String website, @PathParam("language")String language, @PathParam("intrested_in")String intrested_in, @PathParam("fb_link")String fb_link, @PathParam("insta_link")String insta_link, @PathParam("bio")String bio, @PathParam("userid")int userid) {
+        return vibe.user_contact_info_Update(uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid);
+    }
+    
+    @Path("user_contact_info_delete/{uciid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String user_contact_info_Delete(@PathParam("uciid")int uciid) {
+        return vibe.user_contact_info_Delete(uciid);
+    }
+    
+    @Path("user_contact_info_findbyid/{uciid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public UserContactInfo user_contact_info_FindById(@PathParam("uciid")int uciid) {
+        return vibe.user_contact_info_FindById(uciid);
+    }
+    
+    
+    @Path("user_contact_info_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserContactInfo> user_contact_info_ShowAll() {
+        return vibe.user_contact_info_ShowAll();
+    }
+    
+    
     
 }

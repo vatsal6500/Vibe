@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author LENOVO
+ * @author pooja
  */
 public class VibeClient {
 
@@ -70,6 +70,10 @@ public class VibeClient {
 
     public String stateInsert(String stateId, String stateName, String isActive, String countryId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("stateinsert/{0}/{1}/{2}/{3}", new Object[]{stateId, stateName, isActive, countryId})).request().post(null, String.class);
+    }
+
+    public String user_contact_info_Insert(String uci_id, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, String userid) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("user_contact_info_insert/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}", new Object[]{uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid})).request().post(null, String.class);
     }
 
     public <T> T stateShowAll(Class<T> responseType) throws ClientErrorException {
@@ -138,6 +142,12 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T user_contact_info_FindById(Class<T> responseType, String uciid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("user_contact_info_findbyid/{0}", new Object[]{uciid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String cityInsert(String cityId, String cityName, String isActive, String stateId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("cityinsert/{0}/{1}/{2}/{3}", new Object[]{cityId, cityName, isActive, stateId})).request().post(null, String.class);
     }
@@ -146,6 +156,20 @@ public class VibeClient {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("userfindbyname/{0}", new Object[]{userName}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String user_contact_info_Delete(String uciid) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("user_contact_info_delete/{0}", new Object[]{uciid})).request().post(null, String.class);
+    }
+
+    public <T> T user_contact_info_ShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("user_contact_info_showall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String user_contact_info_Update(String uci_id, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, String userid) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("user_contact_info_update/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}", new Object[]{uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid})).request().post(null, String.class);
     }
 
     public <T> T cityFindByName(Class<T> responseType, String cityName) throws ClientErrorException {
