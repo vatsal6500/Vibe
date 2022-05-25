@@ -1197,27 +1197,118 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String groupInsert(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+           
+            
+            User u = em.find(User.class, adminId);
+            Collection<Groups> gc = u.getGroupsCollection();
+            
+            Groups g = new Groups();
+            
+            g.setGroupid(groupId);
+            g.setAdminid(u);
+            g.setGroupname(groupName);
+            g.setDescription(description);
+            g.setMemberscount(membersCount);
+            g.setIsDeleted(isDeleted);
+            
+            gc.add(g);
+            u.setGroupsCollection(gc);
+           
+            em.persist(g);
+            em.merge(u);
+            
+            return "Group Created";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String groupUpdate(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+           
+            
+            User u = em.find(User.class, adminId);
+            Collection<Groups> gc = u.getGroupsCollection();
+            
+            Groups g = em.find(Groups.class, groupId);
+            
+            g.setGroupid(groupId);
+            g.setAdminid(u);
+            g.setGroupname(groupName);
+            g.setDescription(description);
+            g.setMemberscount(membersCount);
+            g.setIsDeleted(isDeleted);
+            
+            gc.add(g);
+            u.setGroupsCollection(gc);
+           
+            em.persist(g);
+            em.merge(u);
+            
+            return "Group Updated";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String groupDelete(int groupId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Groups g = em.find(Groups.class, groupId);
+            em.remove(g);
+            return "Group Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Groups groupFindById(int groupId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Groups g = em.find(Groups.class,groupId);
+            
+            return g;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Groups> groupShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<Groups> group = em.createNamedQuery("Groups.findAll")
+                    .getResultList();
+            
+            return group;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

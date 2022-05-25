@@ -8,6 +8,7 @@ package rest;
 import ejb.VibeSessionBeanLocal;
 import entity.City;
 import entity.Country;
+import entity.Groups;
 import entity.State;
 import entity.User;
 import entity.UserContactInfo;
@@ -403,5 +404,44 @@ public class GenericResource {
     public List<UserWork> user_work_ShowALl() {
         return vibe.user_work_ShowALl();
     }
+    
+    //Groups
+    
+    @Path("groupinsert/{groupid}/{groupName}/{description}/{membersCount}/{isDeleted}/{adminId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String groupInsert(@PathParam("groupid")int groupid, @PathParam("groupName")String groupName, @PathParam("description")String description, @PathParam("membersCount")int membersCount, @PathParam("isDeleted")Boolean isDeleted, @PathParam("adminId")int adminId) {
+        return vibe.groupInsert(groupid, groupName, description, membersCount, isDeleted, adminId);
+    }
+    
+    @Path("groupupdate/{groupid}/{groupName}/{description}/{membersCount}/{isDeleted}/{adminId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String groupUpdate(@PathParam("groupid")int groupid, @PathParam("groupName")String groupName, @PathParam("description")String description, @PathParam("membersCount")int membersCount, @PathParam("isDeleted")Boolean isDeleted, @PathParam("adminId")int adminId) {
+        return vibe.groupUpdate(groupid, groupName, description, membersCount, isDeleted, adminId);
+    }
+    
+    @Path("groupdelete/{groupid}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String groupDelete(@PathParam("groupid")int groupid) {
+        return vibe.groupDelete(groupid);
+    }
+    
+    @Path("groupfindbyid/{groupid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Groups groupFindById(@PathParam("groupid")int groupid) {
+        return vibe.groupFindById(groupid);
+    }
+    
+    
+    @Path("groupshowall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Groups> groupShowAll() {
+        return vibe.groupShowAll();
+    }
+    
     
 }
