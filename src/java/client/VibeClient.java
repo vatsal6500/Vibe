@@ -168,6 +168,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("countryupdate/{0}/{1}/{2}/{3}/{4}", new Object[]{countryId, sortName, countryName, phoneCode, isActive})).request().post(null, String.class);
     }
 
+    public <T> T group_member_ShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("group_member_showall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T stateFindByName(Class<T> responseType, String stateName) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("statefindbyname/{0}", new Object[]{stateName}));
@@ -210,6 +216,14 @@ public class VibeClient {
 
     public String countryDelete(String countryId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("countrydelete/{0}", new Object[]{countryId})).request().post(null, String.class);
+    }
+
+    public String group_member_Delete(String gmId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("group_member_delete/{0}", new Object[]{gmId})).request().post(null, String.class);
+    }
+
+    public String group_member_Insert(String gmId, String isMember, String becameMember, String groupId, String memberId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("group_member_insert/{0}/{1}/{2}/{3}/{4}", new Object[]{gmId, isMember, becameMember, groupId, memberId})).request().post(null, String.class);
     }
 
     public <T> T user_education_ShowAll(Class<T> responseType) throws ClientErrorException {
@@ -258,10 +272,20 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T group_member_FindById(Class<T> responseType, String gmId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("group_member_findbyid/{0}", new Object[]{gmId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T user_contact_info_ShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("user_contact_info_showall");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String group_member_Update(String gmId, String isMember, String becameMember, String groupId, String memberId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("group_member_update/{0}/{1}/{2}/{3}/{4}", new Object[]{gmId, isMember, becameMember, groupId, memberId})).request().post(null, String.class);
     }
 
     public String user_contact_info_Update(String uci_id, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, String userid) throws ClientErrorException {

@@ -8,6 +8,7 @@ package rest;
 import ejb.VibeSessionBeanLocal;
 import entity.City;
 import entity.Country;
+import entity.GroupMembers;
 import entity.Groups;
 import entity.State;
 import entity.User;
@@ -410,14 +411,14 @@ public class GenericResource {
     @Path("groupinsert/{groupid}/{groupName}/{description}/{membersCount}/{isDeleted}/{adminId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String groupInsert(@PathParam("groupid")int groupid, @PathParam("groupName")String groupName, @PathParam("description")String description, @PathParam("membersCount")int membersCount, @PathParam("isDeleted")Boolean isDeleted, @PathParam("adminId")int adminId) {
+    public String groupInsert(@PathParam("groupid")int groupid, @PathParam("groupName")String groupName, @PathParam("description")String description, @PathParam("membersCount")int membersCount, @PathParam("isDeleted")boolean isDeleted, @PathParam("adminId")int adminId) {
         return vibe.groupInsert(groupid, groupName, description, membersCount, isDeleted, adminId);
     }
     
     @Path("groupupdate/{groupid}/{groupName}/{description}/{membersCount}/{isDeleted}/{adminId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String groupUpdate(@PathParam("groupid")int groupid, @PathParam("groupName")String groupName, @PathParam("description")String description, @PathParam("membersCount")int membersCount, @PathParam("isDeleted")Boolean isDeleted, @PathParam("adminId")int adminId) {
+    public String groupUpdate(@PathParam("groupid")int groupid, @PathParam("groupName")String groupName, @PathParam("description")String description, @PathParam("membersCount")int membersCount, @PathParam("isDeleted")boolean isDeleted, @PathParam("adminId")int adminId) {
         return vibe.groupUpdate(groupid, groupName, description, membersCount, isDeleted, adminId);
     }
     
@@ -443,5 +444,43 @@ public class GenericResource {
         return vibe.groupShowAll();
     }
     
+    //Group Members
+    
+    
+    @Path("group_member_insert/{gmId}/{isMember}/{becameMember}/{groupId}/{memberId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String group_member_Insert(@PathParam("gmId")int gmId, @PathParam("isMember")boolean isMember, @PathParam("becameMember")String becameMember, @PathParam("groupId")int groupId, @PathParam("memberId")int memberId) {
+        return vibe.group_member_Insert(gmId, isMember, becameMember, groupId, memberId);
+    }
+    
+    @Path("group_member_update/{gmId}/{isMember}/{becameMember}/{groupId}/{memberId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String group_member_Update(@PathParam("gmId")int gmId, @PathParam("isMember")boolean isMember, @PathParam("becameMember")String becameMember, @PathParam("groupId")int groupId, @PathParam("memberId")int memberId) {
+        return vibe.group_member_Update(gmId, isMember, becameMember, groupId, memberId);
+    }
+    
+    @Path("group_member_delete/{gmId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String group_member_Delete(@PathParam("gmId")int gmId) {
+        return vibe.group_member_Delete(gmId);
+    }
+    
+    @Path("group_member_findbyid/{gmId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public GroupMembers group_member_FindById(@PathParam("gmId")int gmId) {
+        return vibe.group_member_FindById(gmId);
+    }
+    
+    
+    @Path("group_member_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<GroupMembers> group_member_ShowAll() {
+        return vibe.group_member_ShowAll();
+    }
     
 }

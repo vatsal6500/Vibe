@@ -90,8 +90,8 @@ public interface VibeSessionBeanLocal {
     public List<Groups> groupShowAll(); //admin 
     
     //Group Members
-    public String group_member_Insert(int gmId, boolean isMember, Date becameMember, int groupId, int memberId);
-    public String group_member_Update(int gmId, boolean isMember, Date becameMember, int groupId, int memberId);
+    public String group_member_Insert(int gmId, boolean isMember, String becameMember, int groupId, int memberId);
+    public String group_member_Update(int gmId, boolean isMember, String becameMember, int groupId, int memberId);
     public String group_member_Delete(int gmId);
     public GroupMembers group_member_FindById(int gmId);
     public List<GroupMembers> group_member_ShowAll(); //admin

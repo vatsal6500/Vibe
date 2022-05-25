@@ -1315,28 +1315,133 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //Group_Members
 
     @Override
-    public String group_member_Insert(int gmId, boolean isMember, Date becameMember, int groupId, int memberId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String group_member_Insert(int gmId, boolean isMember, String becameMember, int groupId, int memberId) {
+        
+        try {
+           
+            Date mdate = new SimpleDateFormat("yyyy-MM-dd").parse(becameMember);
+            
+            User u = em.find(User.class, memberId);
+            Groups g  = em.find(Groups.class, groupId);
+            
+            Collection<GroupMembers> gmuc = u.getGroupMembersCollection();
+            Collection<GroupMembers> gmgc = g.getGroupMembersCollection();
+            
+            GroupMembers gm = new GroupMembers();
+            
+            gm.setGmId(gmId);
+            gm.setIsMember(isMember);
+            gm.setBecamemember(mdate);
+            gm.setGroupid(g);
+            gm.setMemberid(u);
+            
+            
+            gmuc.add(gm);
+            gmgc.add(gm);
+            u.setGroupMembersCollection(gmuc);
+            g.setGroupMembersCollection(gmgc);
+           
+            em.persist(g);
+            em.merge(u);
+            em.merge(g);
+            
+            return "Group Member Inserted";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String group_member_Update(int gmId, boolean isMember, Date becameMember, int groupId, int memberId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String group_member_Update(int gmId, boolean isMember, String becameMember, int groupId, int memberId) {
+        
+        try {
+           
+            Date mdate = new SimpleDateFormat("yyyy-MM-dd").parse(becameMember);
+            
+            User u = em.find(User.class, memberId);
+            Groups g  = em.find(Groups.class, groupId);
+            
+            Collection<GroupMembers> gmuc = u.getGroupMembersCollection();
+            Collection<GroupMembers> gmgc = g.getGroupMembersCollection();
+            
+            GroupMembers gm = em.find(GroupMembers.class, gmId);
+            
+            gm.setGmId(gmId);
+            gm.setIsMember(isMember);
+            gm.setBecamemember(mdate);
+            gm.setGroupid(g);
+            gm.setMemberid(u);
+            
+            
+            gmuc.add(gm);
+            gmgc.add(gm);
+            u.setGroupMembersCollection(gmuc);
+            g.setGroupMembersCollection(gmgc);
+           
+            em.persist(g);
+            em.merge(u);
+            em.merge(g);
+            
+            return "Group Member Updated";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String group_member_Delete(int gmId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            GroupMembers g = em.find(GroupMembers.class, gmId);
+            em.remove(g);
+            return "Group Member Removed";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public GroupMembers group_member_FindById(int gmId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            GroupMembers g = em.find(GroupMembers.class,gmId);
+            
+            return g;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<GroupMembers> group_member_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<GroupMembers> group = em.createNamedQuery("GroupMembers.findAll")
+                    .getResultList();
+            
+            return group;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
