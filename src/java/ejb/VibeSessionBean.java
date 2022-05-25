@@ -1750,5 +1750,54 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     public List<ActivityFeed> activity_feed_ShowAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String vibeLogin(String email, String password) {
+        
+        try {
+            
+            List<User> userList = em.createNamedQuery("User.findUserByEmail")
+                    .setParameter("email", email)
+                    .getResultList();
+            
+            if(!userList.isEmpty()) {
+                
+                for(User user : userList) {
+                    
+                    if(user.getAccess() == false || user.getIsactive() == false) {
+                        return "delete";
+                    }
+                    
+                    boolean PassToHash = hashPassword.checkPassword(user.getPassword(), password);
+                    
+                    if(user.getIsadmin() == true) {
+                        if(PassToHash) {
+                            return "admin";
+                        }
+                        return "invalid";
+                    }
+                    
+                    if(user.getIsadmin() == false) {
+                        if(PassToHash) {
+                            return "vibe";
+                        }
+                        return "invalid";
+                    }
+                    
+                }
+                
+            }
+                
+            return "invalid";
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            return "failed";
+            
+        }
+
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

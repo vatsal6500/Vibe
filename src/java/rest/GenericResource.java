@@ -288,8 +288,7 @@ public class GenericResource {
     public List<UserContactInfo> user_contact_info_ShowAll() {
         return vibe.user_contact_info_ShowAll();
     }
-    
-    
+        
     //User Education
     
     @Path("user_education_insert/{ueId}/{instituteName}/{joiningDate}/{endingDate}/{instituteAddress}/{userid}")
@@ -366,7 +365,6 @@ public class GenericResource {
     public List<UserSkills> user_skills_ShowAll() {
         return vibe.user_skills_ShowAll();
     }
-    
     
     //User Work
     
@@ -481,6 +479,14 @@ public class GenericResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<GroupMembers> group_member_ShowAll() {
         return vibe.group_member_ShowAll();
+
+    }
+
+    @Path("vibelogin/{email}/{password}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String vibeLogin(@PathParam("email")String email, @PathParam("password")String password) {
+        return vibe.vibeLogin(email, password);
     }
     
 }
