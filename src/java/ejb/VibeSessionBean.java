@@ -1699,27 +1699,94 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String adsInsert(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Ads a = new Ads();
+            
+            a.setAdsId(adsId);
+            a.setAdstype(adsType);
+            a.setPrice(price);
+            a.setTimelimit(timeLimit);
+            a.setDescription(description);
+            a.setIsRemoved(isRemoved);
+           
+            em.persist(a);
+            
+            return "Ads Created";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String adsUpdate(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Ads a = em.find(Ads.class, adsId);
+            
+            a.setAdsId(adsId);
+            a.setAdstype(adsType);
+            a.setPrice(price);
+            a.setTimelimit(timeLimit);
+            a.setDescription(description);
+            a.setIsRemoved(isRemoved);
+           
+            em.persist(a);
+            
+            return "Ads Updated";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String adsDelete(int adsId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Ads a = em.find(Ads.class, adsId);
+            em.remove(a);
+            
+            return "Ad Removed";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Ads adsFindById(int adsId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Ads a = em.find(Ads.class, adsId);
+            return a;
+            
+        } catch (Exception e) {
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Ads> adsShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            List<Ads> ad = em.createNamedQuery("Ads.findAll")
+                    .getResultList();
+            
+            return ad;
+        } catch (Exception e) {
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

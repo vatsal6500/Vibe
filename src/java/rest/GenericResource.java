@@ -7,6 +7,7 @@ package rest;
 
 import ejb.VibeSessionBeanLocal;
 import entity.ActivityFeed;
+import entity.Ads;
 import entity.City;
 import entity.Country;
 import entity.GroupMembers;
@@ -521,6 +522,49 @@ public class GenericResource {
         return vibe.activity_feed_ShowAll();
 
     }
+    
+    
+    //Ads
+    
+    
+    @Path("adsinsert/{adsId}/{adsType}/{price}/{timeLimit}/{description}/{isRemoved}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String adsInsert(@PathParam("adsId")int adsId, @PathParam("adsType")String adsType, @PathParam("price")int price, @PathParam("timeLimit")String timeLimit, @PathParam("description")String description, @PathParam("isRemoved")boolean isRemoved) {
+        return vibe.adsInsert(adsId, adsType, price, timeLimit, description, isRemoved);
+    }
+    
+    @Path("adsupdate/{adsId}/{adsType}/{price}/{timeLimit}/{description}/{isRemoved}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String adsUpdate(@PathParam("adsId")int adsId, @PathParam("adsType")String adsType, @PathParam("price")int price, @PathParam("timeLimit")String timeLimit, @PathParam("description")String description, @PathParam("isRemoved")boolean isRemoved) {
+        return vibe.adsUpdate(adsId, adsType, price, timeLimit, description, isRemoved);
+    }
+    
+    @Path("adsdelete/{adsId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String adsDelete(@PathParam("adsId")int adsId) {
+        return vibe.adsDelete(adsId);
+    }
+    
+    @Path("adsfindbyid/{adsId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Ads adsFindById(@PathParam("adsId")int adsId) {
+        return vibe.adsFindById(adsId);
+    }
+    
+    
+    @Path("adsshowall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Ads> adsShowAll() {
+        return vibe.adsShowAll();
+
+    }
+    
+    
     
     //Login
 
