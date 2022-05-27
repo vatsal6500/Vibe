@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author LENOVO
+ * @author pooja
  */
 public class VibeClient {
 
@@ -48,6 +48,10 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("statedelete/{0}", new Object[]{stateId})).request().post(null, String.class);
     }
 
+    public String activity_feed_Delete(String afId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("activity_feed_delete/{0}", new Object[]{afId})).request().post(null, String.class);
+    }
+
     public <T> T cityShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("cityshowall");
@@ -64,8 +68,16 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("stateupdate/{0}/{1}/{2}/{3}", new Object[]{stateId, stateName, isActive, countryId})).request().post(null, String.class);
     }
 
+    public String activity_feed_Update(String afId, String senderMsg, String receiverMsg, String groupId, String memberId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("activity_feed_update/{0}/{1}/{2}/{3}/{4}", new Object[]{afId, senderMsg, receiverMsg, groupId, memberId})).request().post(null, String.class);
+    }
+
     public String stateInsert(String stateId, String stateName, String isActive, String countryId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("stateinsert/{0}/{1}/{2}/{3}", new Object[]{stateId, stateName, isActive, countryId})).request().post(null, String.class);
+    }
+
+    public String activity_feed_Insert(String afId, String senderMsg, String receiverMsg, String groupId, String memberId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("activity_feed_insert/{0}/{1}/{2}/{3}/{4}", new Object[]{afId, senderMsg, receiverMsg, groupId, memberId})).request().post(null, String.class);
     }
 
     public String user_contact_info_Insert(String uci_id, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, String userid) throws ClientErrorException {
@@ -74,12 +86,6 @@ public class VibeClient {
 
     public String vibeLogin(String email, String password) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("vibelogin/{0}/{1}", new Object[]{email, password})).request().post(null, String.class);
-    }
-
-    public <T> T user_education_ShowAll(Class<T> responseType) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path("user_education_showall");
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public <T> T stateShowAll(Class<T> responseType) throws ClientErrorException {
@@ -98,9 +104,21 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T activity_feed_FindById(Class<T> responseType, String afId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("activity_feed_findbyid/{0}", new Object[]{afId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T groupFindById(Class<T> responseType, String groupid) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("groupfindbyid/{0}", new Object[]{groupid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T activity_feed_ShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("activity_feed_showall");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 

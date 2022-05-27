@@ -1728,29 +1728,152 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     
     @Override
     public String activity_feed_Insert(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User s = em.find(User.class, senderId);
+            User r = em.find(User.class, receiverId);
+            Groups g  = em.find(Groups.class, groupId);
+            
+            Collection<ActivityFeed> gmsc = s.getActivityFeedCollection();
+            Collection<ActivityFeed> gmrc = r.getActivityFeedCollection();
+            Collection<ActivityFeed> gmgc = g.getActivityFeedCollection();
+            
+            ActivityFeed af = new ActivityFeed();
+            
+            af.setAfId(afId);
+            af.setSendermessage(senderMsg);
+            af.setReceivermessage(receiverMsg);
+            af.setTargetUrl(targerURL);
+            af.setIsRead(isRead);
+            af.setIsDeleted(isDeleted);
+            af.setSenderid(r);
+            af.setReceiverid(r);
+            af.setGroupid(g);
+            
+            
+            gmsc.add(af);
+            gmrc.add(af);
+            gmgc.add(af);
+            s.setActivityFeedCollection(gmsc);
+            r.setActivityFeedCollection(gmrc);
+            g.setActivityFeedCollection(gmgc);
+           
+            em.persist(af);
+            em.merge(s);
+            em.merge(r);
+            em.merge(g);
+            
+            return "Activity Feed Inserted";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String activity_feed_Update(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User s = em.find(User.class, senderId);
+            User r = em.find(User.class, receiverId);
+            Groups g  = em.find(Groups.class, groupId);
+            
+            Collection<ActivityFeed> gmsc = s.getActivityFeedCollection();
+            Collection<ActivityFeed> gmrc = r.getActivityFeedCollection();
+            Collection<ActivityFeed> gmgc = g.getActivityFeedCollection();
+            
+            ActivityFeed af = em.find(ActivityFeed.class, afId);
+            
+            af.setAfId(afId);
+            af.setSendermessage(senderMsg);
+            af.setReceivermessage(receiverMsg);
+            af.setTargetUrl(targerURL);
+            af.setIsRead(isRead);
+            af.setIsDeleted(isDeleted);
+            af.setSenderid(r);
+            af.setReceiverid(r);
+            af.setGroupid(g);
+            
+            
+            gmsc.add(af);
+            gmrc.add(af);
+            gmgc.add(af);
+            s.setActivityFeedCollection(gmsc);
+            r.setActivityFeedCollection(gmrc);
+            g.setActivityFeedCollection(gmgc);
+           
+            em.persist(af);
+            em.merge(s);
+            em.merge(r);
+            em.merge(g);
+            
+            return "Activity Feed Updated";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String activity_feed_Delete(int afId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            ActivityFeed af = em.find(ActivityFeed.class, afId);
+            em.remove(af);
+            return "Activity Feed Removed";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public ActivityFeed activity_feed_FindById(int afId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            ActivityFeed af = em.find(ActivityFeed.class,afId);
+            
+            return af;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<ActivityFeed> activity_feed_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         try {
+            
+            List<ActivityFeed> feed = em.createNamedQuery("ActivityFeed.findAll")
+                    .getResultList();
+            
+            return feed;
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+    //Login 
+    
+    
     @Override
     public String vibeLogin(String email, String password) {
         

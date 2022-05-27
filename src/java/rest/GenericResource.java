@@ -6,6 +6,7 @@
 package rest;
 
 import ejb.VibeSessionBeanLocal;
+import entity.ActivityFeed;
 import entity.City;
 import entity.Country;
 import entity.GroupMembers;
@@ -481,6 +482,47 @@ public class GenericResource {
         return vibe.group_member_ShowAll();
 
     }
+    
+    //Activity Feed
+    
+    @Path("activity_feed_insert/{afId}/{senderMsg}/{receiverMsg}/{targerURL}/{isRead}/{isDeleted}/{senderId}/{receiverId}/{groupId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String activity_feed_Insert(@PathParam("afId")int afId, @PathParam("senderMsg")String senderMsg, @PathParam("receiverMsg")String receiverMsg, @PathParam("targerURL")String targerURL, @PathParam("isRead")boolean isRead, @PathParam("isDeleted")boolean isDeleted, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId, @PathParam("groupId")int groupId) {
+        return vibe.activity_feed_Insert(afId, senderMsg, receiverMsg, targerURL, isRead, isDeleted, senderId, receiverId, groupId);
+    }
+    
+    @Path("activity_feed_update/{afId}/{senderMsg}/{receiverMsg}/{targerURL}/{isRead}/{isDeleted}/{senderId}/{receiverId}/{groupId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String activity_feed_Update(@PathParam("afId")int afId, @PathParam("senderMsg")String senderMsg, @PathParam("receiverMsg")String receiverMsg, @PathParam("targerURL")String targerURL, @PathParam("isRead")boolean isRead, @PathParam("isDeleted")boolean isDeleted, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId, @PathParam("groupId")int groupId) {
+        return vibe.activity_feed_Update(afId, senderMsg, receiverMsg, targerURL, isRead, isDeleted, senderId, receiverId, groupId);
+    }
+    
+    @Path("activity_feed_delete/{afId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String activity_feed_Delete(@PathParam("afId")int afId) {
+        return vibe.activity_feed_Delete(afId);
+    }
+    
+    @Path("activity_feed_findbyid/{afId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public ActivityFeed activity_feed_FindById(@PathParam("afId")int afId) {
+        return vibe.activity_feed_FindById(afId);
+    }
+    
+    
+    @Path("activity_feed_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ActivityFeed> activity_feed_ShowAll() {
+        return vibe.activity_feed_ShowAll();
+
+    }
+    
+    //Login
 
     @Path("vibelogin/{email}/{password}")
     @POST
