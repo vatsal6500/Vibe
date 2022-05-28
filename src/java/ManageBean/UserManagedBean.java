@@ -14,13 +14,15 @@ import entity.User;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -101,6 +103,7 @@ public class UserManagedBean {
         
     }
     
+    
     @PostConstruct
     public void init() {
         isActive = "true";
@@ -116,7 +119,7 @@ public class UserManagedBean {
         stateList = vibe.stateShowActive();
         cityList = vibe.cityShowActive();
     }
-
+    
     public VibeSessionBeanLocal getVibe() {
         return vibe;
     }
@@ -351,6 +354,21 @@ public class UserManagedBean {
     
     
     
+    //Private Methods
+    
+    private void showAllVar() {
+        System.out.println(firstName);
+        System.out.println(lastName);
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println(isActive);
+        System.out.println(access);
+        System.out.println(isAdmin);
+        System.out.println(dob);
+        System.out.println(userId);
+        System.out.println(accept);
+    }
+    
     private void clearAll() {
         setFirstName("");
         setLastName("");
@@ -358,7 +376,8 @@ public class UserManagedBean {
         setPassword("");
         setDob(null);
         setAccept(false);
-    } 
+    }
+    
     
     private void setFalse() {
         setRegister(false);
@@ -400,16 +419,9 @@ public class UserManagedBean {
     
     public boolean userRegister() {
         try {
-//            System.out.println(firstName);
-//            System.out.println(lastName);
-//            System.out.println(email);
-//            System.out.println(password);
-//            System.out.println(isActive);
-//            System.out.println(access);
-//            System.out.println(isAdmin);
-//            System.out.println(dob);
-//            System.out.println(userId);
-//            System.out.println(accept);
+            
+            //showAllVar();
+            
             if(accept) {
                 
                 //Parsing Date to String
@@ -419,8 +431,8 @@ public class UserManagedBean {
                 String Register = vibeClient.userRegister(userId, firstName, lastName, DOB, email, password, isActive, isAdmin, access);
                 if(Register.equals("false")) {
                     setEmail("");
-                    setFalse();
-                    return usedEmail = true;
+                    setUsedEmail(true);
+                    return isUsedEmail();
                 }
                 clearAll();
                 setFalse();
@@ -438,5 +450,7 @@ public class UserManagedBean {
             return notRegister = true;
         }
     }
+    
+    
     
 }

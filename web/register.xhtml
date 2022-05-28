@@ -40,7 +40,7 @@
                 <div class="container p-0">
                     <div class="row no-gutters">
                         <div class="col-md-6 text-center pt-5">
-                            <c:if test="#{userManagedBean.register}">
+                            <c:if test="#{userManagedBean.register eq true}">
                                 <div class="alert alert-solid alert-success alert-dismissible fade show mb-3" role="alert">
                                     <span><i class="fas fa-thumbs-up"></i></span>
                                     <span> Registered!! Go to Login page to Login</span>
@@ -48,7 +48,7 @@
                                           aria-label="Close"></button>
                                 </div>
                             </c:if>
-                            <c:if test="#{userManagedBean.notRegister}">
+                            <c:if test="#{userManagedBean.notRegister eq true}">
                                 <div class="alert alert-solid alert-danger alert-dismissible fade show mb-3" role="alert">
                                     <span><i class="fas fa-thumbs-up"></i></span>
                                     <span> Register Failed </span>
@@ -56,7 +56,7 @@
                                           aria-label="Close"></button>
                                 </div>
                             </c:if>
-                            <c:if test="#{userManagedBean.usedEmail}">
+                            <c:if test="#{userManagedBean.usedEmail eq true}">
                                 <div class="alert alert-solid alert-danger alert-dismissible fade show mb-3" role="alert">
                                     <span><i class="fas fa-thumbs-up"></i></span>
                                     <span> Email Already Used!! </span>
@@ -130,7 +130,7 @@
                                             <h:commandButton class="btn btn-primary float-end" action="#{userManagedBean.userRegister()}" value="Sign Up"></h:commandButton>
                                         </div>
                                         <div class="sign-info">
-                                            <span class="dark-color d-inline-block line-height-2">Already Have Account ? <a href="sign-in.html">Log In</a></span>
+                                            <span class="dark-color d-inline-block line-height-2">Already Have Account ? <a href="login.xhtml">Log In</a></span>
                                             <ul class="iq-social-media">
                                                 <li><a href="#"><i class="ri-facebook-box-line"></i></a></li>
                                                 <li><a href="#"><i class="ri-twitter-line"></i></a></li>
