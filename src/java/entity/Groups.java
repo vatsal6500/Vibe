@@ -78,9 +78,9 @@ public class Groups implements Serializable {
     @JoinColumn(name = "adminid", referencedColumnName = "userid", nullable = false)
     @ManyToOne(optional = false)
     private User adminid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupid")
+    @OneToMany(mappedBy = "groupid")
     private Collection<Post> postCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupid")
+    @OneToMany(mappedBy = "groupid")
     private Collection<ActivityFeed> activityFeedCollection;
 
     public Groups() {

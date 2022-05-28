@@ -73,8 +73,8 @@ public class Post implements Serializable {
     private Integer likecount;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postid")
     private Collection<Comments> commentsCollection;
-    @JoinColumn(name = "groupid", referencedColumnName = "groupid", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "groupid", referencedColumnName = "groupid")
+    @ManyToOne
     private Groups groupid;
     @JoinColumn(name = "userid", referencedColumnName = "userid", nullable = false)
     @ManyToOne(optional = false)

@@ -74,8 +74,8 @@ public class ActivityFeed implements Serializable {
     @NotNull
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
-    @JoinColumn(name = "groupid", referencedColumnName = "groupid", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "groupid", referencedColumnName = "groupid")
+    @ManyToOne
     private Groups groupid;
     @JoinColumn(name = "receiverid", referencedColumnName = "userid", nullable = false)
     @ManyToOne(optional = false)
