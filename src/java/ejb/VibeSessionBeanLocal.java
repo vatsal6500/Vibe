@@ -18,7 +18,7 @@ import javax.ejb.Local;
 public interface VibeSessionBeanLocal {
     
     //Login
-    public String vibeLogin(String email, String password);
+    public User vibeLogin(String email, String password);
     
     
     //Country

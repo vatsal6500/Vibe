@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author pooja
+ * @author LENOVO
  */
 public class VibeClient {
 
@@ -84,8 +84,8 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("user_contact_info_insert/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}", new Object[]{uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid})).request().post(null, String.class);
     }
 
-    public String vibeLogin(String email, String password) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("vibelogin/{0}/{1}", new Object[]{email, password})).request().post(null, String.class);
+    public <T> T vibeLogin(Class<T> responseType, String email, String password) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("vibelogin/{0}/{1}", new Object[]{email, password})).request().post(null, responseType);
     }
 
     public <T> T adsFindById(Class<T> responseType, String adsId) throws ClientErrorException {

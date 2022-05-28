@@ -89,10 +89,11 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     c.setIsactive(true);
                     em.merge(c);
                 }
+                return "Country Exists";
             }
             
             
-            return "Country Inserted " + String.valueOf(id);
+            return "Country Inserted " + countryName;
             
         } catch (Exception e) {
             
@@ -1942,7 +1943,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     
     
     @Override
-    public String vibeLogin(String email, String password) {
+    public User vibeLogin(String email, String password) {
         
         try {
             
@@ -1953,37 +1954,37 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             if(!userList.isEmpty()) {
                 
                 for(User user : userList) {
-                    
-                    if(user.getAccess() == false || user.getIsactive() == false) {
-                        return "delete";
-                    }
-                    
+                                        
                     boolean PassToHash = hashPassword.checkPassword(user.getPassword(), password);
                     
-                    if(user.getIsadmin() == true) {
-                        if(PassToHash) {
-                            return "admin";
-                        }
-                        return "invalid";
+                    if(!PassToHash) {
+                        return null;
                     }
                     
-                    if(user.getIsadmin() == false) {
-                        if(PassToHash) {
-                            return "vibe";
-                        }
-                        return "invalid";
-                    }
-                    
+//                    if(user.getIsadmin() == true) {
+//                        if(PassToHash) {
+//                            return user;
+//                        }
+//                        //return "invalid";
+//                    }
+//                    
+//                    if(user.getIsadmin() == false) {
+//                        if(PassToHash) {
+//                            return user;
+//                        }
+//                        //return "invalid";
+//                    }
+                    return user;
                 }
                 
             }
                 
-            return "invalid";
+            return null;
             
         } catch (Exception e) {
             
             System.out.println(e.getMessage());
-            return "failed";
+            return null;
             
         }
 

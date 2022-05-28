@@ -571,7 +571,7 @@ public class GenericResource {
     @Path("vibelogin/{email}/{password}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String vibeLogin(@PathParam("email")String email, @PathParam("password")String password) {
+    public User vibeLogin(@PathParam("email")String email, @PathParam("password")String password) {
         return vibe.vibeLogin(email, password);
     }
     
