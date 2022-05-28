@@ -106,18 +106,18 @@ public class UserManagedBean {
     
     @PostConstruct
     public void init() {
-        isActive = "true";
-        isAdmin = "false";
-        access = "true";
-        userId = "0";
-        accept = false;
-        register = false;
-        notRegister = false;
-        usedEmail = false;
-        userList = vibe.userShowAll();
-        countryList = vibe.countryShowActive();
-        stateList = vibe.stateShowActive();
-        cityList = vibe.cityShowActive();
+        this.isActive = "true";
+        this.isAdmin = "false";
+        this.access = "true";
+        this.userId = "0";
+        this.accept = false;
+        this.register = false;
+        this.notRegister = false;
+        this.usedEmail = false;
+        this.userList = vibe.userShowAll();
+        this.countryList = vibe.countryShowActive();
+        this.stateList = vibe.stateShowActive();
+        this.cityList = vibe.cityShowActive();
     }
     
     public VibeSessionBeanLocal getVibe() {
@@ -380,9 +380,10 @@ public class UserManagedBean {
     
     
     private void setFalse() {
-        setRegister(false);
-        setNotRegister(false);
-        setUsedEmail(false);
+        this.accept = false;
+        this.register = false;
+        this.notRegister = false;
+        this.usedEmail = false;
     }
     
     //ManageBeans Methods
@@ -431,23 +432,22 @@ public class UserManagedBean {
                 String Register = vibeClient.userRegister(userId, firstName, lastName, DOB, email, password, isActive, isAdmin, access);
                 if(Register.equals("false")) {
                     setEmail("");
-                    setUsedEmail(true);
-                    return isUsedEmail();
+                    return this.usedEmail = true;
                 }
                 clearAll();
                 setFalse();
-                return register = true;
+                return this.register = true;
                 
             } else {
                 setFalse();
-                return accept = false;
+                return this.accept = false;
             }
             
         } catch (ClientErrorException e) {
             
             System.out.println("Error:- " + e.getMessage());
             setFalse();
-            return notRegister = true;
+            return this.notRegister = true;
         }
     }
     
