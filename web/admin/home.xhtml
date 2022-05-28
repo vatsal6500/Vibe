@@ -1,12 +1,138 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
     <h:head>
-        <title>Facelet Title</title>
+        <title>Admin | Home</title>
+        <ui:include src="includes/css.xhtml" />
     </h:head>
     <h:body>
-        Hello from Facelets
+        <!-- loader Start -->
+        <div id="loading">
+            <div id="loading-center">
+            </div>
+        </div>
+        <!-- loader END -->
+
+        <!-- Wrapper Start -->
+        <div class="wrapper">
+            <!--Navigation-->
+            <ui:include src="includes/navigation.xhtml"></ui:include>
+
+            <!-- Header  -->
+            <ui:include src="includes/header.xhtml"></ui:include>
+
+<!--             FriendList 
+            <ui:include src="includes/list.xhtml" />-->
+
+            <div id="content-page" class="content-page">
+                <div class="container">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="header-title">
+                                    <h4 class="card-title">Responsive tables</h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p>Responsive tables allow tables to be scrolled horizontally with ease. Make any table responsive across all viewports by wrapping a <code class="highlighter-rouge">.table</code> with <code class="highlighter-rouge">.table-responsive</code>. Or, pick a maximum breakpoint with which to have a responsive table up to by using <code class="highlighter-rouge">.table-responsive{-sm|-md|-lg|-xl}</code>.</p>
+                                <div class="table-responsive-xl">
+                                    <h:dataTable class="table" value="#{userManagedBean.userList}" var="item">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Full Name</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">DOB</th>
+                                                <th scope="col">Country</th>
+                                                <th scope="col">State</th>
+                                                <th scope="col">City</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">UserName</th>
+                                                <th scope="col">Mobile</th>
+                                                <th scope="col">Profile Photo</th>
+                                                <th scope="col">Cover Photo</th>
+                                                <th scope="col">Reg Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                        </tbody>
+                                    </h:dataTable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Wrapper End-->
+
+
+        <!-- footer -->
+        <ui:include src="includes/footer.xhtml" />
+
+
+        <!-- Scripts -->
+        <ui:include src="includes/bottomscript.xhtml" />
+
+        <!-- offcanvas start -->
+
+        <div class="offcanvas offcanvas-bottom share-offcanvas" tabindex="-1" id="share-btn" aria-labelledby="shareBottomLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="shareBottomLabel">Share</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body small">
+                <div class="d-flex flex-wrap align-items-center">
+                    <div class="text-center me-3 mb-3">
+                        <img src="../assets/images/icon/08.png" class="img-fluid rounded mb-2" alt=""/>
+                        <h6>Facebook</h6>
+                    </div>
+                    <div class="text-center me-3 mb-3">
+                        <img src="../assets/images/icon/09.png" class="img-fluid rounded mb-2" alt=""/>
+                        <h6>Twitter</h6>
+                    </div>
+                    <div class="text-center me-3 mb-3">
+                        <img src="../assets/images/icon/10.png" class="img-fluid rounded mb-2" alt=""/>
+                        <h6>Instagram</h6>
+                    </div>
+                    <div class="text-center me-3 mb-3">
+                        <img src="../assets/images/icon/11.png" class="img-fluid rounded mb-2" alt=""/>
+                        <h6>Google Plus</h6>
+                    </div>
+                    <div class="text-center me-3 mb-3">
+                        <img src="../assets/images/icon/13.png" class="img-fluid rounded mb-2" alt=""/>
+                        <h6>In</h6>
+                    </div>
+                    <div class="text-center me-3 mb-3">
+                        <img src="../assets/images/icon/12.png" class="img-fluid rounded mb-2" alt=""/>
+                        <h6>YouTube</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 
