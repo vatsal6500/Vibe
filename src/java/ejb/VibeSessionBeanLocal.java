@@ -147,7 +147,7 @@ public interface VibeSessionBeanLocal {
     public String commentsUpdate(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId);
     public String commentsdelete(int commentId);
     public Comments commentsFindById(int commentId);
-    public List<Comments> commentsInsert(); //admin
+    public List<Comments> commentsShowAll(); //admin
     
     //Chat
     public String chatInsert(int chatId, String message, boolean isDelevered, boolean isRead, boolean isDeleted, int senderId, int receiverId);
