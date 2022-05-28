@@ -18,6 +18,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -35,8 +37,14 @@ public class LoginManagedBean {
     
     private VibeClient vibeClient = new VibeClient();
     
+    @NotNull(message = "Email Required")
+    @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "Invalid Email")
     private String email;
+    
+    @NotNull(message = "Password Required")
     private String password;
+    
+    
     private boolean remember;
     
     
@@ -55,8 +63,8 @@ public class LoginManagedBean {
     
     @PostConstruct
     public void init() {
-        deniedUser = false;
-        invalidpass = false;
+        this.deniedUser = false;
+        this.invalidpass = false;
     }
 
     public VibeSessionBeanLocal getVibeSessionBean() {
@@ -119,8 +127,8 @@ public class LoginManagedBean {
     //Private Methods
     
     private void setFalse() {
-        deniedUser = true;
-        invalidpass = true;
+        this.deniedUser = false;
+        this.invalidpass = false;
     }
     
     
@@ -167,7 +175,10 @@ public class LoginManagedBean {
                         adminSession.getAttribute("Atype"));
                 
                 setFalse();
-                return "/admin/home.xhtml?faces-redirect=true";
+                
+                if(adminSession.getAttribute("AuserId") !=  null) {
+                    return "/admin/home.xhtml?faces-redirect=true";
+                }
                 
             }
             
@@ -212,7 +223,7 @@ public class LoginManagedBean {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         
         try {
-            
+            setFalse();
             FacesContext.getCurrentInstance().getExternalContext().redirect("../login.xhtml");
             
         } catch (IOException e) {
