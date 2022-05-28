@@ -9,8 +9,6 @@ import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
 import entity.User;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -32,10 +30,15 @@ import javax.ws.rs.core.Response;
 @ApplicationScoped
 public class LoginManagedBean {
 
+    // Session Bean
     @EJB
     private VibeSessionBeanLocal vibeSessionBean;
     
+    //VibeClient
     private VibeClient vibeClient = new VibeClient();
+    
+    
+    //Declare Variables
     
     @NotNull(message = "Email Required")
     @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "Invalid Email")
@@ -44,14 +47,15 @@ public class LoginManagedBean {
     @NotNull(message = "Password Required")
     private String password;
     
+    //Declare Variables ends
+    
+    
+    //Custom Variables
     
     private boolean remember;
-    
-    
-    //checking values
     private boolean deniedUser,invalidpass;
 
-    
+    //Custom Variables ends
     
     
     /**
@@ -61,12 +65,18 @@ public class LoginManagedBean {
         
     }
     
+    //Post Construct
+    
     @PostConstruct
     public void init() {
         this.deniedUser = false;
         this.invalidpass = false;
     }
 
+    //Post Construct ends
+    
+    //Getters and setters
+    
     public VibeSessionBeanLocal getVibeSessionBean() {
         return vibeSessionBean;
     }
@@ -123,6 +133,7 @@ public class LoginManagedBean {
         this.invalidpass = invalidpass;
     }
     
+    //Getters and setters
     
     //Private Methods
     
@@ -130,6 +141,8 @@ public class LoginManagedBean {
         this.deniedUser = false;
         this.invalidpass = false;
     }
+    
+    //Private Methods ends
     
     
     //ManageBeans Methods
@@ -232,4 +245,6 @@ public class LoginManagedBean {
             
         }
     }
+    
+    //ManageBeans Methods ends
 }
