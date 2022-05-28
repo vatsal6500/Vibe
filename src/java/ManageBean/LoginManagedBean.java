@@ -8,6 +8,9 @@ package ManageBean;
 import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
 import entity.User;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -204,7 +207,18 @@ public class LoginManagedBean {
         return "/login.xhtml?faces-redirect=true";
     }
     
-    public String vibeLogout() {
-        return null;
+    public void vibeLogout() {
+        
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        
+        try {
+            
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../login.xhtml");
+            
+        } catch (IOException e) {
+            
+            System.out.println(e.getMessage());
+            
+        }
     }
 }
