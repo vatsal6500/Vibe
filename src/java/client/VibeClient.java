@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author LENOVO
+ * @author pooja
  */
 public class VibeClient {
 
@@ -152,6 +152,14 @@ public class VibeClient {
 
     public String cityUpdate(String cityId, String cityName, String isActive, String stateId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("cityupdate/{0}/{1}/{2}/{3}", new Object[]{cityId, cityName, isActive, stateId})).request().post(null, String.class);
+    }
+
+    public String ads_user_Insert(String auId, String adsContent, String description, String link, String endDate, String isRemoved, String isExpired, String userId, String adsId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("ads_user_insert/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}", new Object[]{auId, adsContent, description, link, endDate, isRemoved, isExpired, userId, adsId})).request().post(null, String.class);
+    }
+
+    public String ads_user_Delete(String auId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("ads_user_delete/{0}", new Object[]{auId})).request().post(null, String.class);
     }
 
     public String user_education_Insert(String ueId, String instituteName, String joiningDate, String endingDate, String instituteAddress, String userid) throws ClientErrorException {
@@ -306,12 +314,28 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("adsdelete/{0}", new Object[]{adsId})).request().post(null, String.class);
     }
 
+    public <T> T ads_user_FindById(Class<T> responseType, String auId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("ads_user_findbyid/{0}", new Object[]{auId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String user_education_Delete(String ueId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("user_education_delete/{0}", new Object[]{ueId})).request().post(null, String.class);
     }
 
+    public String ads_user_Update(String auId, String adsContent, String description, String link, String endDate, String isRemoved, String isExpired, String userId, String adsId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("ads_user_update/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}", new Object[]{auId, adsContent, description, link, endDate, isRemoved, isExpired, userId, adsId})).request().post(null, String.class);
+    }
+
     public String userUpdate(String userId, String firstName, String middleName, String lastName, String gender, String dob, String pincode, String email, String username, String password, String mobile, String profilePhoto, String coverPhoto, String isActive, String isAdmin, String access, String countryId, String stateId, String cityId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("userupdate/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}/{13}/{14}/{15}/{16}/{17}/{18}", new Object[]{userId, firstName, middleName, lastName, gender, dob, pincode, email, username, password, mobile, profilePhoto, coverPhoto, isActive, isAdmin, access, countryId, stateId, cityId})).request().post(null, String.class);
+    }
+
+    public <T> T ads_user_ShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("ads_user_showall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public String cityDelete(String cityId) throws ClientErrorException {

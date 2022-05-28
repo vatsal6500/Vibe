@@ -26,6 +26,7 @@ import entity.UserEducation;
 import entity.UserSkills;
 import entity.UserWork;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import utility.HashUtility;
+import java.time.format.DateTimeFormatter; 
+import java.time.LocalDateTime;    
 
 /**
  *
@@ -1599,28 +1603,147 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Ads_User
     @Override
-    public String ads_user_Insert(int auId, String adsConcent, String description, String link, String endDate, boolean isRemoved, boolean isExpried, int userId, int adsId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String ads_user_Insert(int auId, String adsContent, String description, String link, String endDate, boolean isRemoved, boolean isExpired, int userId, int adsId) {
+        
+        try {
+
+//            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+//            LocalDateTime now = LocalDateTime.now();
+//            Date sdate = new SimpleDateFormat("yyyy-MM-dd").parse(dtf.format(now));
+            
+            User u = em.find(User.class, userId);
+            Ads a = em.find(Ads.class, adsId);
+
+            Collection<AdsUser> gmuc = u.getAdsUserCollection();
+            Collection<AdsUser> gmac = a.getAdsUserCollection();
+
+            AdsUser au = new AdsUser();
+
+            au.setAuId(auId);
+            au.setAdscontent(adsContent);
+            au.setDescription(description);
+            au.setLink(link);
+            //au.setStartdate(sdate);
+            au.setEnddate(endDate);
+            au.setIsRemoved(isRemoved);
+            au.setIsExpried(isExpired);
+            au.setUserid(u);
+            au.setAdsid(a);            
+
+            gmuc.add(au);
+            gmac.add(au);
+            
+            u.setAdsUserCollection(gmuc);
+            a.setAdsUserCollection(gmac);
+
+            em.persist(au);
+            em.merge(u);
+            em.merge(a);
+
+            return "User Ads Inserted";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String ads_user_Update(int auId, String adsConcent, String description, String link, String endDate, boolean isRemoved, boolean isExpried, int userId, int adsId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String ads_user_Update(int auId, String adsContent, String description, String link, String endDate, boolean isRemoved, boolean isExpired, int userId, int adsId) {
+        
+        try {
+
+//            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+//            LocalDateTime now = LocalDateTime.now();
+//            Date sdate = new SimpleDateFormat("yyyy-MM-dd").parse(dtf.format(now));
+
+            User u = em.find(User.class, userId);
+            Ads a = em.find(Ads.class, adsId);
+
+            Collection<AdsUser> gmuc = u.getAdsUserCollection();
+            Collection<AdsUser> gmac = a.getAdsUserCollection();
+
+            AdsUser au = em.find(AdsUser.class, auId);
+
+            au.setAuId(auId);
+            au.setAdscontent(adsContent);
+            au.setDescription(description);
+            au.setLink(link);
+            //au.setStartdate(sdate);
+            au.setEnddate(endDate);
+            au.setIsRemoved(isRemoved);
+            au.setIsExpried(isExpired);
+            au.setUserid(u);
+            au.setAdsid(a);            
+
+            gmuc.add(au);
+            gmac.add(au);
+            
+            u.setAdsUserCollection(gmuc);
+            a.setAdsUserCollection(gmac);
+
+            em.persist(au);
+            em.merge(u);
+            em.merge(a);
+
+            return "User Ads Updated";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String ads_user_Delete(int auId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            AdsUser au = em.find(AdsUser.class, auId);
+            em.remove(au);
+            return "User Ads Removed";
+
+        } catch (Exception e) {
+
+            return e.getMessage();
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public AdsUser ads_user_FindById(int auId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            AdsUser au = em.find(AdsUser.class, auId);
+
+            return au;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<AdsUser> ads_user_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            List<AdsUser> userads = em.createNamedQuery("AdsUser.findAll")
+                    .getResultList();
+
+            return userads;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Ads

@@ -8,6 +8,7 @@ package rest;
 import ejb.VibeSessionBeanLocal;
 import entity.ActivityFeed;
 import entity.Ads;
+import entity.AdsUser;
 import entity.City;
 import entity.Country;
 import entity.GroupMembers;
@@ -563,6 +564,47 @@ public class GenericResource {
         return vibe.adsShowAll();
 
     }
+    
+    
+    //Ads_User
+    
+    @Path("ads_user_insert/{auId}/{adsContent}/{description}/{link}/{endDate}/{isRemoved}/{isExpired}/{userId}/{adsId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ads_user_Insert(@PathParam("auId")int auId, @PathParam("adsContent")String adsContent, @PathParam("description")String description, @PathParam("link")String link, @PathParam("endDate")String endDate, @PathParam("isRemoved")boolean isRemoved, @PathParam("isExpired")boolean isExpired, @PathParam("userId")int userId, @PathParam("adsId")int adsId) {
+        return vibe.ads_user_Insert(auId, adsContent, description, link, endDate, isRemoved, isExpired, userId, adsId);
+    }
+    
+    @Path("ads_user_update/{auId}/{adsContent}/{description}/{link}/{endDate}/{isRemoved}/{isExpired}/{userId}/{adsId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ads_user_Update(@PathParam("auId")int auId, @PathParam("adsContent")String adsContent, @PathParam("description")String description, @PathParam("link")String link, @PathParam("endDate")String endDate, @PathParam("isRemoved")boolean isRemoved, @PathParam("isExpired")boolean isExpired, @PathParam("userId")int userId, @PathParam("adsId")int adsId) {
+        return vibe.ads_user_Update(auId, adsContent, description, link, endDate, isRemoved, isExpired, userId, adsId);
+    }
+    
+    @Path("ads_user_delete/{auId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ads_user_Delete(@PathParam("auId")int auId) {
+        return vibe.ads_user_Delete(auId);
+    }
+    
+    @Path("ads_user_findbyid/{auId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public AdsUser ads_user_FindById(@PathParam("auId")int auId) {
+        return vibe.ads_user_FindById(auId);
+    }
+    
+    
+    @Path("ads_user_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AdsUser> ads_user_ShowAll() {
+        return vibe.ads_user_ShowAll();
+
+    }
+    
     
     
     

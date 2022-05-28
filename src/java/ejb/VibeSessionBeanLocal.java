@@ -9,6 +9,7 @@ import entity.*;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  *
@@ -156,8 +157,8 @@ public interface VibeSessionBeanLocal {
     //    public List<Chat> chatShowAll(); //admin
 
     //Ads User
-    public String ads_user_Insert(int auId, String adsConcent, String description, String link, String endDate, boolean isRemoved, boolean isExpried, int userId, int adsId);
-    public String ads_user_Update(int auId, String adsConcent, String description, String link, String endDate, boolean isRemoved, boolean isExpried, int userId, int adsId);
+    public String ads_user_Insert(int auId, String adsContent, String description, String link, String endDate, boolean isRemoved, boolean isExpired, int userId, int adsId);
+    public String ads_user_Update(int auId, String adsContent, String description, String link, String endDate, boolean isRemoved, boolean isExpired, int userId, int adsId);
     public String ads_user_Delete(int auId);
     public AdsUser ads_user_FindById(int auId);
     public List<AdsUser> ads_user_ShowAll();  //admin
