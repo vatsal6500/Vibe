@@ -1410,28 +1410,121 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Posts
     @Override
-    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId, int groupId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId) {
+        
+        try {
+
+            User u = em.find(User.class, userId);
+
+            Collection<Post> puc = u.getPostCollection();
+
+            Post p = new Post();
+
+            p.setPostid(postId);
+            p.setPost(post);
+            p.setCaption(caption);
+            p.setIsDeleted(is_deleted);
+            p.setLikecount(likeCount);
+            p.setUserid(u);
+            p.setGroupid(null);
+
+            puc.add(p);
+            u.setPostCollection(puc);
+
+            em.persist(p);
+            em.merge(u);
+
+            return "Post Inserted";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId, int groupId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId) {
+        
+        try {
+
+            User u = em.find(User.class, userId);
+
+            Collection<Post> puc = u.getPostCollection();
+
+            Post p = em.find(Post.class, postId);
+
+            p.setPostid(postId);
+            p.setPost(post);
+            p.setCaption(caption);
+            p.setIsDeleted(is_deleted);
+            p.setLikecount(likeCount);
+            p.setUserid(u);
+            p.setGroupid(null);
+
+            puc.add(p);
+            u.setPostCollection(puc);
+
+            em.persist(p);
+            em.merge(u);
+
+            return "Post Updated";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String postDelete(int postId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            Post p = em.find(Post.class, postId);
+            em.remove(p);
+            return "Post Removed";
+
+        } catch (Exception e) {
+
+            return e.getMessage();
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Post postFindById(int postId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            Post p = em.find(Post.class, postId);
+
+            return p;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Post> postShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            List<Post> posts = em.createNamedQuery("Post.findAll")
+                    .getResultList();
+
+            return posts;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Likes

@@ -13,6 +13,7 @@ import entity.City;
 import entity.Country;
 import entity.GroupMembers;
 import entity.Groups;
+import entity.Post;
 import entity.State;
 import entity.User;
 import entity.UserContactInfo;
@@ -605,7 +606,44 @@ public class GenericResource {
 
     }
     
+    //Posts
     
+    @Path("postinsert/{postId}/{post}/{caption}/{is_deleted}/{likecount}/{userId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String postInsert(@PathParam("postId")int postId, @PathParam("post")String post, @PathParam("caption")String caption, @PathParam("is_deleted")boolean is_deleted, @PathParam("likecount")int likecount, @PathParam("userId")int userId) {
+        return vibe.postInsert(postId, post, caption, is_deleted, likecount, userId);
+    }
+    
+    @Path("postupdate/{postId}/{post}/{caption}/{is_deleted}/{likecount}/{userId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String postUpdate(@PathParam("postId")int postId, @PathParam("post")String post, @PathParam("caption")String caption, @PathParam("is_deleted")boolean is_deleted, @PathParam("likecount")int likecount, @PathParam("userId")int userId) {
+        return vibe.postUpdate(postId, post, caption, is_deleted, likecount, userId);
+    }
+    
+    @Path("postdelete/{postId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String postDelete(@PathParam("postId")int postId) {
+        return vibe.postDelete(postId);
+    }
+    
+    @Path("postfindbyid/{postId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Post postFindById(@PathParam("postId")int postId) {
+        return vibe.postFindById(postId);
+    }
+    
+    
+    @Path("postShowAll")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Post> postShowAll() {
+        return vibe.postShowAll();
+
+    }
     
     
     //Login
