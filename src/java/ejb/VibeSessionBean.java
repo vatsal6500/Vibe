@@ -1530,27 +1530,138 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //Likes
     @Override
     public String likeInsert(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            User s = em.find(User.class, senderId);
+            User r = em.find(User.class, receiverId);
+            Post p = em.find(Post.class, postId);
+
+            Collection<Likes> lsc = s.getLikesCollection();
+            Collection<Likes> lrc = r.getLikesCollection();
+            Collection<Likes> lpc = p.getLikesCollection();
+
+            Likes l = new Likes();
+
+            l.setLikeid(likeId);
+            l.setLikeDate(likeDate);
+            l.setIsRemoved(isRemoved);
+            l.setPostid(p);
+            l.setSenderid(s);
+            l.setReceiverid(r);
+
+            lsc.add(l);
+            lrc.add(l);
+            lpc.add(l);
+            s.setLikesCollection(lsc);
+            r.setLikesCollection(lrc);
+            p.setLikesCollection(lpc);
+
+            em.persist(l);
+            em.merge(s);
+            em.merge(r);
+            em.merge(p);
+
+            return "Like Inserted";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String likeUpdate(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            User s = em.find(User.class, senderId);
+            User r = em.find(User.class, receiverId);
+            Post p = em.find(Post.class, postId);
+
+            Collection<Likes> lsc = s.getLikesCollection();
+            Collection<Likes> lrc = r.getLikesCollection();
+            Collection<Likes> lpc = p.getLikesCollection();
+
+            Likes l = em.find(Likes.class, likeId);
+
+            l.setLikeid(likeId);
+            l.setLikeDate(likeDate);
+            l.setIsRemoved(isRemoved);
+            l.setPostid(p);
+            l.setSenderid(s);
+            l.setReceiverid(r);
+
+            lsc.add(l);
+            lrc.add(l);
+            lpc.add(l);
+            s.setLikesCollection(lsc);
+            r.setLikesCollection(lrc);
+            p.setLikesCollection(lpc);
+
+            em.persist(l);
+            em.merge(s);
+            em.merge(r);
+            em.merge(p);
+
+            return "Like Updated";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String likeDelete(int likeId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            Likes l = em.find(Likes.class, likeId);
+            em.remove(l);
+            return "Like Removed";
+
+        } catch (Exception e) {
+
+            return e.getMessage();
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Likes likeFindById(int likeId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            Likes l = em.find(Likes.class, likeId);
+
+            return l;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Likes> likeShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            List<Likes> likelist = em.createNamedQuery("Likes.findAll")
+                    .getResultList();
+
+            return likelist;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Friend_Request

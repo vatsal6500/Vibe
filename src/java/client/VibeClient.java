@@ -174,6 +174,16 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("postupdate/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{postId, post, caption, is_deleted, likecount, userId})).request().post(null, String.class);
     }
 
+    public String likeUpdate(String likeId, String likeDate, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("likeupdate/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{likeId, likeDate, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
+    }
+
+    public <T> T likeFindById(Class<T> responseType, String likeId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("likefindbyid/{0}", new Object[]{likeId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T user_contact_info_FindById(Class<T> responseType, String uciid) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("user_contact_info_findbyid/{0}", new Object[]{uciid}));
@@ -202,6 +212,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("user_contact_info_delete/{0}", new Object[]{uciid})).request().post(null, String.class);
     }
 
+    public <T> T likeShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("likeshowall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T adsShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("adsshowall");
@@ -222,7 +238,7 @@ public class VibeClient {
 
     public <T> T postShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
-        resource = resource.path("postShowAll");
+        resource = resource.path("postshowall");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -358,6 +374,10 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("postinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{postId, post, caption, is_deleted, likecount, userId})).request().post(null, String.class);
     }
 
+    public String likeInsert(String likeId, String likeDate, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("likeinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{likeId, likeDate, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
+    }
+
     public String cityDelete(String cityId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("citydelete/{0}", new Object[]{cityId})).request().post(null, String.class);
     }
@@ -366,6 +386,10 @@ public class VibeClient {
         WebTarget resource = webTarget;
         resource = resource.path("countryshowactive");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String likeDelete(String likeId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("likedelete/{0}", new Object[]{likeId})).request().post(null, String.class);
     }
 
     public <T> T group_member_FindById(Class<T> responseType, String gmId) throws ClientErrorException {

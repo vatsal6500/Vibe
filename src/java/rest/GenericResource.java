@@ -13,6 +13,7 @@ import entity.City;
 import entity.Country;
 import entity.GroupMembers;
 import entity.Groups;
+import entity.Likes;
 import entity.Post;
 import entity.State;
 import entity.User;
@@ -637,13 +638,55 @@ public class GenericResource {
     }
     
     
-    @Path("postShowAll")
+    @Path("postshowall")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Post> postShowAll() {
         return vibe.postShowAll();
 
     }
+    
+    
+    //Likes
+    
+    @Path("likeinsert/{likeId}/{likeDate}/{isRemoved}/{postId}/{senderId}/{receiverId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String likeInsert(@PathParam("likeId")int likeId, @PathParam("likeDate")String likeDate, @PathParam("isRemoved")boolean isRemoved, @PathParam("postId")int postId, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.likeInsert(likeId, likeDate, isRemoved, postId, senderId, receiverId);
+    }
+    
+    @Path("likeupdate/{likeId}/{likeDate}/{isRemoved}/{postId}/{senderId}/{receiverId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String likeUpdate(@PathParam("likeId")int likeId, @PathParam("likeDate")String likeDate, @PathParam("isRemoved")boolean isRemoved, @PathParam("postId")int postId, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.likeUpdate(likeId, likeDate, isRemoved, postId, senderId, receiverId);
+    }
+    
+    @Path("likedelete/{likeId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String likeDelete(@PathParam("likeId")int likeId) {
+        return vibe.likeDelete(likeId);
+    }
+    
+    @Path("likefindbyid/{likeId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Likes likeFindById(@PathParam("likeId")int likeId) {
+        return vibe.likeFindById(likeId);
+    }
+    
+    
+    @Path("likeshowall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Likes> likeShowAll() {
+        return vibe.likeShowAll();
+
+    }
+    
+    
     
     
     //Login
