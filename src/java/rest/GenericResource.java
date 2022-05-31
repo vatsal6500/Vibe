@@ -11,6 +11,7 @@ import entity.Ads;
 import entity.AdsUser;
 import entity.City;
 import entity.Country;
+import entity.FriendRequest;
 import entity.GroupMembers;
 import entity.Groups;
 import entity.Likes;
@@ -687,6 +688,57 @@ public class GenericResource {
     }
     
     
+    //Friend Request
+    
+    
+    @Path("friend_request_insert/{frId}/{status}/{senderId}/{receiverId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String friend_request_Insert(@PathParam("frId")int frId, @PathParam("status")String status, @PathParam("requestDate")Date requestDate, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.friend_request_Insert(frId, status, senderId, receiverId);
+    }
+    
+    @Path("friend_request_update/{frId}/{status}/{senderId}/{receiverId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String friend_request_Update(@PathParam("frId")int frId, @PathParam("status")String status, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.friend_request_Update(frId, status, senderId, receiverId);
+    }
+    
+    @Path("friend_request_delete/{frId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String friend_request_Delete(@PathParam("frId")int frId) {
+        return vibe.friend_request_Delete(frId);
+    }
+    
+    @Path("friend_request_findbyid/{frId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public FriendRequest friend_request_FindById(@PathParam("frId")int frId) {
+        return vibe.friend_request_FindById(frId);
+    }
+    
+    @Path("friend_request_findbysenderid/{senderId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<FriendRequest> friend_request_FindBySenderId(@PathParam("senderId")int senderId) {
+        return vibe.friend_request_FindBySenderId(senderId);
+    }
+    
+    @Path("friend_request_findbyreceiverid/{receiverId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<FriendRequest> friend_request_FindByReceiverId(@PathParam("receiverId")int receiverId) {
+        return vibe.friend_request_FindByReceiverId(receiverId);
+    }
+    
+    @Path("friend_request_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<FriendRequest> friend_request_ShowAll() {
+        return vibe.friend_request_ShowAll();
+    }
     
     
     //Login

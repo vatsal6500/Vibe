@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author pooja
+ * @author LENOVO
  */
 public class VibeClient {
 
@@ -44,6 +44,16 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public String friend_request_Delete(String frId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("friend_request_delete/{0}", new Object[]{frId})).request().post(null, String.class);
+    }
+
+    public <T> T friend_request_FindBySenderId(Class<T> responseType, String senderId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("friend_request_findbysenderid/{0}", new Object[]{senderId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String stateDelete(String stateId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("statedelete/{0}", new Object[]{stateId})).request().post(null, String.class);
     }
@@ -52,10 +62,24 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("activity_feed_delete/{0}", new Object[]{afId})).request().post(null, String.class);
     }
 
+    public <T> T friend_request_FindByReceiverId(Class<T> responseType, String receiverId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("friend_request_findbyreceiverid/{0}", new Object[]{receiverId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T cityShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("cityshowall");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String friend_request_Insert(String frId, String status, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("friend_request_insert/{0}/{1}/{2}/{3}", new Object[]{frId, status, senderId, receiverId})).request().post(null, String.class);
+    }
+
+    public String friend_request_Update(String frId, String status, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("friend_request_update/{0}/{1}/{2}/{3}", new Object[]{frId, status, senderId, receiverId})).request().post(null, String.class);
     }
 
     public <T> T countryFindByName(Class<T> responseType, String countryName) throws ClientErrorException {
@@ -246,6 +270,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("user_skills_insert/{0}/{1}/{2}/{3}/{4}", new Object[]{usId, skillname, skillinfo, skillportfolio, userid})).request().post(null, String.class);
     }
 
+    public <T> T friend_request_FindById(Class<T> responseType, String frId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("friend_request_findbyid/{0}", new Object[]{frId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String countryUpdate(String countryId, String sortName, String countryName, String phoneCode, String isActive) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("countryupdate/{0}/{1}/{2}/{3}/{4}", new Object[]{countryId, sortName, countryName, phoneCode, isActive})).request().post(null, String.class);
     }
@@ -302,6 +332,12 @@ public class VibeClient {
 
     public String group_member_Delete(String gmId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("group_member_delete/{0}", new Object[]{gmId})).request().post(null, String.class);
+    }
+
+    public <T> T friend_request_ShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("friend_request_showall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public <T> T postFindById(Class<T> responseType, String postId) throws ClientErrorException {

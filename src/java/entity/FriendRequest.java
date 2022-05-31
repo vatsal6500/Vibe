@@ -32,6 +32,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "friend_request", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    
+    //Find Request by Sender ID
+    @NamedQuery(name = "FriendRequest.findBySenderId", query = "SELECT f FROM FriendRequest f WHERE f.senderid.userid = :senderid"),
+    
+    //Find Request by Receiver ID
+    @NamedQuery(name = "FriendRequest.findByReceiverId", query = "SELECT f FROM FriendRequest f WHERE f.receiverid.userid = :receiverid"),
+    
     @NamedQuery(name = "FriendRequest.findAll", query = "SELECT f FROM FriendRequest f"),
     @NamedQuery(name = "FriendRequest.findByFrId", query = "SELECT f FROM FriendRequest f WHERE f.frId = :frId"),
     @NamedQuery(name = "FriendRequest.findByStatus", query = "SELECT f FROM FriendRequest f WHERE f.status = :status"),

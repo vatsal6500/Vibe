@@ -9,7 +9,6 @@ import entity.*;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  *
@@ -120,6 +119,8 @@ public interface VibeSessionBeanLocal {
     public String friend_request_Update(int frId, String status, int senderId, int receiverId);
     public String friend_request_Delete(int frId);
     public FriendRequest friend_request_FindById(int frId);
+    public List<FriendRequest> friend_request_FindBySenderId(int senderId);
+    public List<FriendRequest> friend_request_FindByReceiverId(int receiverId);
     public List<FriendRequest> friend_request_ShowAll(); //admin
     
     //Friend List

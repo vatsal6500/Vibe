@@ -26,7 +26,6 @@ import entity.UserEducation;
 import entity.UserSkills;
 import entity.UserWork;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -34,10 +33,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import utility.HashUtility;
-import java.time.format.DateTimeFormatter; 
-import java.time.LocalDateTime;    
 
 /**
  *
@@ -1667,27 +1663,188 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //Friend_Request
     @Override
     public String friend_request_Insert(int frId, String status, int senderId, int receiverId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User sender = em.find(User.class, senderId);
+            User receiver = em.find(User.class, receiverId);
+            
+            Collection<FriendRequest> senderCollection = sender.getFriendRequestCollection();
+            Collection<FriendRequest> receiverCollection = receiver.getFriendRequestCollection();
+            
+            FriendRequest fr = new FriendRequest();
+            
+            fr.setFrId(frId);
+            // status as requested or accepted or deleted
+            fr.setStatus(status);
+            fr.setRequestdate(new Date());
+            fr.setSenderid(sender);
+            fr.setReceiverid(receiver);
+            
+            senderCollection.add(fr);
+            receiverCollection.add(fr);
+            
+            sender.setFriendRequestCollection(senderCollection);
+            receiver.setFriendRequestCollection(receiverCollection);
+            
+            em.persist(fr);
+            em.merge(sender);
+            em.merge(receiver);
+            
+            return "Friend Request send";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
     }
 
     @Override
     public String friend_request_Update(int frId, String status, int senderId, int receiverId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User sender = em.find(User.class, senderId);
+            User receiver = em.find(User.class, receiverId);
+            
+            Collection<FriendRequest> senderCollection = sender.getFriendRequestCollection();
+            Collection<FriendRequest> receiverCollection = receiver.getFriendRequestCollection();
+            
+            FriendRequest fr = em.find(FriendRequest.class, frId);
+            
+            fr.setFrId(frId);
+            fr.setStatus(status);
+            fr.setReceiverid(receiver);
+            fr.setReceiverid(sender);
+            
+            senderCollection.add(fr);
+            receiverCollection.add(fr);
+            
+            sender.setFriendRequestCollection(receiverCollection);
+            receiver.setFriendRequestCollection(senderCollection);
+            
+            em.persist(fr);
+            em.merge(sender);
+            em.merge(receiver);
+            
+            return "Friend Request Updated";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String friend_request_Delete(int frId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            FriendRequest fr = em.find(FriendRequest.class, frId);
+            
+            fr.setStatus("deleted");
+            
+            em.merge(fr);
+            
+            return "Request Deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public FriendRequest friend_request_FindById(int frId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            FriendRequest fr = em.find(FriendRequest.class,frId);
+            
+            return fr;
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<FriendRequest> friend_request_FindBySenderId(int senderId) {
+        
+        try {
+            
+            List<FriendRequest> fr = em.createNamedQuery("FriendRequest.findBySenderId")
+                    .setParameter("senderid", senderId)
+                    .getResultList();
+            
+            return fr;
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+            
+        }
     }
 
+    
+    @Override
+    public List<FriendRequest> friend_request_FindByReceiverId(int receiverId) {
+        
+        try {
+            
+            List<FriendRequest> fr = em.createNamedQuery("FriendRequest.findByReceiverId")
+                    .setParameter("receiverid", receiverId)
+                    .getResultList();
+            
+            return fr;
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+            
+        }
+    }
+    
     @Override
     public List<FriendRequest> friend_request_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<FriendRequest> friendRequests = em.createNamedQuery("FriendRequest.findAll")
+                    .getResultList();
+            
+            if(friendRequests.isEmpty()) {
+                return null;
+            }
+            
+            return friendRequests;
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Friend_List
@@ -2205,20 +2362,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     if (!PassToHash) {
                         return null;
                     }
-
-//                    if(user.getIsadmin() == true) {
-//                        if(PassToHash) {
-//                            return user;
-//                        }
-//                        //return "invalid";
-//                    }
-//                    
-//                    if(user.getIsadmin() == false) {
-//                        if(PassToHash) {
-//                            return user;
-//                        }
-//                        //return "invalid";
-//                    }
+                    
                     return user;
                 }
 
@@ -2232,8 +2376,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             return null;
 
         }
-
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
