@@ -145,6 +145,7 @@ public class Post implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public Collection<Comments> getCommentsCollection() {
         return commentsCollection;
     }
