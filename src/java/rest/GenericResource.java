@@ -652,18 +652,18 @@ public class GenericResource {
     
     //Likes
     
-    @Path("likeinsert/{likeId}/{likeDate}/{isRemoved}/{postId}/{senderId}/{receiverId}")
+    @Path("likeinsert/{likeId}/{isRemoved}/{postId}/{senderId}/{receiverId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String likeInsert(@PathParam("likeId")int likeId, @PathParam("likeDate")String likeDate, @PathParam("isRemoved")boolean isRemoved, @PathParam("postId")int postId, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
-        return vibe.likeInsert(likeId, likeDate, isRemoved, postId, senderId, receiverId);
+    public String likeInsert(@PathParam("likeId")int likeId, @PathParam("isRemoved")boolean isRemoved, @PathParam("postId")int postId, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.likeInsert(likeId, isRemoved, postId, senderId, receiverId);
     }
     
-    @Path("likeupdate/{likeId}/{likeDate}/{isRemoved}/{postId}/{senderId}/{receiverId}")
+    @Path("likeupdate/{likeId}/{isRemoved}/{postId}/{senderId}/{receiverId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String likeUpdate(@PathParam("likeId")int likeId, @PathParam("likeDate")String likeDate, @PathParam("isRemoved")boolean isRemoved, @PathParam("postId")int postId, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
-        return vibe.likeUpdate(likeId, likeDate, isRemoved, postId, senderId, receiverId);
+    public String likeUpdate(@PathParam("likeId")int likeId, @PathParam("isRemoved")boolean isRemoved, @PathParam("postId")int postId, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.likeUpdate(likeId, isRemoved, postId, senderId, receiverId);
     }
     
     @Path("likedelete/{likeId}")

@@ -136,8 +136,8 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("postupdate/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{postId, post, caption, is_deleted, likecount, userId})).request().post(null, String.class);
     }
 
-    public String likeUpdate(String likeId, String likeDate, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("likeupdate/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{likeId, likeDate, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
+    public String likeUpdate(String likeId, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("likeupdate/{0}/{1}/{2}/{3}/{4}", new Object[]{likeId, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
     }
 
     public <T> T likeFindById(Class<T> responseType, String likeId) throws ClientErrorException {
@@ -498,8 +498,8 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("ads_user_update/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}", new Object[]{auId, adsContent, description, link, endDate, isRemoved, isExpired, userId, adsId})).request().post(null, String.class);
     }
 
-    public String likeInsert(String likeId, String likeDate, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("likeinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{likeId, likeDate, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
+    public String likeInsert(String likeId, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("likeinsert/{0}/{1}/{2}/{3}/{4}", new Object[]{likeId, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
     }
 
     public String cityDelete(String cityId) throws ClientErrorException {

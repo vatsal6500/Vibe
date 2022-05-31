@@ -108,8 +108,8 @@ public interface VibeSessionBeanLocal {
     public List<Post> postShowAll(); //admin
     
     //Likes
-    public String likeInsert(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId);
-    public String likeUpdate(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId);
+    public String likeInsert(int likeId, boolean isRemoved, int postId, int senderId, int receiverId);
+    public String likeUpdate(int likeId, boolean isRemoved, int postId, int senderId, int receiverId);
     public String likeDelete(int likeId);
     public Likes likeFindById(int likeId);
     public List<Likes> likeShowAll(); //admin

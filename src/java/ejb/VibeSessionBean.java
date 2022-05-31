@@ -1526,7 +1526,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Likes
     @Override
-    public String likeInsert(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId) {
+    public String likeInsert(int likeId, boolean isRemoved, int postId, int senderId, int receiverId) {
         
         try {
 
@@ -1541,7 +1541,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             Likes l = new Likes();
 
             l.setLikeid(likeId);
-            l.setLikeDate(likeDate);
+            l.setLikeDate(new Date());
             l.setIsRemoved(isRemoved);
             l.setPostid(p);
             l.setSenderid(s);
@@ -1568,7 +1568,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public String likeUpdate(int likeId, String likeDate, boolean isRemoved, int postId, int senderId, int receiverId) {
+    public String likeUpdate(int likeId, boolean isRemoved, int postId, int senderId, int receiverId) {
         
         try {
 
@@ -1583,7 +1583,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             Likes l = em.find(Likes.class, likeId);
 
             l.setLikeid(likeId);
-            l.setLikeDate(likeDate);
             l.setIsRemoved(isRemoved);
             l.setPostid(p);
             l.setSenderid(s);
