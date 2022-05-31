@@ -72,12 +72,12 @@ public class Events implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "eventstartdate", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date eventstartdate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "eventenddate", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date eventenddate;
     @Basic(optional = false)
     @NotNull
