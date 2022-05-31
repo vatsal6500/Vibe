@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -43,9 +45,9 @@ public class FriendList implements Serializable {
     private Integer flId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "accepted_datetime", nullable = false, length = 100)
-    private String acceptedDatetime;
+    @Column(name = "accepted_datetime", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date acceptedDatetime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "friend_status", nullable = false)
@@ -64,7 +66,7 @@ public class FriendList implements Serializable {
         this.flId = flId;
     }
 
-    public FriendList(Integer flId, String acceptedDatetime, boolean friendStatus) {
+    public FriendList(Integer flId, Date acceptedDatetime, boolean friendStatus) {
         this.flId = flId;
         this.acceptedDatetime = acceptedDatetime;
         this.friendStatus = friendStatus;
@@ -78,11 +80,11 @@ public class FriendList implements Serializable {
         this.flId = flId;
     }
 
-    public String getAcceptedDatetime() {
+    public Date getAcceptedDatetime() {
         return acceptedDatetime;
     }
 
-    public void setAcceptedDatetime(String acceptedDatetime) {
+    public void setAcceptedDatetime(Date acceptedDatetime) {
         this.acceptedDatetime = acceptedDatetime;
     }
 

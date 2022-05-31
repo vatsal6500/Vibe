@@ -50,7 +50,7 @@ public class GroupMembers implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "becamemember", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date becamemember;
     @JoinColumn(name = "groupid", referencedColumnName = "groupid", nullable = false)
     @ManyToOne(optional = false)

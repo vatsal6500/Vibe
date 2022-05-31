@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -43,9 +45,9 @@ public class Likes implements Serializable {
     private Integer likeid;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "like_date", nullable = false, length = 100)
-    private String likeDate;
+    @Column(name = "like_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date likeDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_removed", nullable = false)
@@ -67,7 +69,7 @@ public class Likes implements Serializable {
         this.likeid = likeid;
     }
 
-    public Likes(Integer likeid, String likeDate, boolean isRemoved) {
+    public Likes(Integer likeid, Date likeDate, boolean isRemoved) {
         this.likeid = likeid;
         this.likeDate = likeDate;
         this.isRemoved = isRemoved;
@@ -81,11 +83,11 @@ public class Likes implements Serializable {
         this.likeid = likeid;
     }
 
-    public String getLikeDate() {
+    public Date getLikeDate() {
         return likeDate;
     }
 
-    public void setLikeDate(String likeDate) {
+    public void setLikeDate(Date likeDate) {
         this.likeDate = likeDate;
     }
 
