@@ -10,6 +10,7 @@ import entity.ActivityFeed;
 import entity.Ads;
 import entity.AdsUser;
 import entity.City;
+import entity.Comments;
 import entity.Country;
 import entity.FriendRequest;
 import entity.GroupMembers;
@@ -740,7 +741,46 @@ public class GenericResource {
         return vibe.friend_request_ShowAll();
     }
     
+    //Comments
     
+    
+    @Path("commentsinsert/{commentId}/{comment}/{isRemoved}/{postId}/{senderId}/{receiverId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String commentsInsert(@PathParam("commentId")int commentId, @PathParam("comment")String comment, @PathParam("isRemoved")boolean isRemoved, @PathParam("postId")int postId, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.commentsInsert(commentId, comment, isRemoved, postId, senderId, receiverId);
+    }
+    
+    @Path("commentsupdate/{commentId}/{comment}/{isRemoved}/{postId}/{senderId}/{receiverId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String commentsUpdate(@PathParam("commentId")int commentId, @PathParam("comment")String comment, @PathParam("isRemoved")boolean isRemoved, @PathParam("postId")int postId, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.commentsUpdate(commentId, comment, isRemoved, postId, senderId, receiverId);
+    }
+    
+    @Path("commentsdelete/{commentId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String commentsdelete(@PathParam("commentId")int commentId) {
+        return vibe.commentsdelete(commentId);
+    }
+    
+    @Path("commentsfindbyid/{commentId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Comments commentsFindById(@PathParam("commentId")int commentId) {
+        return vibe.commentsFindById(commentId);
+    }
+    
+    
+    @Path("commentsshowall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Comments> commentsShowAll() {
+        return vibe.commentsShowAll();
+
+    }
+
     //Login
 
     @Path("vibelogin/{email}/{password}")

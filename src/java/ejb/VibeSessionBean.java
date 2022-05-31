@@ -1928,27 +1928,140 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //Comments
     @Override
     public String commentsInsert(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            User s = em.find(User.class, senderId);
+            User r = em.find(User.class, receiverId);
+            Post p = em.find(Post.class, postId);
+
+            Collection<Comments> csc = s.getCommentsCollection();
+            Collection<Comments> crc = r.getCommentsCollection();
+            Collection<Comments> cpc = p.getCommentsCollection();
+
+            Comments c = new Comments();
+
+            c.setCommentid(commentId);
+            c.setComment(comment);
+            c.setIsRemoved(isRemoved);
+            c.setPostid(p);
+            c.setSenderid(s);
+            c.setReceiverid(r);
+
+            csc.add(c);
+            crc.add(c);
+            cpc.add(c);
+            s.setCommentsCollection(csc);
+            r.setCommentsCollection(crc);
+            p.setCommentsCollection(cpc);
+
+            em.persist(c);
+            em.merge(s);
+            em.merge(r);
+            em.merge(p);
+
+            return "Comment Inserted";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String commentsUpdate(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            User s = em.find(User.class, senderId);
+            User r = em.find(User.class, receiverId);
+            Post p = em.find(Post.class, postId);
+
+            Collection<Comments> csc = s.getCommentsCollection();
+            Collection<Comments> crc = r.getCommentsCollection();
+            Collection<Comments> cpc = p.getCommentsCollection();
+
+            Comments c = em.find(Comments.class, commentId);
+
+            c.setCommentid(commentId);
+            c.setComment(comment);
+            c.setIsRemoved(isRemoved);
+            c.setPostid(p);
+            c.setSenderid(s);
+            c.setReceiverid(r);
+
+            csc.add(c);
+            crc.add(c);
+            cpc.add(c);
+            s.setCommentsCollection(csc);
+            r.setCommentsCollection(crc);
+            p.setCommentsCollection(cpc);
+
+            em.persist(c);
+            em.merge(s);
+            em.merge(r);
+            em.merge(p);
+
+            return "Comment Updated";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String commentsdelete(int commentId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            Comments c = em.find(Comments.class, commentId);
+            em.remove(c);
+            return "Comment Removed";
+
+        } catch (Exception e) {
+
+            return e.getMessage();
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Comments commentsFindById(int commentId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+
+            Comments c = em.find(Comments.class, commentId);
+
+            return c;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Comments> commentsShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         try {
+
+            List<Comments> commentlist = em.createNamedQuery("Comments.findAll")
+                    .getResultList();
+
+           
+            return commentlist;
+
+        } catch (Exception e) {
+
+             System.out.println(e.getMessage());
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Chats

@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author LENOVO
+ * @author pooja
  */
 public class VibeClient {
 
@@ -54,6 +54,12 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T commentsShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("commentsshowall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String stateDelete(String stateId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("statedelete/{0}", new Object[]{stateId})).request().post(null, String.class);
     }
@@ -82,6 +88,10 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("friend_request_update/{0}/{1}/{2}/{3}", new Object[]{frId, status, senderId, receiverId})).request().post(null, String.class);
     }
 
+    public String commentsInsert(String commentId, String comment, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("commentsinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{commentId, comment, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
+    }
+
     public <T> T countryFindByName(Class<T> responseType, String countryName) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("countryfindbyname/{0}", new Object[]{countryName}));
@@ -94,6 +104,10 @@ public class VibeClient {
 
     public String activity_feed_Update(String afId, String senderMsg, String receiverMsg, String targerURL, String isRead, String isDeleted, String senderId, String receiverId, String groupId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("activity_feed_update/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}", new Object[]{afId, senderMsg, receiverMsg, targerURL, isRead, isDeleted, senderId, receiverId, groupId})).request().post(null, String.class);
+    }
+
+    public String commentsUpdate(String commentId, String comment, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("commentsupdate/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{commentId, comment, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
     }
 
     public String stateInsert(String stateId, String stateName, String isActive, String countryId) throws ClientErrorException {
@@ -302,6 +316,12 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T commentsFindById(Class<T> responseType, String commentId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("commentsfindbyid/{0}", new Object[]{commentId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String user_skills_Delete(String usId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("user_skills_delete/{0}", new Object[]{usId})).request().post(null, String.class);
     }
@@ -324,6 +344,10 @@ public class VibeClient {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("user_skills_findbyid/{0}", new Object[]{usId}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String commentsdelete(String commentId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("commentsdelete/{0}", new Object[]{commentId})).request().post(null, String.class);
     }
 
     public String countryDelete(String countryId) throws ClientErrorException {
