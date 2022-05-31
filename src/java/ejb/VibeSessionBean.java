@@ -1847,28 +1847,138 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Friend_List
     @Override
-    public String friend_list_Insert(int flId, String acceptedDateTime, boolean friendStatus, int userId, int friendId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String friend_list_Insert(int flId, boolean friendStatus, int userId, int friendId) {
+        
+        try {
+            
+            User user = em.find(User.class, userId);
+            User friend = em.find(User.class, friendId);
+            
+            Collection<FriendList> userCollection = user.getFriendListCollection();
+            Collection<FriendList> friendCollection = friend.getFriendListCollection();
+            
+            FriendList fl = new FriendList();
+            
+            fl.setFlId(flId);
+            fl.setUserid(user);
+            fl.setFriendid(friend);
+            fl.setAcceptedDatetime(new Date());
+            fl.setFriendStatus(friendStatus);
+            
+            userCollection.add(fl);
+            friendCollection.add(fl);
+            
+            
+            user.setFriendListCollection(userCollection);
+            friend.setFriendListCollection(friendCollection);
+            
+            em.persist(fl);
+            em.merge(user);
+            em.merge(friend);
+            
+            return "Friend List Inserted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String friend_list_Update(int flId, String acceptedDateTime, boolean friendStatus, int userId, int friendId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String friend_list_Update(int flId, boolean friendStatus, int userId, int friendId) {
+        
+        try {
+            
+            User user = em.find(User.class, userId);
+            User friend = em.find(User.class, friendId);
+            
+            Collection<FriendList> userCollection = user.getFriendListCollection();
+            Collection<FriendList> friendCollection = friend.getFriendListCollection();
+            
+            FriendList fl = em.find(FriendList.class, flId);
+            
+            fl.setFlId(flId);
+            fl.setUserid(user);
+            fl.setFriendid(friend);
+            fl.setFriendStatus(friendStatus);
+            
+            userCollection.add(fl);
+            friendCollection.add(fl);
+            
+            
+            user.setFriendListCollection(userCollection);
+            friend.setFriendListCollection(friendCollection);
+            
+            em.persist(fl);
+            em.merge(user);
+            em.merge(friend);
+            
+            return "Friend List Updated";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
     }
 
     @Override
     public String friend_list_Delete(int flId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            FriendList fl = em.find(FriendList.class, flId);
+            
+            fl.setFriendStatus(false);
+            
+            em.merge(fl);
+            
+            return "Friend List deleted";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
     }
 
     @Override
     public FriendList friend_list_FindById(int flId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            return em.find(FriendList.class, flId);
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+            
+        }
     }
 
     @Override
     public List<FriendList> friend_list_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<FriendList> fl = em.createNamedQuery("FriendList.findAll")
+                    .getResultList();
+            
+            return fl;
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+            
+        }
+        
     }
 
     //Events

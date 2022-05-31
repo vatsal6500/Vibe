@@ -128,6 +128,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("ads_user_delete/{0}", new Object[]{auId})).request().post(null, String.class);
     }
 
+    public <T> T friend_list_FindById(Class<T> responseType, String flId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("friendlistfindbyid/{0}", new Object[]{flId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String user_education_Update(String ueId, String instituteName, String joiningDate, String endingDate, String instituteAddress, String userid) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("user_education_update/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{ueId, instituteName, joiningDate, endingDate, instituteAddress, userid})).request().post(null, String.class);
     }
@@ -184,6 +190,10 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public String friend_list_Insert(String flId, String friendStatus, String userId, String friendId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("friendlistinsert/{0}/{1}/{2}/{3}", new Object[]{flId, friendStatus, userId, friendId})).request().post(null, String.class);
+    }
+
     public <T> T commentsFindById(Class<T> responseType, String commentId) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("commentsfindbyid/{0}", new Object[]{commentId}));
@@ -198,6 +208,10 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("groupupdate/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{groupid, groupName, description, membersCount, isDeleted, adminId})).request().post(null, String.class);
     }
 
+    public String friend_list_Delete(String flId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("friendlistdelete/{0}", new Object[]{flId})).request().post(null, String.class);
+    }
+
     public <T> T countryShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("countryshowall");
@@ -210,6 +224,10 @@ public class VibeClient {
 
     public String countryDelete(String countryId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("countrydelete/{0}", new Object[]{countryId})).request().post(null, String.class);
+    }
+
+    public String friend_list_Update(String flId, String friendStatus, String userId, String friendId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("friendlistupdate/{0}/{1}/{2}/{3}", new Object[]{flId, friendStatus, userId, friendId})).request().post(null, String.class);
     }
 
     public String group_member_Delete(String gmId) throws ClientErrorException {
@@ -525,6 +543,12 @@ public class VibeClient {
     public <T> T user_work_FindById(Class<T> responseType, String uwId) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("user_work_findbyid/{0}", new Object[]{uwId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T friend_list_ShowAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("friendlistshowall");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 

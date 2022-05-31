@@ -13,6 +13,7 @@ import entity.City;
 import entity.Comments;
 import entity.Country;
 import entity.Events;
+import entity.FriendList;
 import entity.FriendRequest;
 import entity.GroupMembers;
 import entity.Groups;
@@ -823,6 +824,48 @@ public class GenericResource {
     }
     
     
+    //FriendList
+    
+    @Path("friendlistinsert/{flId}/{friendStatus}/{userId}/{friendId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String friend_list_Insert(@PathParam("flId")int flId, @PathParam("friendStatus")boolean friendStatus, @PathParam("userId")int userId, @PathParam("friendId")int friendId) {
+        return vibe.friend_list_Insert(flId, friendStatus, userId, friendId);
+    }
+    
+    
+    
+    @Path("friendlistupdate/{flId}/{friendStatus}/{userId}/{friendId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String friend_list_Update(@PathParam("flId")int flId, @PathParam("friendStatus")boolean friendStatus, @PathParam("userId")int userId, @PathParam("friendId")int friendId) {
+        return vibe.friend_list_Update(flId, friendStatus, userId, friendId);
+    }
+    
+    
+    
+    @Path("friendlistdelete/{flId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String friend_list_Delete(@PathParam("flId")int flId) {
+        return vibe.friend_list_Delete(flId);
+    }
+    
+    
+    @Path("friendlistfindbyid/{flId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public FriendList friend_list_FindById(@PathParam("flId")int flId) {
+        return vibe.friend_list_FindById(flId);
+    }
+    
+    
+    @Path("friendlistshowall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<FriendList> friend_list_ShowAll() {
+        return vibe.friend_list_ShowAll();
+    }
     
 
     //Login
