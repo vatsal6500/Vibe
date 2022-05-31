@@ -559,6 +559,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                 //parsing string-date to Date
                 Date DOB = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
                 User user = new User(userId, firstName, lastName, DOB, email, hashPassword.getHashPassword(password), isActive, isAdmin, access);
+                user.setRegDate(new Date());
                 em.persist(user);
                 System.out.println("User Registered");
                 return "User Registered";
