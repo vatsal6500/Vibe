@@ -1839,8 +1839,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             
         } catch (Exception e) {
             
-            System.out.println(e.getMessage());
-            
             return null;
         }
         
@@ -1875,31 +1873,142 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Events
     @Override
-    public String eventInsert(int eventId, String eventName, String post, Date eventStartDate, Date eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String eventInsert(int eventId, String eventName, String post, String eventStartDate, String eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId) {
+        
+        try {
+
+            Date sdate = new SimpleDateFormat("yyyy-MM-dd").parse(eventStartDate);
+            Date edate = new SimpleDateFormat("yyyy-MM-dd").parse(eventEndDate);
+            
+            User host = em.find(User.class, hostId);
+
+            Collection<Events> hostCollection = host.getEventsCollection();
+
+            Events e = new Events();
+
+            e.setEventid(eventId);
+            e.setEventname(eventName);
+            e.setPost(post);
+            e.setEventstartdate(sdate);
+            e.setEventenddate(edate);
+            e.setEventinfo(eventInfo);
+            e.setVenue(venue);
+            e.setType(type);
+            e.setFees(fees);
+            e.setMode(mode);
+            e.setGuestcount(guestCount);
+            e.setIsRemoved(is_removed);
+            e.setHostid(host);
+
+            hostCollection.add(e);
+            host.setEventsCollection(hostCollection);
+
+            em.persist(e);
+            em.merge(host);
+
+            return "Event Inserted";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String eventUpdate(int eventId, String eventName, String post, Date eventStartDate, Date eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String eventUpdate(int eventId, String eventName, String post, String eventStartDate, String eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId) {
+        
+        try {
+
+            Date sdate = new SimpleDateFormat("yyyy-MM-dd").parse(eventStartDate);
+            Date edate = new SimpleDateFormat("yyyy-MM-dd").parse(eventEndDate);
+            
+            User host = em.find(User.class, hostId);
+
+            Collection<Events> hostCollection = host.getEventsCollection();
+
+            Events e = em.find(Events.class, eventId);
+
+            e.setEventid(eventId);
+            e.setEventname(eventName);
+            e.setPost(post);
+            e.setEventstartdate(sdate);
+            e.setEventenddate(edate);
+            e.setEventinfo(eventInfo);
+            e.setVenue(venue);
+            e.setType(type);
+            e.setFees(fees);
+            e.setMode(mode);
+            e.setGuestcount(guestCount);
+            e.setIsRemoved(is_removed);
+            e.setHostid(host);
+
+            hostCollection.add(e);
+            host.setEventsCollection(hostCollection);
+
+            em.persist(e);
+            em.merge(host);
+
+            return "Event Updated";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String eventDelete(int eventId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            Events e = em.find(Events.class, eventId);
+            em.remove(e);
+            
+            return "Event Deleted";
+            
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Events eventFindById(int eventId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try {
+             
+            Events e = em.find(Events.class, eventId);
+            
+            return e;
+            
+        } catch (Exception e) {
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Events> eventShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<Events> events = em.createNamedQuery("Events.findAll")
+                    .getResultList();
+            
+            if(events.isEmpty()) {
+                return null;
+            }
+            
+            return events;
+            
+        } catch (Exception e) {
+            
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Events_UserCount
+    
     @Override
     public String event_usercount_Insert(int euc_Id, boolean isIntrested, int eventId, int userId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

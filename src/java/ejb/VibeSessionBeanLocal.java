@@ -131,8 +131,8 @@ public interface VibeSessionBeanLocal {
     public List<FriendList> friend_list_ShowAll();  //admin
     
     //Events
-    public String eventInsert(int eventId, String eventName, String post, Date eventStartDate, Date eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId);
-    public String eventUpdate(int eventId, String eventName, String post, Date eventStartDate, Date eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId);
+    public String eventInsert(int eventId, String eventName, String post, String eventStartDate, String eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId);
+    public String eventUpdate(int eventId, String eventName, String post, String eventStartDate, String eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId);
     public String eventDelete(int eventId);
     public Events eventFindById(int eventId);
     public List<Events> eventShowAll();  //admin

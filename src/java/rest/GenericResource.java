@@ -12,6 +12,7 @@ import entity.AdsUser;
 import entity.City;
 import entity.Comments;
 import entity.Country;
+import entity.Events;
 import entity.FriendRequest;
 import entity.GroupMembers;
 import entity.Groups;
@@ -780,6 +781,49 @@ public class GenericResource {
         return vibe.commentsShowAll();
 
     }
+    
+    //Events
+    
+    
+    @Path("eventinsert/{eventid}/{hostid}/{eventname}/{post}/{eventstartdate}/{eventenddate}/{eventinfo}/{venue}/{type}/{fees}/{mode}/{guestcount}/{isremoved}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String eventInsert(@PathParam("eventid")int eventid, @PathParam("hostid")int hostid, @PathParam("eventname")String eventname, @PathParam("post")String post, @PathParam("eventstartdate")String eventstartdate, @PathParam("eventenddate")String eventenddate, @PathParam("eventinfo")String eventinfo, @PathParam("venue")String venue, @PathParam("type")String type, @PathParam("fees")int fees, @PathParam("mode")String mode, @PathParam("guestcount")int guestcount, @PathParam("isremoved")boolean isremoved) {
+        return vibe.eventInsert(eventid, eventname, post, eventstartdate, eventenddate, eventinfo, venue, type, fees, mode, guestcount, isremoved, hostid);
+    }
+    
+    @Path("eventupdate/{eventid}/{hostid}/{eventname}/{post}/{eventstartdate}/{eventenddate}/{eventinfo}/{venue}/{type}/{fees}/{mode}/{guestcount}/{isremoved}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String eventUpdate(@PathParam("eventid")int eventid, @PathParam("hostid")int hostid, @PathParam("eventname")String eventname, @PathParam("post")String post, @PathParam("eventstartdate")String eventstartdate, @PathParam("eventenddate")String eventenddate, @PathParam("eventinfo")String eventinfo, @PathParam("venue")String venue, @PathParam("type")String type, @PathParam("fees")int fees, @PathParam("mode")String mode, @PathParam("guestcount")int guestcount, @PathParam("isremoved")boolean isremoved) {
+        return vibe.eventUpdate(eventid, eventname, post, eventstartdate, eventenddate, eventinfo, venue, type, fees, mode, guestcount, isremoved, hostid);
+    }
+    
+    @Path("eventdelete/{eventId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String eventDelete(@PathParam("eventId")int eventId) {
+        return vibe.eventDelete(eventId);
+    }
+    
+    @Path("eventfindbyid/{eventId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Events eventFindById(@PathParam("eventId")int eventId) {
+        return vibe.eventFindById(eventId);
+    }
+    
+    
+    @Path("eventshowall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Events> eventShowAll() {
+        return vibe.eventShowAll();
+
+    }
+    
+    
+    
 
     //Login
 
