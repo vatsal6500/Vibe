@@ -272,8 +272,8 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public String userUpdate(String userId, String firstName, String middleName, String lastName, String gender, String dob, String pincode, String email, String username, String password, String mobile, String profilePhoto, String coverPhoto, String isActive, String isAdmin, String access, String countryId, String stateId, String cityId) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("userupdate/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}/{13}/{14}/{15}/{16}/{17}/{18}", new Object[]{userId, firstName, middleName, lastName, gender, dob, pincode, email, username, password, mobile, profilePhoto, coverPhoto, isActive, isAdmin, access, countryId, stateId, cityId})).request().post(null, String.class);
+    public String userUpdate(String userId, String firstName, String middleName, String lastName, String gender, String dob, String email, String username, String password, String mobile, String profilePhoto, String coverPhoto, String countryId, String stateId, String cityId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("userupdate/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}/{13}/{14}", new Object[]{userId, firstName, middleName, lastName, gender, dob, email, username, password, mobile, profilePhoto, coverPhoto, countryId, stateId, cityId})).request().post(null, String.class);
     }
 
     public <T> T ads_user_ShowAll(Class<T> responseType) throws ClientErrorException {

@@ -50,7 +50,7 @@ public interface VibeSessionBeanLocal {
     
     //User
     public String userRegister(int userId, String firstName, String lastName, String dob, String email, String password, boolean isActive, boolean isAdmin, boolean access);
-    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, int countryId, int stateId, int cityId);
+    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, String dob, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, int countryId, int stateId, int cityId);
     public String userDelete(int userId); //admin
     public User userFindById(int userId);
     public List<User> userFindByName(String userName);

@@ -25,6 +25,7 @@ import entity.UserContactInfo;
 import entity.UserEducation;
 import entity.UserSkills;
 import entity.UserWork;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -218,11 +219,17 @@ public class GenericResource {
         return vibe.userRegister(userId, firstName, lastName, dob, email, password, isActive, isAdmin, access);
     }
     
-    @Path("userupdate/{userId}/{firstName}/{middleName}/{lastName}/{gender}/{dob}/{pincode}/{email}/{username}/{password}/{mobile}/{profilePhoto}/{coverPhoto}/{isActive}/{isAdmin}/{access}/{countryId}/{stateId}/{cityId}")
+    @Path("userupdate/{userId}/{firstName}/{middleName}/{lastName}/{gender}/{dob}/{email}/{username}/{password}/{mobile}/{profilePhoto}/{coverPhoto}/{countryId}/{stateId}/{cityId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String userUpdate(@PathParam("userId")int userId, @PathParam("firstName")String firstName, @PathParam("middleName")String middleName, @PathParam("lastName")String lastName, @PathParam("gender")String gender, @PathParam("dob")Date dob, @PathParam("pincode")int pincode, @PathParam("email")String email, @PathParam("username")String username, @PathParam("password")String password, @PathParam("mobile")long mobile, @PathParam("profilePhoto")String profilePhoto, @PathParam("coverPhoto")String coverPhoto, @PathParam("isActive")boolean isActive, @PathParam("isAdmin")boolean isAdmin, @PathParam("access")boolean access, @PathParam("countryId")int countryId, @PathParam("stateId")int stateId, @PathParam("cityId")int cityId) {
-        return vibe.userUpdate(userId, firstName, middleName, lastName, gender, dob, pincode, email, username, password, mobile, profilePhoto, coverPhoto, isActive, isAdmin, access, countryId, stateId, cityId);
+    public String userUpdate(@PathParam("userId")int userId, @PathParam("firstName")String firstName, @PathParam("middleName")String middleName, @PathParam("lastName")String lastName, @PathParam("gender")String gender, @PathParam("dob")String dob, @PathParam("email")String email, @PathParam("username")String username, @PathParam("password")String password, @PathParam("mobile")long mobile, @PathParam("profilePhoto")String profilePhoto, @PathParam("coverPhoto")String coverPhoto, @PathParam("countryId")int countryId, @PathParam("stateId")int stateId, @PathParam("cityId")int cityId) {
+        
+        
+//        String directoryPath = System.getProperty("user.dir");
+//        String profilePath = directoryPath + "/Posts/" + userId + "/Profile/" + new Date() + profilePhoto;
+//        String coverPath = directoryPath + "/Posts/" + userId + "/Cover/" + new Date() + profilePhoto;
+        
+        return vibe.userUpdate(userId, firstName, middleName, lastName, gender, dob, email, username, password, mobile, profilePhoto, coverPhoto, countryId, stateId, cityId);
     }
     
     @Path("userdelete/{userId}")

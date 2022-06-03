@@ -577,10 +577,52 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, Date dob, int pincode, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, boolean isActive, boolean isAdmin, boolean access, int countryId, int stateId, int cityId) {
+    public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, String dob, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, int countryId, int stateId, int cityId) {
 
         try {
-
+            
+            Country country = em.find(Country.class, countryId);
+            State state = em.find(State.class, stateId);
+            City city = em.find(City.class, cityId);
+            
+            Collection<User> countryCollection = country.getUserCollection();
+            Collection<User> stateCollection = state.getUserCollection();
+            Collection<User> cityCollection = city.getUserCollection();
+            
+            User user = em.find(User.class, userId);
+            
+            user.setUserid(userId);
+            user.setFirstname(firstName);
+            user.setMiddlename(middleName);
+            user.setLastname(lastName);
+            user.setGender(gender);
+            
+            Date DOB = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
+            user.setDob(DOB);
+            
+            user.setEmail(email);
+            user.setUsername(username);
+            user.setPassword(hashPassword.getHashPassword(password));
+            user.setMobile(mobile);
+            user.setProfilephoto(profilePhoto);
+            user.setCoverphoto(coverPhoto);
+            user.setCountryid(country);
+            user.setStateid(state);
+            user.setCityid(city);
+            
+            countryCollection.add(user);
+            stateCollection.add(user);
+            cityCollection.add(user);
+            
+            country.setUserCollection(countryCollection);
+            state.setUserCollection(stateCollection);
+            city.setUserCollection(cityCollection);
+            
+            em.persist(user);
+            em.merge(country);
+            em.merge(state);
+            em.merge(city);
+            
             return "User Updated";
 
         } catch (Exception e) {
