@@ -1,4 +1,4 @@
-/*!
+c/*!
 *
 * Template: SocialV - Responsive Bootstrap 4 Admin Dashboard Template
 * Author: iqonic.design
@@ -5400,7 +5400,27 @@ fieldset:disabled .btn {
     color: #fff
 }
 
+.text_poppins{
+    font-family: Poppins, sans-serif;
+}
+
 .card {
+    position: relative;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0, 0, 0, .125);
+    border-radius: 5px;
+}
+
+.admin_card {
     position: absolute;
     margin-right: 50px;
     display: -webkit-flex;
@@ -5414,7 +5434,7 @@ fieldset:disabled .btn {
     background-color: #fff;
     background-clip: border-box;
     border: 0 solid rgba(0, 0, 0, .125);
-    border-radius: 5px
+    border-radius: 5px;
 }
 
 .card>hr {
