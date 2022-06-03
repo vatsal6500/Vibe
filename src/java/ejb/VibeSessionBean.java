@@ -1240,6 +1240,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             g.setDescription(description);
             g.setMemberscount(membersCount);
             g.setIsDeleted(isDeleted);
+            g.setCreateDate(new Date());
 
             gc.add(g);
             u.setGroupsCollection(gc);
@@ -1349,8 +1350,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            Date mdate = new SimpleDateFormat("yyyy-MM-dd").parse(becameMember);
-
             User u = em.find(User.class, memberId);
             Groups g = em.find(Groups.class, groupId);
 
@@ -1361,7 +1360,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             gm.setGmId(gmId);
             gm.setIsMember(isMember);
-            gm.setBecamemember(mdate);
+            gm.setBecamemember(new Date());
             gm.setGroupid(g);
             gm.setMemberid(u);
 
@@ -1494,6 +1493,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             p.setCaption(caption);
             p.setIsDeleted(is_deleted);
             p.setLikecount(likeCount);
+            p.setUploadDate(new Date());
             p.setUserid(u);
             p.setGroupid(null);
 
@@ -2084,6 +2084,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             e.setEventstartdate(sdate);
             e.setEventenddate(edate);
             e.setEventinfo(eventInfo);
+            e.setRegDate(new Date());
             e.setVenue(venue);
             e.setType(type);
             e.setFees(fees);
@@ -2347,6 +2348,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             c.setCommentid(commentId);
             c.setComment(comment);
             c.setIsRemoved(isRemoved);
+            c.setCommentDate(new Date());
             c.setPostid(p);
             c.setSenderid(s);
             c.setReceiverid(r);
@@ -2504,7 +2506,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             au.setAdscontent(adsContent);
             au.setDescription(description);
             au.setLink(link);
-            //au.setStartdate(sdate);
+            au.setStartdate(new Date());
             au.setEnddate(endDate);
             au.setIsRemoved(isRemoved);
             au.setIsExpried(isExpired);
@@ -2750,6 +2752,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             af.setSendermessage(senderMsg);
             af.setReceivermessage(receiverMsg);
             af.setTargetUrl(targerURL);
+            af.setActivityDate(new Date());
             af.setIsRead(isRead);
             af.setIsDeleted(isDeleted);
             af.setSenderid(r);
