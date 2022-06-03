@@ -679,6 +679,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<User> user = em.createNamedQuery("User.findAll")
                     .getResultList();
+            
+            if(user.isEmpty()) {
+                return null;
+            }
 
             return user;
 
@@ -835,10 +839,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            List<UserContactInfo> user = em.createNamedQuery("UserContactInfo.findAll")
+            List<UserContactInfo> usercontact = em.createNamedQuery("UserContactInfo.findAll")
                     .getResultList();
+            
+            if(usercontact.isEmpty()) {
+                return null;
+            }
 
-            return user;
+            return usercontact;
 
         } catch (Exception e) {
 
@@ -956,10 +964,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            List<UserEducation> user = em.createNamedQuery("UserEducation.findAll")
+            List<UserEducation> usered = em.createNamedQuery("UserEducation.findAll")
                     .getResultList();
+            
+            if(usered.isEmpty()) {
+                return null;
+            }
 
-            return user;
+            return usered;
 
         } catch (Exception e) {
 
@@ -1069,10 +1081,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            List<UserSkills> user = em.createNamedQuery("UserSkills.findAll")
+            List<UserSkills> userskill = em.createNamedQuery("UserSkills.findAll")
                     .getResultList();
+            
+            if(userskill.isEmpty()) {
+                return null;
+            }
 
-            return user;
+            return userskill;
 
         } catch (Exception e) {
 
@@ -1190,10 +1206,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            List<UserWork> user = em.createNamedQuery("UserWork.findAll")
+            List<UserWork> userwork = em.createNamedQuery("UserWork.findAll")
                     .getResultList();
+            
+            if(userwork.isEmpty()) {
+                return null;
+            }
 
-            return user;
+            return userwork;
 
         } catch (Exception e) {
 
@@ -1272,7 +1292,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             Groups g = em.find(Groups.class, groupId);
-            em.remove(g);
+            g.setIsDeleted(true);
+            em.merge(g);
             return "Group Deleted";
 
         } catch (Exception e) {
@@ -1307,6 +1328,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<Groups> group = em.createNamedQuery("Groups.findAll")
                     .getResultList();
+            
+            if(group.isEmpty()) {
+                return null;
+            }
 
             return group;
 
@@ -1401,7 +1426,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             GroupMembers g = em.find(GroupMembers.class, gmId);
-            em.remove(g);
+            g.setIsMember(false);
+            em.merge(g);
             return "Group Member Removed";
 
         } catch (Exception e) {
@@ -1434,10 +1460,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            List<GroupMembers> group = em.createNamedQuery("GroupMembers.findAll")
+            List<GroupMembers> groupmember = em.createNamedQuery("GroupMembers.findAll")
                     .getResultList();
+            
+            if(groupmember.isEmpty()) {
+                return null;
+            }
 
-            return group;
+            return groupmember;
 
         } catch (Exception e) {
 
@@ -1520,7 +1550,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             Post p = em.find(Post.class, postId);
-            em.remove(p);
+            p.setIsDeleted(true);
+            em.merge(p);
             return "Post Removed";
 
         } catch (Exception e) {
@@ -1555,6 +1586,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<Post> posts = em.createNamedQuery("Post.findAll")
                     .getResultList();
+            
+            if(posts.isEmpty()) {
+                return null;
+            }
 
             return posts;
 
@@ -1656,7 +1691,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             Likes l = em.find(Likes.class, likeId);
-            em.remove(l);
+            l.setIsRemoved(true);
+            em.merge(l);
             return "Like Removed";
 
         } catch (Exception e) {
@@ -1691,6 +1727,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<Likes> likelist = em.createNamedQuery("Likes.findAll")
                     .getResultList();
+            
+            if(likelist.isEmpty()) {
+                return null;
+            }
 
             return likelist;
 
@@ -2114,7 +2154,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
             
             Events e = em.find(Events.class, eventId);
-            em.remove(e);
+            e.setIsRemoved(true);
+            em.merge(e);
             
             return "Event Deleted";
             
@@ -2163,27 +2204,128 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     
     @Override
     public String event_usercount_Insert(int euc_Id, boolean isIntrested, int eventId, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User u = em.find(User.class, userId);
+            Events e = em.find(Events.class, eventId);
+
+            Collection<EventUsercount> userCollection = u.getEventUsercountCollection();
+            Collection<EventUsercount> eventCollection = e.getEventUsercountCollection();
+
+            EventUsercount eu = new EventUsercount();
+
+            eu.setEucId(euc_Id);
+            eu.setIsInterested(isIntrested);
+            eu.setEventid(e);
+            eu.setUserid(u);
+
+            userCollection.add(eu);
+            eventCollection.add(eu);
+            u.setEventUsercountCollection(userCollection);
+            e.setEventUsercountCollection(eventCollection);
+
+            em.persist(eu);
+            em.merge(u);
+            em.merge(e);
+
+            return "Event User Count Inserted";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String event_usercount_Update(int euc_Id, boolean isIntrested, int eventId, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User u = em.find(User.class, userId);
+            Events e = em.find(Events.class, eventId);
+
+            Collection<EventUsercount> userCollection = u.getEventUsercountCollection();
+            Collection<EventUsercount> eventCollection = e.getEventUsercountCollection();
+
+            EventUsercount eu = em.find(EventUsercount.class, euc_Id);
+
+            eu.setEucId(euc_Id);
+            eu.setIsInterested(isIntrested);
+            eu.setEventid(e);
+            eu.setUserid(u);
+
+            userCollection.add(eu);
+            eventCollection.add(eu);
+            u.setEventUsercountCollection(userCollection);
+            e.setEventUsercountCollection(eventCollection);
+
+            em.persist(eu);
+            em.merge(u);
+            em.merge(e);
+
+            return "Event User Count Updated";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String event_usercount_Delete(int euc_Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+             
+            EventUsercount eu = em.find(EventUsercount.class, euc_Id);
+            eu.setIsInterested(false);
+            em.merge(eu);
+            
+            return "Event User Count Deleted";
+                
+        } catch (Exception e) {
+            
+            return e.getMessage();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public EventUsercount event_usercount_FindById(int euc_Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         try {
+             
+            EventUsercount eu = em.find(EventUsercount.class, euc_Id);
+            return eu;
+                
+        } catch (Exception e) {
+            
+            return null;
+        }
+         
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<EventUsercount> event_usercount_ShowAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            List<EventUsercount> eventusers = em.createNamedQuery("EventUsercount.findAll")
+                    .getResultList();
+            
+            if(eventusers.isEmpty()) {
+                return null;
+            }
+            
+            return eventusers;
+            
+        } catch (Exception e) {
+            
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Comments
@@ -2277,7 +2419,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             Comments c = em.find(Comments.class, commentId);
-            em.remove(c);
+            c.setIsRemoved(true);
+            em.merge(c);
             return "Comment Removed";
 
         } catch (Exception e) {
@@ -2313,6 +2456,9 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             List<Comments> commentlist = em.createNamedQuery("Comments.findAll")
                     .getResultList();
 
+            if(commentlist.isEmpty()) {
+                return null;
+            }
            
             return commentlist;
 
@@ -2435,7 +2581,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             AdsUser au = em.find(AdsUser.class, auId);
-            em.remove(au);
+            au.setIsRemoved(true);
+            em.merge(au);
             return "User Ads Removed";
 
         } catch (Exception e) {
@@ -2470,6 +2617,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<AdsUser> userads = em.createNamedQuery("AdsUser.findAll")
                     .getResultList();
+            
+            if(userads.isEmpty()) {
+                return null;
+            }
 
             return userads;
 
@@ -2536,7 +2687,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             Ads a = em.find(Ads.class, adsId);
-            em.remove(a);
+            a.setIsRemoved(true);
+            em.merge(a);
 
             return "Ad Removed";
 
@@ -2566,6 +2718,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
             List<Ads> ad = em.createNamedQuery("Ads.findAll")
                     .getResultList();
+            
+            if(ad.isEmpty()) {
+                return null;
+            }
 
             return ad;
         } catch (Exception e) {
@@ -2671,7 +2827,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             ActivityFeed af = em.find(ActivityFeed.class, afId);
-            em.remove(af);
+            af.setIsDeleted(true);
+            em.merge(af);
             return "Activity Feed Removed";
 
         } catch (Exception e) {
@@ -2706,6 +2863,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<ActivityFeed> feed = em.createNamedQuery("ActivityFeed.findAll")
                     .getResultList();
+            
+            if(feed.isEmpty()) {
+                return null;
+            }
 
             return feed;
 

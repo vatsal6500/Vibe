@@ -12,6 +12,7 @@ import entity.AdsUser;
 import entity.City;
 import entity.Comments;
 import entity.Country;
+import entity.EventUsercount;
 import entity.Events;
 import entity.FriendList;
 import entity.FriendRequest;
@@ -830,7 +831,6 @@ public class GenericResource {
 
     }
     
-    
     //FriendList
     
     @Path("friendlistinsert/{flId}/{friendStatus}/{userId}/{friendId}")
@@ -873,7 +873,46 @@ public class GenericResource {
     public List<FriendList> friend_list_ShowAll() {
         return vibe.friend_list_ShowAll();
     }
+
+    //Events User Counts
     
+    
+    @Path("event_usercount_insert/{eucId}/{isIntrested}/{eventId}/{userId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String event_usercount_Insert(@PathParam("eucId")int eucId, @PathParam("isIntrested")boolean isIntrested, @PathParam("eventId")int eventId, @PathParam("userId")int userId) {
+        return vibe.event_usercount_Insert(eucId, isIntrested, eventId, userId);
+    }
+    
+    @Path("event_usercount_update/{eucId}/{isIntrested}/{eventId}/{userId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String event_usercount_Update(@PathParam("eucId")int eucId, @PathParam("isIntrested")boolean isIntrested, @PathParam("eventId")int eventId, @PathParam("userId")int userId) {
+        return vibe.event_usercount_Update(eucId, isIntrested, eventId, userId);
+    }
+    
+    @Path("event_usercount_delete/{eucId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String event_usercount_Delete(@PathParam("eucId")int eucId) {
+        return vibe.event_usercount_Delete(eucId);
+    }
+    
+    @Path("event_usercount_findbyid/{eucId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public EventUsercount event_usercount_FindById(@PathParam("eucId")int eucId) {
+        return vibe.event_usercount_FindById(eucId);
+    }
+    
+    
+    @Path("event_usercount_showall")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<EventUsercount> event_usercount_ShowAll() {
+        return vibe.event_usercount_ShowAll();
+
+    }
 
     //Login
 
