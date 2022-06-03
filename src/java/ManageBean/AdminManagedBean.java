@@ -7,6 +7,8 @@ package ManageBean;
 
 import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
+import entity.Ads;
+import entity.AdsUser;
 import entity.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -312,6 +314,8 @@ public class AdminManagedBean {
     
     //Private Methods ends
     //Public Methods
+    
+    //USER
     public List<User> userShowAll() {
         Response response = vibeClient.userShowAll(Response.class);
         ArrayList<User> userArrayList = new ArrayList<>();
@@ -337,6 +341,31 @@ public class AdminManagedBean {
         setVariable(user);
         
     }
+    
+    //ADS
+    
+    public List<Ads> adsShowAll() {
+        Response response = vibeClient.adsShowAll(Response.class);
+        ArrayList<Ads> adsArrayList = new ArrayList<>();
+        GenericType<List<Ads>> showAllAds = new GenericType<List<Ads>>() {
+        };
+        adsArrayList = (ArrayList<Ads>) response.readEntity(showAllAds);
+        return adsArrayList;
+    }
+    
+    //USER ADS
+    
+    
+    public List<AdsUser> adsuserShowAll() {
+        Response response = vibeClient.ads_user_ShowAll(Response.class);
+        ArrayList<AdsUser> useradsArrayList = new ArrayList<>();
+        GenericType<List<AdsUser>> showAllUserAds = new GenericType<List<AdsUser>>() {
+        };
+        useradsArrayList = (ArrayList<AdsUser>) response.readEntity(showAllUserAds
+        );
+        return useradsArrayList;
+    }
+    
             
     //Public Methods ends
 }
