@@ -21,6 +21,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
@@ -363,8 +364,13 @@ public class AdminManagedBean {
     }
     
     
-     public void deletead(String id) {
-        vibeClient.adsDelete(id);
+     public void deletead(int id) {
+        try {
+            vibeClient.adsDelete(String.valueOf(id));
+            
+        } catch (ClientErrorException e) {
+            e.getMessage();
+        }
     }
     
     
