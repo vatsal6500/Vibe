@@ -9,6 +9,8 @@ import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
 import entity.Ads;
 import entity.AdsUser;
+import entity.Events;
+import entity.Groups;
 import entity.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -337,9 +339,7 @@ public class AdminManagedBean {
         Response response = vibeClient.userFindById(Response.class, id);
         GenericType<User> userById = new GenericType<User>() {};
         User user = response.readEntity(userById);
-        
         setVariable(user);
-        
     }
     
     //ADS
@@ -353,6 +353,22 @@ public class AdminManagedBean {
         return adsArrayList;
     }
     
+    public List<Ads> adsfindById(String id) {
+        Response response = vibeClient.adsFindById(Response.class, id);
+        ArrayList<Ads> adsArrayList = new ArrayList<>();
+        GenericType<List<Ads>> showAllAds = new GenericType<List<Ads>>() {
+        };
+        adsArrayList = (ArrayList<Ads>) response.readEntity(showAllAds);
+        return adsArrayList;
+    }
+    
+    
+     public void deletead(String id) {
+        vibeClient.adsDelete(id);
+    }
+    
+    
+    
     //USER ADS
     
     
@@ -364,6 +380,30 @@ public class AdminManagedBean {
         useradsArrayList = (ArrayList<AdsUser>) response.readEntity(showAllUserAds
         );
         return useradsArrayList;
+    }
+    
+    //EVENTS
+    
+    public List<Events> eventsShowAll() {
+        Response response = vibeClient.eventShowAll(Response.class);
+        ArrayList<Events> eventsArrayList = new ArrayList<>();
+        GenericType<List<Events>> showAllEvents = new GenericType<List<Events>>() {
+        };
+        eventsArrayList = (ArrayList<Events>) response.readEntity(showAllEvents
+        );
+        return eventsArrayList;
+    }
+    
+    //GROUPS
+    
+    public List<Groups> groupsShowAll() {
+        Response response = vibeClient.groupShowAll(Response.class);
+        ArrayList<Groups> groupsArrayList = new ArrayList<>();
+        GenericType<List<Groups>> showAllGroups = new GenericType<List<Groups>>() {
+        };
+        groupsArrayList = (ArrayList<Groups>) response.readEntity(showAllGroups
+        );
+        return groupsArrayList;
     }
     
             

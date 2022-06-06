@@ -8,7 +8,7 @@
        xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
-        <title>Admin | Home</title>
+        <title>Admin | Ads</title>
         <ui:include src="includes/css.xhtml" />
         
     </h:head>
@@ -35,50 +35,43 @@
                         <div class="admin_card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Vibe User</h4>
+                                    <h4 class="card-title">Events</h4>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <h:dataTable class="table table-striped table-bordered" value="#{adminManagedBean.userShowAll()}" var="item">
+                                    <h:dataTable class="table table-striped table-bordered" value="#{adminManagedBean.eventsShowAll()}" var="ev">
                                         <h:column>
-                                            <f:facet name="header">Profile</f:facet>
-                                                #{item.profilephoto}
+                                            <f:facet name="header">Event Name</f:facet>
+                                                #{ev.eventname}
                                         </h:column>
                                         <h:column>
-                                            <f:facet name="header">Full Name</f:facet>
-                                                #{item.firstname} #{item.lastname}
+                                            <f:facet name="header">Host</f:facet>
+                                                #{ev.hostid.firstname} #{ev.hostid.lastname} 
                                         </h:column>
                                         <h:column>
-                                            <f:facet name="header">Gender</f:facet>
-                                                #{item.gender}
+                                            <f:facet name="header">Start Date</f:facet>
+                                                #{ev.eventstartdate} 
                                         </h:column>
                                         <h:column>
-                                            <f:facet name="header">Email</f:facet>
-                                                #{item.email}
+                                            <f:facet name="header">End Date</f:facet>
+                                                #{ev.eventenddate}
                                         </h:column>
                                         <h:column>
-                                            <f:facet name="header">User Name</f:facet>
-                                                #{item.username}
+                                            <f:facet name="header">Venue</f:facet>
+                                                #{ev.venue}
                                         </h:column>
                                         <h:column>
-                                            <f:facet name="header">Mobile</f:facet>
-                                                #{item.mobile}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Active</f:facet>
-                                                #{item.isactive}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">State</f:facet>
-                                                #{item.stateid.statename}
-                                        </h:column>
+                                            <f:facet name="header">Fees</f:facet>
+                                                #{ev.fees}
+                                        </h:column>  
                                         <h:column>
                                             <f:facet name="header">Info</f:facet>
-                                                <a href="userinfo.xhtml" class=" ">
+                                                <a href="eventinfo.xhtml" class=" ">
                                                     <span>Know More</span>
                                                  </a>
                                         </h:column>
+                                        
                                     </h:dataTable>
                                 </div>
                             </div>
@@ -91,9 +84,8 @@
         </div>
         <!-- Wrapper End-->
 
-
         <!-- Scripts -->
-        <ui:include src="includes/bottomscript.xhtml" />
+        <ui:include src="includes/bottomscript.xhtml" />      
         
         
     </h:body>
