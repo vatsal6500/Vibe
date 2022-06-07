@@ -2689,11 +2689,22 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             Ads a = em.find(Ads.class, adsId);
-            a.setIsRemoved(true);
-            em.merge(a);
+            
+            if(a.getIsRemoved() == true) {
+                a.setIsRemoved(false);
+                em.merge(a);
 
-            return "Ad Removed";
+                return "Ad Added Again";
+            }
+            if(a.getIsRemoved() == false) {
+                a.setIsRemoved(true);
+                em.merge(a);
 
+                return "Ad Removed";
+            }
+            
+            return "null";
+            
         } catch (Exception e) {
             return e.getMessage();
         }
