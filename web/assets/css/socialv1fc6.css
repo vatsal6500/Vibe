@@ -5421,7 +5421,7 @@ fieldset:disabled .btn {
 }
 
 .admin_card {
-    position: fixed;
+    position: absolute;
     width: 1200px;
 /*    margin-right: 50px;*/
     display: -webkit-flex;
