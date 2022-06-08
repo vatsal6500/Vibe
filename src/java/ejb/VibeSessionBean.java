@@ -2636,7 +2636,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Ads
     @Override
-    public String adsInsert(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved) {
+    public void adsInsert(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved) {
 
         try {
 
@@ -2651,10 +2651,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             em.persist(a);
 
-            return "Ads Created";
 
         } catch (Exception e) {
-            return e.getMessage();
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

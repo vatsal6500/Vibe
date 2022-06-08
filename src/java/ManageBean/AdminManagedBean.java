@@ -60,6 +60,53 @@ public class AdminManagedBean {
     private String isadmin;
     private String access;
     private String req_date;
+    
+    private String ads_id;
+
+    public String getAds_id() {
+        return ads_id;
+    }
+
+    public void setAds_id(String ads_id) {
+        this.ads_id = ads_id;
+    }
+    private String adstype;
+    private String price;
+    private String timelimit;
+    private String description;
+
+    public String getAdstype() {
+        return adstype;
+    }
+
+    public void setAdstype(String adstype) {
+        this.adstype = adstype;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getTimelimit() {
+        return timelimit;
+    }
+
+    public void setTimelimit(String timelimit) {
+        this.timelimit = timelimit;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
 
     //Declare Variable ends
     
@@ -336,6 +383,14 @@ public class AdminManagedBean {
         setVariable(user);
     }
     
+    public void showUserWork() {
+        Response response = vibeClient.userFindById(Response.class, userid);
+        GenericType<User> userById = new GenericType<User>() {};
+        User user = response.readEntity(userById);
+        
+        setVariable(user);
+    }
+    
     public void findById(String id) {
         Response response = vibeClient.userFindById(Response.class, id);
         GenericType<User> userById = new GenericType<User>() {};
@@ -367,10 +422,14 @@ public class AdminManagedBean {
      public void deletead(int id) {
         try {
             vibeClient.adsDelete(String.valueOf(id));
-            
         } catch (ClientErrorException e) {
             e.getMessage();
         }
+    }
+     
+     public String insertads(){
+             vibeClient.adsInsert("0", adstype, price, timelimit, description, "false");
+             return "/admin/ads.xhtml?faces-redirect=true";
     }
     
     

@@ -165,7 +165,7 @@ public interface VibeSessionBeanLocal {
     public List<AdsUser> ads_user_ShowAll();  //admin
     
     //Ads
-    public String adsInsert(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved);
+    public void adsInsert(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved);
     public String adsUpdate(int adsId, String adsType, int price, String timeLimit, String description, boolean isRemoved);
     public String adsDelete(int adsId);
     public Ads adsFindById(int adsId);

@@ -36,7 +36,7 @@
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
                                     <h4 class="card-title">Advertisements</h4>
-                                    <span><button type="button" class="btn btn-success btn-rounded btn-sm my-0">Add New</button></span>
+                                    <a href="addads.xhtml"><button type="button" class="btn btn-success btn-rounded btn-sm my-0">Add New</button></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -65,7 +65,7 @@
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">Action</f:facet>
-                                                <h:commandButton id="btn_delete" class="btn btn-danger btn-rounded btn-sm my-0" action="#{adminManagedBean.deletead(item.adsId)}" value="Remove"/>
+                                                    <h:commandButton id="btn_delete" class="btn btn-danger btn-rounded btn-sm my-0" action="#{adminManagedBean.deletead(item.adsId)}" value="Update Status"/>
                                             </h:column>
                                         </h:dataTable>
                                     </h:form>

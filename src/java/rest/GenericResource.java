@@ -545,8 +545,8 @@ public class GenericResource {
     @Path("adsinsert/{adsId}/{adsType}/{price}/{timeLimit}/{description}/{isRemoved}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String adsInsert(@PathParam("adsId")int adsId, @PathParam("adsType")String adsType, @PathParam("price")int price, @PathParam("timeLimit")String timeLimit, @PathParam("description")String description, @PathParam("isRemoved")boolean isRemoved) {
-        return vibe.adsInsert(adsId, adsType, price, timeLimit, description, isRemoved);
+    public void adsInsert(@PathParam("adsId")int adsId, @PathParam("adsType")String adsType, @PathParam("price")int price, @PathParam("timeLimit")String timeLimit, @PathParam("description")String description, @PathParam("isRemoved")boolean isRemoved) {
+         vibe.adsInsert(adsId, adsType, price, timeLimit, description, isRemoved);
     }
     
     @Path("adsupdate/{adsId}/{adsType}/{price}/{timeLimit}/{description}/{isRemoved}")
