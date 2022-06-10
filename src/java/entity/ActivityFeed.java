@@ -34,12 +34,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ActivityFeed.findAll", query = "SELECT a FROM ActivityFeed a"),
     @NamedQuery(name = "ActivityFeed.findByAfId", query = "SELECT a FROM ActivityFeed a WHERE a.afId = :afId"),
+    @NamedQuery(name = "ActivityFeed.findByDescription", query = "SELECT a FROM ActivityFeed a WHERE a.description = :description"),
     @NamedQuery(name = "ActivityFeed.findBySendermessage", query = "SELECT a FROM ActivityFeed a WHERE a.sendermessage = :sendermessage"),
     @NamedQuery(name = "ActivityFeed.findByReceivermessage", query = "SELECT a FROM ActivityFeed a WHERE a.receivermessage = :receivermessage"),
     @NamedQuery(name = "ActivityFeed.findByTargetUrl", query = "SELECT a FROM ActivityFeed a WHERE a.targetUrl = :targetUrl"),
     @NamedQuery(name = "ActivityFeed.findByActivityDate", query = "SELECT a FROM ActivityFeed a WHERE a.activityDate = :activityDate"),
     @NamedQuery(name = "ActivityFeed.findByIsRead", query = "SELECT a FROM ActivityFeed a WHERE a.isRead = :isRead"),
-    @NamedQuery(name = "ActivityFeed.findByIsDeleted", query = "SELECT a FROM ActivityFeed a WHERE a.isDeleted = :isDeleted")})
+    @NamedQuery(name = "ActivityFeed.findByIsDeleted", query = "SELECT a FROM ActivityFeed a WHERE a.isDeleted = :isDeleted"),
+    @NamedQuery(name = "ActivityFeed.findByActivityType", query = "SELECT a FROM ActivityFeed a WHERE a.activityType = :activityType")})
 public class ActivityFeed implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +50,9 @@ public class ActivityFeed implements Serializable {
     @Basic(optional = false)
     @Column(name = "af_id", nullable = false)
     private Integer afId;
+    @Size(max = 1000)
+    @Column(name = "description", length = 1000)
+    private String description;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1000)
@@ -74,6 +79,11 @@ public class ActivityFeed implements Serializable {
     @NotNull
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "activity_type", nullable = false, length = 45)
+    private String activityType;
     @JoinColumn(name = "groupid", referencedColumnName = "groupid")
     @ManyToOne
     private Groups groupid;
@@ -91,13 +101,14 @@ public class ActivityFeed implements Serializable {
         this.afId = afId;
     }
 
-    public ActivityFeed(Integer afId, String sendermessage, String receivermessage, String targetUrl, boolean isRead, boolean isDeleted) {
+    public ActivityFeed(Integer afId, String sendermessage, String receivermessage, String targetUrl, boolean isRead, boolean isDeleted, String activityType) {
         this.afId = afId;
         this.sendermessage = sendermessage;
         this.receivermessage = receivermessage;
         this.targetUrl = targetUrl;
         this.isRead = isRead;
         this.isDeleted = isDeleted;
+        this.activityType = activityType;
     }
 
     public Integer getAfId() {
@@ -106,6 +117,14 @@ public class ActivityFeed implements Serializable {
 
     public void setAfId(Integer afId) {
         this.afId = afId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSendermessage() {
@@ -154,6 +173,14 @@ public class ActivityFeed implements Serializable {
 
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public String getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(String activityType) {
+        this.activityType = activityType;
     }
 
     public Groups getGroupid() {
