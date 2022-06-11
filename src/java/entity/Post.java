@@ -43,7 +43,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByCaption", query = "SELECT p FROM Post p WHERE p.caption = :caption"),
     @NamedQuery(name = "Post.findByUploadDate", query = "SELECT p FROM Post p WHERE p.uploadDate = :uploadDate"),
     @NamedQuery(name = "Post.findByIsDeleted", query = "SELECT p FROM Post p WHERE p.isDeleted = :isDeleted"),
-    @NamedQuery(name = "Post.findByLikecount", query = "SELECT p FROM Post p WHERE p.likecount = :likecount")})
+    @NamedQuery(name = "Post.findByLikecount", query = "SELECT p FROM Post p WHERE p.likecount = :likecount"),
+    @NamedQuery(name = "Post.findByPosttype", query = "SELECT p FROM Post p WHERE p.posttype = :posttype")})
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,6 +72,11 @@ public class Post implements Serializable {
     private boolean isDeleted;
     @Column(name = "likecount")
     private Integer likecount;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "posttype", nullable = false, length = 45)
+    private String posttype;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postid")
     private Collection<Comments> commentsCollection;
     @JoinColumn(name = "groupid", referencedColumnName = "groupid")
@@ -89,11 +95,12 @@ public class Post implements Serializable {
         this.postid = postid;
     }
 
-    public Post(Integer postid, String post, String caption, boolean isDeleted) {
+    public Post(Integer postid, String post, String caption, boolean isDeleted, String posttype) {
         this.postid = postid;
         this.post = post;
         this.caption = caption;
         this.isDeleted = isDeleted;
+        this.posttype = posttype;
     }
 
     public Integer getPostid() {
@@ -142,6 +149,14 @@ public class Post implements Serializable {
 
     public void setLikecount(Integer likecount) {
         this.likecount = likecount;
+    }
+
+    public String getPosttype() {
+        return posttype;
+    }
+
+    public void setPosttype(String posttype) {
+        this.posttype = posttype;
     }
 
     @XmlTransient
