@@ -1478,7 +1478,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Posts
     @Override
-    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId) {
+    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId) {
         
         try {
 
@@ -1493,6 +1493,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             p.setCaption(caption);
             p.setIsDeleted(is_deleted);
             p.setLikecount(likeCount);
+            p.setPosttype(postType);
             p.setUploadDate(new Date());
             p.setUserid(u);
             p.setGroupid(null);
@@ -1503,16 +1504,17 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             em.persist(p);
             em.merge(u);
 
-            return "Post Inserted";
+            return "true";
 
         } catch (Exception e) {
-            return e.getMessage();
+            System.out.println(e.getMessage());
+            return "false";
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId) {
+    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId) {
         
         try {
 
@@ -1527,6 +1529,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             p.setCaption(caption);
             p.setIsDeleted(is_deleted);
             p.setLikecount(likeCount);
+            p.setPosttype(postType);
             p.setUserid(u);
             p.setGroupid(null);
 

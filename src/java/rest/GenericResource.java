@@ -621,18 +621,18 @@ public class GenericResource {
     
     //Posts
     
-    @Path("postinsert/{postId}/{post}/{caption}/{is_deleted}/{likecount}/{userId}")
+    @Path("postinsert/{postId}/{post}/{caption}/{is_deleted}/{likecount}/{postType}/{userId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String postInsert(@PathParam("postId")int postId, @PathParam("post")String post, @PathParam("caption")String caption, @PathParam("is_deleted")boolean is_deleted, @PathParam("likecount")int likecount, @PathParam("userId")int userId) {
-        return vibe.postInsert(postId, post, caption, is_deleted, likecount, userId);
+    public String postInsert(@PathParam("postId")int postId, @PathParam("post")String post, @PathParam("caption")String caption, @PathParam("is_deleted")boolean is_deleted, @PathParam("likecount")int likecount, @PathParam("postType")String postType, @PathParam("userId")int userId) {
+        return vibe.postInsert(postId, post, caption, is_deleted, likecount, postType, userId);
     }
     
-    @Path("postupdate/{postId}/{post}/{caption}/{is_deleted}/{likecount}/{userId}")
+    @Path("postupdate/{postId}/{post}/{caption}/{is_deleted}/{likecount}/{postType}/{userId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String postUpdate(@PathParam("postId")int postId, @PathParam("post")String post, @PathParam("caption")String caption, @PathParam("is_deleted")boolean is_deleted, @PathParam("likecount")int likecount, @PathParam("userId")int userId) {
-        return vibe.postUpdate(postId, post, caption, is_deleted, likecount, userId);
+    public String postUpdate(@PathParam("postId")int postId, @PathParam("post")String post, @PathParam("caption")String caption, @PathParam("is_deleted")boolean is_deleted, @PathParam("likecount")int likecount, @PathParam("postType")String postType, @PathParam("userId")int userId) {
+        return vibe.postUpdate(postId, post, caption, is_deleted, likecount, postType, userId);
     }
     
     @Path("postdelete/{postId}")

@@ -144,8 +144,8 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("user_education_update/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{ueId, instituteName, joiningDate, endingDate, instituteAddress, userid})).request().post(null, String.class);
     }
 
-    public String postUpdate(String postId, String post, String caption, String is_deleted, String likecount, String userId) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("postupdate/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{postId, post, caption, is_deleted, likecount, userId})).request().post(null, String.class);
+    public String postUpdate(String postId, String post, String caption, String is_deleted, String likecount, String postType, String userId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("postupdate/{0}/{1}/{2}/{3}/{4}/{5}/{6}", new Object[]{postId, post, caption, is_deleted, likecount, postType, userId})).request().post(null, String.class);
     }
 
     public String likeUpdate(String likeId, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
@@ -292,8 +292,8 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public String postInsert(String postId, String post, String caption, String is_deleted, String likecount, String userId) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("postinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{postId, post, caption, is_deleted, likecount, userId})).request().post(null, String.class);
+    public String postInsert(String postId, String post, String caption, String is_deleted, String likecount, String postType, String userId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("postinsert/{0}/{1}/{2}/{3}/{4}/{5}/{6}", new Object[]{postId, post, caption, is_deleted, likecount, postType, userId})).request().post(null, String.class);
     }
 
     public <T> T countryShowActive(Class<T> responseType) throws ClientErrorException {

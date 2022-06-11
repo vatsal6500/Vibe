@@ -101,8 +101,8 @@ public interface VibeSessionBeanLocal {
     public List<GroupMembers> group_member_ShowAll(); //admin
     
     //Post
-    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId);
-    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, int userId);
+    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId);
+    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId);
     public String postDelete(int postId);
     public Post postFindById(int postId);
     public List<Post> postShowAll(); //admin
