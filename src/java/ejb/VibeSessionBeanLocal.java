@@ -172,8 +172,8 @@ public interface VibeSessionBeanLocal {
     public List<Ads> adsShowAll(); //admin
     
     //Activity Feed
-    public String activity_feed_Insert(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId);
-    public String activity_feed_Update(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId);
+    public String activity_feed_Insert(int afId, String description, String senderMsg, String receiverMsg, String targerURL, String activityType, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId);
+    public String activity_feed_Update(int afId, String description, String senderMsg, String receiverMsg, String targerURL, String activityType, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId);
     public String activity_feed_Delete(int afId);
     public ActivityFeed activity_feed_FindById(int afId);
     public List<ActivityFeed> activity_feed_ShowAll();  //admin

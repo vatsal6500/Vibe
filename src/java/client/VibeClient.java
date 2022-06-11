@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author pooja
+ * @author LENOVO
  */
 public class VibeClient {
 
@@ -374,8 +374,8 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("eventupdate/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}", new Object[]{eventid, hostid, eventname, post, eventstartdate, eventenddate, eventinfo, venue, type, fees, mode, guestcount, isremoved})).request().post(null, String.class);
     }
 
-    public String activity_feed_Insert(String afId, String senderMsg, String receiverMsg, String targerURL, String isRead, String isDeleted, String senderId, String receiverId, String groupId) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("activity_feed_insert/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}", new Object[]{afId, senderMsg, receiverMsg, targerURL, isRead, isDeleted, senderId, receiverId, groupId})).request().post(null, String.class);
+    public String activity_feed_Insert(String afId, String description, String senderMsg, String receiverMsg, String targerURL, String activityType, String isRead, String isDeleted, String senderId, String receiverId, String groupId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("activity_feed_insert/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}", new Object[]{afId, description, senderMsg, receiverMsg, targerURL, activityType, isRead, isDeleted, senderId, receiverId, groupId})).request().post(null, String.class);
     }
 
     public String user_contact_info_Insert(String uci_id, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, String userid) throws ClientErrorException {
@@ -430,8 +430,8 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("user_education_insert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{ueId, instituteName, joiningDate, endingDate, instituteAddress, userid})).request().post(null, String.class);
     }
 
-    public String adsInsert(String adsId, String adsType, String price, String timeLimit, String description, String isRemoved) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("adsinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{adsId, adsType, price, timeLimit, description, isRemoved})).request().post(null, String.class);
+    public void adsInsert(String adsId, String adsType, String price, String timeLimit, String description, String isRemoved) throws ClientErrorException {
+        webTarget.path(java.text.MessageFormat.format("adsinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{adsId, adsType, price, timeLimit, description, isRemoved})).request().post(null);
     }
 
     public <T> T userFindByName(Class<T> responseType, String userName) throws ClientErrorException {

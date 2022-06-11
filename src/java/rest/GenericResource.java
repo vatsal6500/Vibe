@@ -501,18 +501,18 @@ public class GenericResource {
     
     //Activity Feed
     
-    @Path("activity_feed_insert/{afId}/{senderMsg}/{receiverMsg}/{targerURL}/{isRead}/{isDeleted}/{senderId}/{receiverId}/{groupId}")
+    @Path("activity_feed_insert/{afId}/{description}/{senderMsg}/{receiverMsg}/{targerURL}/{activityType}/{isRead}/{isDeleted}/{senderId}/{receiverId}/{groupId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String activity_feed_Insert(@PathParam("afId")int afId, @PathParam("senderMsg")String senderMsg, @PathParam("receiverMsg")String receiverMsg, @PathParam("targerURL")String targerURL, @PathParam("isRead")boolean isRead, @PathParam("isDeleted")boolean isDeleted, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId, @PathParam("groupId")int groupId) {
-        return vibe.activity_feed_Insert(afId, senderMsg, receiverMsg, targerURL, isRead, isDeleted, senderId, receiverId, groupId);
+    public String activity_feed_Insert(@PathParam("afId")int afId, @PathParam("description")String description, @PathParam("senderMsg")String senderMsg, @PathParam("receiverMsg")String receiverMsg, @PathParam("targerURL")String targerURL,  @PathParam("activityType")String activityType, @PathParam("isRead")boolean isRead, @PathParam("isDeleted")boolean isDeleted, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId, @PathParam("groupId")int groupId) {
+        return vibe.activity_feed_Insert(afId, description, senderMsg, receiverMsg, targerURL, activityType, isRead, isDeleted, senderId, receiverId, groupId);
     }
     
     @Path("activity_feed_update/{afId}/{senderMsg}/{receiverMsg}/{targerURL}/{isRead}/{isDeleted}/{senderId}/{receiverId}/{groupId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String activity_feed_Update(@PathParam("afId")int afId, @PathParam("senderMsg")String senderMsg, @PathParam("receiverMsg")String receiverMsg, @PathParam("targerURL")String targerURL, @PathParam("isRead")boolean isRead, @PathParam("isDeleted")boolean isDeleted, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId, @PathParam("groupId")int groupId) {
-        return vibe.activity_feed_Update(afId, senderMsg, receiverMsg, targerURL, isRead, isDeleted, senderId, receiverId, groupId);
+    public String activity_feed_Update(@PathParam("afId")int afId, @PathParam("description")String description, @PathParam("senderMsg")String senderMsg, @PathParam("receiverMsg")String receiverMsg, @PathParam("targerURL")String targerURL,  @PathParam("activityType")String activityType, @PathParam("isRead")boolean isRead, @PathParam("isDeleted")boolean isDeleted, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId, @PathParam("groupId")int groupId) {
+        return vibe.activity_feed_Update(afId, description, senderMsg, receiverMsg, targerURL, activityType, isRead, isDeleted, senderId, receiverId, groupId);
     }
     
     @Path("activity_feed_delete/{afId}")

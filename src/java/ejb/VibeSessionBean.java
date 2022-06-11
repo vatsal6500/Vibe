@@ -1773,7 +1773,15 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             em.merge(sender);
             em.merge(receiver);
             
-            return "Friend Request send";
+//            String senderMessage = "Friend Request Send to "+ receiver.getFirstname() + " " 
+//                                    + receiver.getLastname() + ".";
+//            String receiverMessage = sender.getFirstname() + " " + sender.getLastname() + " " +
+//                                        "has Requested to follow you.";
+//            String description = "";
+//            String targetURL = "null";
+//            String activityType = "FriendRequest";
+            
+            return "Friend Request send ";
             
         } catch (Exception e) {
             
@@ -1968,7 +1976,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public String friend_list_Update(int flId, boolean friendStatus, int userId, int friendId) {
         
@@ -2743,7 +2751,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Activity_Feed
     @Override
-    public String activity_feed_Insert(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId) {
+    public String activity_feed_Insert(int afId, String description, String senderMsg, String receiverMsg, String targerURL, String activityType, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId) {
 
         try {
 
@@ -2758,9 +2766,11 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             ActivityFeed af = new ActivityFeed();
 
             af.setAfId(afId);
+            af.setDescription(description);
             af.setSendermessage(senderMsg);
             af.setReceivermessage(receiverMsg);
             af.setTargetUrl(targerURL);
+            af.setActivityType(activityType);
             af.setActivityDate(new Date());
             af.setIsRead(isRead);
             af.setIsDeleted(isDeleted);
@@ -2789,7 +2799,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public String activity_feed_Update(int afId, String senderMsg, String receiverMsg, String targerURL, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId) {
+    public String activity_feed_Update(int afId, String description, String senderMsg, String receiverMsg, String targerURL, String activityType, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId) {
 
         try {
 
@@ -2804,9 +2814,11 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             ActivityFeed af = em.find(ActivityFeed.class, afId);
 
             af.setAfId(afId);
+            af.setDescription(description);
             af.setSendermessage(senderMsg);
             af.setReceivermessage(receiverMsg);
             af.setTargetUrl(targerURL);
+            af.setActivityType(activityType);
             af.setIsRead(isRead);
             af.setIsDeleted(isDeleted);
             af.setSenderid(r);
