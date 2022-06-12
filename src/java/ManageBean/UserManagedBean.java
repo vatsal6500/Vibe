@@ -45,6 +45,7 @@ public class UserManagedBean {
     private User user = new User();
     private final VibeClient vibeClient = new VibeClient();
     
+    //User model
     private String userId;
     private String pincode;
     private String countryId;
@@ -88,13 +89,33 @@ public class UserManagedBean {
     @AssertTrue(message = "Check Terms and Condition")
     private boolean accept;
     
+    private String address;
+    //User model
+    
     //checking value
     private boolean register,notRegister,usedEmail;
-        
+    
+
+    //private var
+            
+    //private var
+    
+    // Declare Lists
+    
     private List<Country> countryList;
     private List<State> stateList;
     private List<City> cityList;
     private List<User> userList;
+    
+    // Declare Lists Ends
+    
+    //Session Declaration
+    
+    HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+    HttpSession userSession = request.getSession();
+    
+    //Session Declaration ends
     
     /**
      * Creates a new instance of UserManagedBean
@@ -119,6 +140,8 @@ public class UserManagedBean {
         this.stateList = vibe.stateShowActive();
         this.cityList = vibe.cityShowActive();
     }
+    
+    //Getters And Setters
     
     public VibeSessionBeanLocal getVibe() {
         return vibe;
@@ -351,12 +374,22 @@ public class UserManagedBean {
     public void setUsedEmail(boolean usedEmail) {
         this.usedEmail = usedEmail;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
     
     
+    
+    //Getters And Setters
     
     //Private Methods
     
-    private void showAllVar() {
+    private void showAllUserVar() {
         System.out.println(firstName);
         System.out.println(lastName);
         System.out.println(email);
@@ -451,6 +484,22 @@ public class UserManagedBean {
         }
     }
     
-    
+    public void findUserById() {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession();
+        
+        Response response = vibeClient.userFindById(Response.class, userSessions.getAttribute("UuserId").toString());
+        GenericType<User> userDetails = new GenericType<User>(){};
+        User Users = response.readEntity(userDetails);
+        
+        email = Users.getEmail();
+        mobile = String.valueOf(Users.getMobile());
+        address = Users.getStateid().getStatename();
+        dob = Users.getDob();
+        gender = Users.getGender();
+        
+    }
     
 }
