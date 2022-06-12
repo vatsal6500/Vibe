@@ -56,6 +56,7 @@ public interface VibeSessionBeanLocal {
     public List<User> userFindByName(String userName);
     public List<User> userShowAll(); //admin
     public List<User> adminShowAll(); //admin
+    public List<User> peopleYouMayKnow(int senderId, int Id);
     
     //User_Contact_Info
     public String user_contact_info_Insert(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, int userId);
@@ -122,6 +123,8 @@ public interface VibeSessionBeanLocal {
     public List<FriendRequest> friend_request_FindBySenderId(int senderId, String status);
     public List<FriendRequest> friend_request_FindByReceiverId(int receiverId, String status);
     public List<FriendRequest> friend_request_ShowAll(); //admin
+    public List<FriendRequest> friend_request_CheckStatus(int senderId, int receiverId);
+    
     
     //Friend List
     public String friend_list_Insert(int flId, boolean friendStatus, int userId, int friendId);

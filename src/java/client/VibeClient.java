@@ -342,6 +342,12 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T friend_request_CheckStatus(Class<T> responseType, String senderId, String receiverId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("friend_request_checkstatus/{0}/{1}", new Object[]{senderId, receiverId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T groupShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("groupshowall");
@@ -521,6 +527,12 @@ public class VibeClient {
     public <T> T friend_list_ShowAllByUserId(Class<T> responseType, String userId) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("friendlistfindbyuserid/{0}", new Object[]{userId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T peopleYouMayKnow(Class<T> responseType, String senderId, String Id) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("peopleyoumayknow/{0}/{1}", new Object[]{senderId, Id}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 

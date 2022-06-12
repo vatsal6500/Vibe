@@ -10,6 +10,7 @@ import ejb.VibeSessionBeanLocal;
 import entity.ActivityFeed;
 import entity.FriendList;
 import entity.FriendRequest;
+import entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -296,8 +297,38 @@ public class FriendManagedBean {
         return friendsArrayList;
     }
     
-    public void sendRequest(String senderid) {
-        //Response response = vibe
+    public List<User> peopleYouMayKnow() {
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession(); 
+        
+        Response response = vibeClient.peopleYouMayKnow(Response.class, userSessions.getAttribute("UuserId").toString(), userSessions.getAttribute("UuserId").toString());
+        
+        ArrayList<User> userArrayList = new ArrayList<>();
+        GenericType<List<User>> userGenericType = new GenericType<List<User>>(){};
+        
+        userArrayList = (ArrayList<User>)response.readEntity(userGenericType);
+        
+        return userArrayList;
+    }
+    
+    public void sendRequest(String receiverid) {
+        
+        try {
+            
+            HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+            HttpSession userSessions = requests.getSession(); 
+
+            vibeClient.friend_request_Insert("0","requested",userSessions.getAttribute("UuserId").toString(),receiverid);
+            
+        } catch (ClientErrorException e) {
+            
+            System.out.println(e.getMessage());
+            
+        }
+        
+        
     }
     
     public void confirmRequest(String senderid, String frId) {
@@ -336,7 +367,39 @@ public class FriendManagedBean {
         
     }
     
+    public String checkStatus(String senderid) {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession(); 
+        
+        Response response = vibeClient.friend_request_CheckStatus(Response.class, senderid, userSessions.getAttribute("UuserId").toString());
+        GenericType<List<FriendRequest>> friendsGenericType = new GenericType<List<FriendRequest>>(){};
+        
+        ArrayList<FriendRequest> frList = (ArrayList<FriendRequest>)response.readEntity(friendsGenericType);
+        
+        for(FriendRequest fr : frList) {
+            return fr.getStatus();
+        }
+        return null;
+    }
     
+    public String checkStatus2(String senderid) {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession(); 
+        
+        Response response = vibeClient.friend_request_CheckStatus(Response.class, userSessions.getAttribute("UuserId").toString(), senderid);
+        GenericType<List<FriendRequest>> friendsGenericType = new GenericType<List<FriendRequest>>(){};
+        
+        ArrayList<FriendRequest> frList = (ArrayList<FriendRequest>)response.readEntity(friendsGenericType);
+        
+        for(FriendRequest fr : frList) {
+            return fr.getStatus();
+        }
+        return null;
+    }
     
     //public methods ends
     

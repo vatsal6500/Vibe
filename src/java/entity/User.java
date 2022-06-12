@@ -44,6 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
     //Find Admin By Email
     @NamedQuery(name = "User.findUserByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     
+    //People You May Know
+    @NamedQuery(name = "User.peopleYouMayKnow", query = "SELECT u FROM User u WHERE u.userid NOT IN(SELECT fl.friendid.userid FROM FriendList fl WHERE fl.userid.userid = :userid) AND u.userid != :currentUserId AND u.isadmin = false AND u.isactive = true"),
+    
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByUserid", query = "SELECT u FROM User u WHERE u.userid = :userid"),
     @NamedQuery(name = "User.findByFirstname", query = "SELECT u FROM User u WHERE u.firstname = :firstname"),

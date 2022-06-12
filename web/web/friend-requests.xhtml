@@ -27,7 +27,7 @@
             <ui:include src="includes/header.xhtml"></ui:include>
 
             <!-- FriendList -->
-            <ui:include src="includes/friendlist.xhtml" />
+            <ui:include id="friendList" src="includes/friendlist.xhtml" />
 
             <div id="content-page" class="content-page">
                 <div class="container">
@@ -57,7 +57,7 @@
                                                             <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Delete Request</a>                                    
                                                         </div>
                                                     </li>-->
-                                        <f:ajax event="click" render="@form">
+                                        <f:ajax event="click" render="@form" >
                                             <h:form>
                                                 <c:if test="#{friendManagedBean.showAllFriendRequest().size() eq 0}">
                                                     <li class="d-block text-center mb-0 pb-0">
@@ -79,7 +79,7 @@
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
                                                                 <h6>#{friendRequest.senderid.firstname} #{friendRequest.senderid.lastname}</h6>
-                                                                <p class="mb-0">12  friends</p>
+                                                                <p class="mb-0">#{friendManagedBean.showAllFriends(friendRequest.senderid.userid).size()} Friends</p>
                                                             </div>
                                                             <div class="d-flex align-items-center mt-2 mt-md-0">
                                                                 <h:commandButton class="me-3 btn btn-primary rounded" action="#{friendManagedBean.confirmRequest(friendRequest.senderid.userid, friendRequest.frId)}" value="Confirm"></h:commandButton>
@@ -105,162 +105,29 @@
                                 </div>
                                 <div class="card-body">
                                     <ul class="request-list m-0 p-0">
-                                        <li class="d-flex align-items-center  flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/15.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Jen Youfelct</h6>
-                                                <p class="mb-0">4  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/16.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Cooke Edoh</h6>
-                                                <p class="mb-0">20  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/17.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Earl E. Riser</h6>
-                                                <p class="mb-0">30  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/05.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Cliff Diver</h6>
-                                                <p class="mb-0">5  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/06.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Cliff Diver</h6>
-                                                <p class="mb-0">5  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/07.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Vinny Gret</h6>
-                                                <p class="mb-0">50  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/08.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Paul Samic</h6>
-                                                <p class="mb-0">6  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/09.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Gustav Wind</h6>
-                                                <p class="mb-0">14  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/10.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Minnie Strone</h6>
-                                                <p class="mb-0">16  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/11.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Ray Volver</h6>
-                                                <p class="mb-0">9  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/12.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Indy Nile</h6>
-                                                <p class="mb-0">6  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center mb-0 pb-0  flex-wrap">
-                                            <div class="user-img img-fluid flex-shrink-0">
-                                                <img src="../assets/images/user/13.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <h6>Jen Trification</h6>
-                                                <p class="mb-0">42  friends</p>
-                                            </div>
-                                            <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                <a href="#" class="me-3 btn btn-primary rounded"><i class="ri-user-add-line me-1"></i>Add Friend</a>
-                                                <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Remove</a>                                    
-                                            </div>
-                                        </li>
+                                        <f:ajax event="click" render="@form">
+                                            <h:form>
+                                                <c:forEach var="people" items="#{friendManagedBean.peopleYouMayKnow()}">
+                                                    <c:if test="#{friendManagedBean.checkStatus(people.userid) ne 'requested' }">
+                                                        <c:if test="#{friendManagedBean.checkStatus2(people.userid) ne 'requested'}">
+                                                            <li class="d-flex align-items-center  flex-wrap">
+                                                                <div class="user-img img-fluid flex-shrink-0">
+                                                                    <img src="../assets/images/user/15.jpg" alt="story-img" class="rounded-circle avatar-40"/>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <h6>#{people.firstname} #{people.lastname}</h6>
+                                                                    <p class="mb-0">#{friendManagedBean.showAllFriends(people.userid).size()} Friends</p>
+                                                                </div>
+                                                                <div class="d-flex align-items-center mt-2 mt-md-0">
+                                                                    <h:commandButton class="me-3 btn btn-primary rounded" action="#{friendManagedBean.sendRequest(people.userid)}"  value="AddFriend" ></h:commandButton>
+                                                                </div>
+                                                            </li>
+                                                            <hr/>
+                                                        </c:if>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </h:form>
+                                        </f:ajax>
                                     </ul>
                                 </div>
                             </div>

@@ -733,6 +733,26 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public List<User> peopleYouMayKnow(int senderId, int Id) {
+        try {
+            
+            List<User> fr = em.createNamedQuery("User.peopleYouMayKnow")
+                    .setParameter("userid", senderId)
+                    .setParameter("currentUserId", Id)
+                    .getResultList();
+            
+            return fr;
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+            
+        }
+    }
+    
     //User_Contact_Info
     @Override
     public String user_contact_info_Insert(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, int userId) {
@@ -1895,7 +1915,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             
         }
     }
-
     
     @Override
     public List<FriendRequest> friend_request_FindByReceiverId(int receiverId, String status) {
@@ -1938,6 +1957,26 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<FriendRequest> friend_request_CheckStatus(int senderId, int receiverId) {
+        try {
+            
+            List<FriendRequest> fr = em.createNamedQuery("FriendRequest.checkStatus")
+                    .setParameter("senderid", senderId)
+                    .setParameter("receiverid", receiverId)
+                    .getResultList();
+            
+            return fr;
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+            
+        }
     }
 
     //Friend_List

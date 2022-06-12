@@ -26,7 +26,6 @@ import entity.UserContactInfo;
 import entity.UserEducation;
 import entity.UserSkills;
 import entity.UserWork;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -213,6 +212,9 @@ public class GenericResource {
         return vibe.cityShowActive();
     }
     
+    
+    //User
+    
     @Path("userregister/{userId}/{firstName}/{lastName}/{dob}/{email}/{password}/{isActive}/{isAdmin}/{access}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -266,6 +268,13 @@ public class GenericResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> adminShowAll() {
         return vibe.adminShowAll();
+    }
+    
+    @Path("peopleyoumayknow/{senderId}/{Id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> peopleYouMayKnow(@PathParam("senderId")int senderId, @PathParam("Id")int Id) {
+        return vibe.peopleYouMayKnow(senderId, Id);
     }
     
     //User Contact Info
@@ -749,6 +758,13 @@ public class GenericResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<FriendRequest> friend_request_ShowAll() {
         return vibe.friend_request_ShowAll();
+    }
+    
+    @Path("friend_request_checkstatus/{senderId}/{receiverId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<FriendRequest> friend_request_CheckStatus(@PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.friend_request_CheckStatus(senderId, receiverId);
     }
     
     //Comments
