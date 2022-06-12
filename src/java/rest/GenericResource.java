@@ -730,18 +730,18 @@ public class GenericResource {
         return vibe.friend_request_FindById(frId);
     }
     
-    @Path("friend_request_findbysenderid/{senderId}")
+    @Path("friend_request_findbysenderid/{senderId}/{status}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<FriendRequest> friend_request_FindBySenderId(@PathParam("senderId")int senderId) {
-        return vibe.friend_request_FindBySenderId(senderId);
+    public List<FriendRequest> friend_request_FindBySenderId(@PathParam("senderId")int senderId, @PathParam("status")String status) {
+        return vibe.friend_request_FindBySenderId(senderId, status);
     }
     
-    @Path("friend_request_findbyreceiverid/{receiverId}")
+    @Path("friend_request_findbyreceiverid/{receiverId}/{status}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<FriendRequest> friend_request_FindByReceiverId(@PathParam("receiverId")int receiverId) {
-        return vibe.friend_request_FindByReceiverId(receiverId);
+    public List<FriendRequest> friend_request_FindByReceiverId(@PathParam("receiverId")int receiverId, @PathParam("status")String status) {
+        return vibe.friend_request_FindByReceiverId(receiverId, status);
     }
     
     @Path("friend_request_showall")

@@ -1810,7 +1810,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             fr.setFrId(frId);
             fr.setStatus(status);
             fr.setReceiverid(receiver);
-            fr.setReceiverid(sender);
+            fr.setSenderid(sender);
             
             senderCollection.add(fr);
             receiverCollection.add(fr);
@@ -1876,12 +1876,13 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
     
     @Override
-    public List<FriendRequest> friend_request_FindBySenderId(int senderId) {
+    public List<FriendRequest> friend_request_FindBySenderId(int senderId, String status) {
         
         try {
             
             List<FriendRequest> fr = em.createNamedQuery("FriendRequest.findBySenderId")
                     .setParameter("senderid", senderId)
+                    .setParameter("status", status)
                     .getResultList();
             
             return fr;
@@ -1897,12 +1898,13 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     
     @Override
-    public List<FriendRequest> friend_request_FindByReceiverId(int receiverId) {
+    public List<FriendRequest> friend_request_FindByReceiverId(int receiverId, String status) {
         
         try {
             
             List<FriendRequest> fr = em.createNamedQuery("FriendRequest.findByReceiverId")
                     .setParameter("receiverid", receiverId)
+                    .setParameter("status", status)
                     .getResultList();
             
             return fr;
@@ -2053,6 +2055,11 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             
         }
     }
+    
+//    @Override
+//    public List<FriendList> friend_list_ShowAllByUserId(int userId) {
+//        
+//    }
 
     @Override
     public List<FriendList> friend_list_ShowAll() {

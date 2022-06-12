@@ -1,0 +1,331 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ManageBean;
+
+import client.VibeClient;
+import ejb.VibeSessionBeanLocal;
+import entity.ActivityFeed;
+import entity.FriendList;
+import entity.FriendRequest;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
+
+/**
+ *
+ * @author LENOVO
+ */
+@Named(value = "friendManagedBean")
+@ApplicationScoped
+public class FriendManagedBean {
+
+    @EJB
+    private VibeSessionBeanLocal vibe;
+    
+    private FriendRequest friendRequest = new FriendRequest();
+    private FriendList friendList = new FriendList();
+    private VibeClient vibeClient = new VibeClient();
+    
+    //friend_request Model
+    
+    private String fr_Id;
+    private String senderId;
+    private String receiverId;
+    private String status;
+    private String requestDate;
+    
+    
+    //friend_request Model ends
+    
+    //friend_list model
+    
+    private String fl_Id;
+    private String userId;
+    private String friendId;
+    private String friendStatus;
+    
+    //friend_list model ends
+    
+    //private var
+
+            
+    //private var
+    
+    //Declare Lists
+    
+    List<FriendRequest> friendRequestList;
+    List<FriendList> friendsList;
+    List<ActivityFeed> activityFeedList;
+    
+    
+    //Declare Lists ends
+    
+    //Session Declaration
+    
+    HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+    HttpSession userSession = request.getSession();
+    
+    //Session Declaration ends
+    
+    /**
+     * Creates a new instance of FriendManagedBean
+     */
+    public FriendManagedBean() {
+        
+    }
+    
+    
+    @PostConstruct
+    public void init() {
+        
+    }
+    
+    //Getters and setters ends
+
+    public VibeSessionBeanLocal getVibe() {
+        return vibe;
+    }
+
+    public void setVibe(VibeSessionBeanLocal vibe) {
+        this.vibe = vibe;
+    }
+
+    public FriendRequest getFriendRequest() {
+        return friendRequest;
+    }
+
+    public void setFriendRequest(FriendRequest friendRequest) {
+        this.friendRequest = friendRequest;
+    }
+
+    public FriendList getFriendList() {
+        return friendList;
+    }
+
+    public void setFriendList(FriendList friendList) {
+        this.friendList = friendList;
+    }
+
+    public VibeClient getVibeClient() {
+        return vibeClient;
+    }
+
+    public void setVibeClient(VibeClient vibeClient) {
+        this.vibeClient = vibeClient;
+    }
+
+    public String getFr_Id() {
+        return fr_Id;
+    }
+
+    public void setFr_Id(String fr_Id) {
+        this.fr_Id = fr_Id;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(String requestDate) {
+        this.requestDate = requestDate;
+    }
+
+    public String getFl_Id() {
+        return fl_Id;
+    }
+
+    public void setFl_Id(String fl_Id) {
+        this.fl_Id = fl_Id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getFriendId() {
+        return friendId;
+    }
+
+    public void setFriendId(String friendId) {
+        this.friendId = friendId;
+    }
+
+    public String getFriendStatus() {
+        return friendStatus;
+    }
+
+    public void setFriendStatus(String friendStatus) {
+        this.friendStatus = friendStatus;
+    }
+
+    public List<FriendRequest> getFriendRequestList() {
+        return friendRequestList;
+    }
+
+    public void setFriendRequestList(List<FriendRequest> friendRequestList) {
+        this.friendRequestList = friendRequestList;
+    }
+
+    public List<FriendList> getFriendsList() {
+        return friendsList;
+    }
+
+    public void setFriendsList(List<FriendList> friendsList) {
+        this.friendsList = friendsList;
+    }
+
+    public List<ActivityFeed> getActivityFeedList() {
+        return activityFeedList;
+    }
+
+    public void setActivityFeedList(List<ActivityFeed> activityFeedList) {
+        this.activityFeedList = activityFeedList;
+    }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
+
+    public HttpSession getUserSession() {
+        return userSession;
+    }
+
+    public void setUserSession(HttpSession userSession) {
+        this.userSession = userSession;
+    }
+    
+    
+    
+    //Getters and setters ends
+
+    
+    //private methods
+    
+    
+    
+    //private methods ends
+    
+    
+    //public methods
+    
+    public List<FriendRequest> showAllFriendRequest() {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession(); 
+        
+        Response response = vibeClient.friend_request_FindByReceiverId(Response.class, userSessions.getAttribute("UuserId").toString(), "requested");
+        ArrayList<FriendRequest> friendRequestArrayList = new ArrayList<>();
+        GenericType<List<FriendRequest>> friendRequestGenericType = new GenericType<List<FriendRequest>>(){};
+        
+        friendRequestArrayList = (ArrayList<FriendRequest>)response.readEntity(friendRequestGenericType);
+        
+        return friendRequestArrayList;
+    }
+    
+    public List<FriendRequest> showAllFriends() {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession(); 
+        
+        
+        
+        return null;
+    }
+    
+    
+    
+    public void sendRequest(String senderid) {
+        //Response response = vibe
+    }
+    
+    public void confirmRequest(String senderid, String frId) {
+        try {
+            
+            HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+            HttpSession userSessions = requests.getSession(); 
+            
+            vibeClient.friend_list_Insert("0", "true", userSessions.getAttribute("UuserId").toString(), senderid);
+            
+            vibeClient.friend_list_Insert("0", "true", senderid, userSessions.getAttribute("UuserId").toString());
+            
+            vibeClient.friend_request_Update(frId, "accepted", senderid, userSessions.getAttribute("UuserId").toString());
+            
+            
+            
+        } catch (ClientErrorException e) {
+            
+            System.out.println(e.getMessage());
+            
+        }
+    }
+    
+    public void deleteRequest(String frId) {
+        
+        try { 
+            
+            vibeClient.friend_request_Delete(frId);
+            
+        } catch (ClientErrorException e) {
+            
+            System.out.println(e.getMessage());
+            
+        }
+        
+    }
+    
+    
+    
+    //public methods ends
+    
+    
+    
+    
+}

@@ -119,8 +119,8 @@ public interface VibeSessionBeanLocal {
     public String friend_request_Update(int frId, String status, int senderId, int receiverId);
     public String friend_request_Delete(int frId);
     public FriendRequest friend_request_FindById(int frId);
-    public List<FriendRequest> friend_request_FindBySenderId(int senderId);
-    public List<FriendRequest> friend_request_FindByReceiverId(int receiverId);
+    public List<FriendRequest> friend_request_FindBySenderId(int senderId, String status);
+    public List<FriendRequest> friend_request_FindByReceiverId(int receiverId, String status);
     public List<FriendRequest> friend_request_ShowAll(); //admin
     
     //Friend List
@@ -128,6 +128,7 @@ public interface VibeSessionBeanLocal {
     public String friend_list_Update(int flId, boolean friendStatus, int userId, int friendId);
     public String friend_list_Delete(int flId);
     public FriendList friend_list_FindById(int flId);
+    //public List<FriendList> friend_list_ShowAllByUserId(int userId);
     public List<FriendList> friend_list_ShowAll();  //admin
     
     //Events

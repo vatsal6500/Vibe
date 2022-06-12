@@ -42,9 +42,9 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("friend_request_delete/{0}", new Object[]{frId})).request().post(null, String.class);
     }
 
-    public <T> T friend_request_FindBySenderId(Class<T> responseType, String senderId) throws ClientErrorException {
+    public <T> T friend_request_FindBySenderId(Class<T> responseType, String senderId, String status) throws ClientErrorException {
         WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("friend_request_findbysenderid/{0}", new Object[]{senderId}));
+        resource = resource.path(java.text.MessageFormat.format("friend_request_findbysenderid/{0}/{1}", new Object[]{senderId, status}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -64,9 +64,9 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("statedelete/{0}", new Object[]{stateId})).request().post(null, String.class);
     }
 
-    public <T> T friend_request_FindByReceiverId(Class<T> responseType, String receiverId) throws ClientErrorException {
+    public <T> T friend_request_FindByReceiverId(Class<T> responseType, String receiverId, String status) throws ClientErrorException {
         WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("friend_request_findbyreceiverid/{0}", new Object[]{receiverId}));
+        resource = resource.path(java.text.MessageFormat.format("friend_request_findbyreceiverid/{0}/{1}", new Object[]{receiverId, status}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
