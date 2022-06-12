@@ -866,6 +866,12 @@ public class GenericResource {
         return vibe.friend_list_FindById(flId);
     }
     
+    @Path("friendlistfindbyuserid/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<FriendList> friend_list_ShowAllByUserId(@PathParam("userId")int userId) {
+        return vibe.friend_list_ShowAllByUserId(userId);
+    }
     
     @Path("friendlistshowall")
     @GET

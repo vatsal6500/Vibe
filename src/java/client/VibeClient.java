@@ -518,6 +518,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("groupdelete/{0}", new Object[]{groupid})).request().post(null, String.class);
     }
 
+    public <T> T friend_list_ShowAllByUserId(Class<T> responseType, String userId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("friendlistfindbyuserid/{0}", new Object[]{userId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T cityShowActive(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("cityshowactive");

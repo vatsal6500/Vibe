@@ -2056,10 +2056,24 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
     }
     
-//    @Override
-//    public List<FriendList> friend_list_ShowAllByUserId(int userId) {
-//        
-//    }
+    @Override
+    public List<FriendList> friend_list_ShowAllByUserId(int userId) {
+        try {
+            
+            List<FriendList> fl = em.createNamedQuery("FriendList.findAllByUserId")
+                    .setParameter("userId", userId)
+                    .getResultList();
+            
+            return fl;
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+            
+            return null;
+            
+        }
+    }
 
     @Override
     public List<FriendList> friend_list_ShowAll() {

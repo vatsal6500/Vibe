@@ -128,7 +128,7 @@ public interface VibeSessionBeanLocal {
     public String friend_list_Update(int flId, boolean friendStatus, int userId, int friendId);
     public String friend_list_Delete(int flId);
     public FriendList friend_list_FindById(int flId);
-    //public List<FriendList> friend_list_ShowAllByUserId(int userId);
+    public List<FriendList> friend_list_ShowAllByUserId(int userId);
     public List<FriendList> friend_list_ShowAll();  //admin
     
     //Events

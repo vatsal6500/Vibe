@@ -268,18 +268,33 @@ public class FriendManagedBean {
         return friendRequestArrayList;
     }
     
-    public List<FriendRequest> showAllFriends() {
+    public List<FriendList> showAllFriends() {
         
         HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
                     .getExternalContext().getRequest();
         HttpSession userSessions = requests.getSession(); 
         
+        Response response = vibeClient.friend_list_ShowAllByUserId(Response.class, userSessions.getAttribute("UuserId").toString());
         
+        ArrayList<FriendList> friendsArrayList = new ArrayList<>();
+        GenericType<List<FriendList>> friendsGenericType = new GenericType<List<FriendList>>(){};
         
-        return null;
+        friendsArrayList = (ArrayList<FriendList>)response.readEntity(friendsGenericType);
+        
+        return friendsArrayList;
     }
     
-    
+    public List<FriendList> showAllFriends(String Id) {
+        
+        Response response = vibeClient.friend_list_ShowAllByUserId(Response.class, Id);
+        
+        ArrayList<FriendList> friendsArrayList = new ArrayList<>();
+        GenericType<List<FriendList>> friendsGenericType = new GenericType<List<FriendList>>(){};
+        
+        friendsArrayList = (ArrayList<FriendList>)response.readEntity(friendsGenericType);
+        
+        return friendsArrayList;
+    }
     
     public void sendRequest(String senderid) {
         //Response response = vibe
