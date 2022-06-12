@@ -72,10 +72,8 @@ public class Post implements Serializable {
     private boolean isDeleted;
     @Column(name = "likecount")
     private Integer likecount;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "posttype", nullable = false, length = 45)
+    @Column(name = "posttype", length = 45)
     private String posttype;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postid")
     private Collection<Comments> commentsCollection;
