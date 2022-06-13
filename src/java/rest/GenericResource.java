@@ -565,6 +565,12 @@ public class GenericResource {
         return vibe.activity_feed_FindById(afId);
     }
     
+    @Path("activity_feed_byreceiverid/{receiverId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ActivityFeed> activity_feed_ByReceiverId(@PathParam("receiverId")int receiverId) {
+        return vibe.activity_feed_ByReceiverId(receiverId);
+    }
     
     @Path("activity_feed_showall")
     @GET

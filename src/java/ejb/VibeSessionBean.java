@@ -3088,6 +3088,28 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
+    public List<ActivityFeed> activity_feed_ByReceiverId(int receiverId) {
+        try {
+
+            List<ActivityFeed> feed = em.createNamedQuery("ActivityFeed.findMsgByReceiverId")
+                    .setParameter("userid",receiverId)
+                    .getResultList();
+            
+            if(feed.isEmpty()) {
+                System.out.println("empty");
+                return null;
+            }
+
+            return feed;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+    }
+    
+    @Override
     public List<ActivityFeed> activity_feed_ShowAll() {
 
         try {

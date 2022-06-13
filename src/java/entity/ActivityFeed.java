@@ -32,6 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "activity_feed", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    
+    //Activity ReceiverMsg by Receiver Id
+    @NamedQuery(name = "ActivityFeed.findMsgByReceiverId", query = "SELECT a FROM ActivityFeed a WHERE a.receiverid.userid = :userid ORDER BY a.afId DESC"),
+    
     @NamedQuery(name = "ActivityFeed.findAll", query = "SELECT a FROM ActivityFeed a"),
     @NamedQuery(name = "ActivityFeed.findByAfId", query = "SELECT a FROM ActivityFeed a WHERE a.afId = :afId"),
     @NamedQuery(name = "ActivityFeed.findByDescription", query = "SELECT a FROM ActivityFeed a WHERE a.description = :description"),
