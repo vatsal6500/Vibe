@@ -1121,13 +1121,13 @@
                                                             <a class="nav-link active" href="#v-pills-basicinfo-tab" data-bs-toggle="pill" data-bs-target="#v-pills-basicinfo-tab" role="button">Contact and Basic Info</a>
                                                         </li>
                                                         <li>
-                                                            <a class="nav-link" href="#v-pills-work-tab" data-bs-toggle="pill" data-bs-target="#v-pills-work-tab" role="button">Work and Education</a>
+                                                            <a class="nav-link" href="#v-pills-work-tab" data-bs-toggle="pill" data-bs-target="#v-pills-work-tab" role="button">Work</a>
                                                         </li>
                                                         <li>
-                                                            <a class="nav-link" href="#v-pills-lived-tab" data-bs-toggle="pill" data-bs-target="#v-pills-lived-tab" role="button">Places You've Lived</a>
+                                                            <a class="nav-link" href="#v-pills-skills-tab" data-bs-toggle="pill" data-bs-target="#v-pills-skills-tab" role="button">Skills</a>
                                                         </li>
                                                         <li>
-                                                            <a class="nav-link" href="#v-pills-details-tab" data-bs-toggle="pill" data-bs-target="#v-pills-details-tab" role="button">Details About You</a>
+                                                            <a class="nav-link" href="#v-pills-edu-tab" data-bs-toggle="pill" data-bs-target="#v-pills-edu-tab" role="button">Education</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -1236,119 +1236,49 @@
                                                                         <h6>Add Work Place</h6>
                                                                     </div>
                                                                 </li>
+                                                                <c:forEach var="works" items="#{userworkManagedBean.showUserWorkInfo()}">
                                                                 <li class="d-flex mb-4 align-items-center justify-content-between">
                                                                     <div class="user-img img-fluid"><img src="../assets/images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
                                                                     <div class="w-100">
                                                                         <div class="d-flex justify-content-between">
                                                                             <div class="ms-3">
-                                                                                <h6>Themeforest</h6>
-                                                                                <p class="mb-0">Web Designer</p>
+                                                                                <h6>#{works.companyname}</h6>
+                                                                                <p class="mb-0">#{works.companyaddress}</p>
+                                                                                <p class="mb-0">#{works.joiningdate} - #{works.endingdate}</p>
                                                                             </div>
                                                                             <div class="edit-relation"><a href="#"><i class="ri-edit-line me-2"></i>Edit</a></div>
                                                                         </div>
                                                                     </div>
                                                                 </li>
-                                                                <li class="d-flex mb-4 align-items-center justify-content-between">
-                                                                    <div class="user-img img-fluid"><img src="../assets/images/user/02.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
-                                                                    <div class="w-100">
-                                                                        <div class="d-flex flex-wrap justify-content-between">
-                                                                            <div class="ms-3">
-                                                                                <h6>iqonicdesign</h6>
-                                                                                <p class="mb-0">Web Developer</p>
-                                                                            </div>
-                                                                            <div class="edit-relation"><a href="#"><i class="ri-edit-line me-2"></i>Edit</a></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="d-flex mb-4 align-items-center justify-content-between">
-                                                                    <div class="user-img img-fluid"><img src="../assets/images/user/03.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
-                                                                    <div class="w-100">
-                                                                        <div class="d-flex flex-wrap justify-content-between">
-                                                                            <div class="ms-3">
-                                                                                <h6>W3school</h6>
-                                                                                <p class="mb-0">Designer</p>
-                                                                            </div>
-                                                                            <div class="edit-relation"><a href="#"><i class="ri-edit-line me-2"></i>Edit</a></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                            <h4 class="mb-3">Professional Skills</h4>
-                                                            <ul class="suggestions-lists m-0 p-0">
-                                                                <li class="d-flex mb-4 align-items-center">
-                                                                    <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                                    <div class="ms-3">
-                                                                        <h6>Add Professional Skills</h6>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                            <h4 class="mt-3 mb-3">College</h4>
-                                                            <ul class="suggestions-lists m-0 p-0">
-                                                                <li class="d-flex mb-4 align-items-center">
-                                                                    <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                                    <div class="ms-3">
-                                                                        <h6>Add College</h6>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="d-flex mb-4 align-items-center">
-                                                                    <div class="user-img img-fluid"><img src="../assets/images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
-                                                                    <div class="w-100">
-                                                                        <div class="d-flex flex-wrap justify-content-between">
-                                                                            <div class="ms-3">
-                                                                                <h6>Lorem ipsum</h6>
-                                                                                <p class="mb-0">USA</p>
-                                                                            </div>
-                                                                            <div class="edit-relation"><a href="#"><i class="ri-edit-line me-2"></i>Edit</a></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
+                                                                </c:forEach>
                                                             </ul>
                                                         </div>
-                                                        <div class="tab-pane fade" id="v-pills-lived-tab" role="tabpanel" aria-labelledby="v-pills-lived-tab">
-                                                            <h4 class="mb-3">Current City and Hometown</h4>
+                                                        <div class="tab-pane fade" id="v-pills-edu-tab" role="tabpanel" aria-labelledby="v-pills-edu-tab">
+                                                            <h4 class="mb-3">Education</h4>
                                                             <ul class="suggestions-lists m-0 p-0">
+                                                                <c:forEach var="edu" items="#{usereduManagedBean.showUserEduInfo()}">
                                                                 <li class="d-flex mb-4 align-items-center justify-content-between">
                                                                     <div class="user-img img-fluid"><img src="../assets/images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
                                                                     <div class="w-100">
                                                                         <div class="d-flex flex-wrap justify-content-between">
                                                                             <div class="ms-3">
-                                                                                <h6>Georgia</h6>
-                                                                                <p class="mb-0">Georgia State</p>
+                                                                                <h6>#{edu.institutename}</h6>
+                                                                                <p class="mb-0">#{edu.instituteaddress}</p>
+                                                                                <p class="mb-0">#{edu.joiningdate} - #{edu.endingdate}</p>
                                                                             </div>
                                                                             <div class="edit-relation"><a href="#"><i class="ri-edit-line me-2"></i>Edit</a></div>
                                                                         </div>
                                                                     </div>
                                                                 </li>
-                                                                <li class="d-flex mb-4 align-items-center justify-content-between">
-                                                                    <div class="user-img img-fluid"><img src="../assets/images/user/02.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
-                                                                    <div class="w-100">
-                                                                        <div class="d-flex flex-wrap justify-content-between">
-                                                                            <div class="ms-3">
-                                                                                <h6>Atlanta</h6>
-                                                                                <p class="mb-0">Atlanta City</p>
-                                                                            </div>
-                                                                            <div class="edit-relation"><a href="#"><i class="ri-edit-line me-2"></i>Edit</a></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                            <h4 class="mt-3 mb-3">Other Places Lived</h4>
-                                                            <ul class="suggestions-lists m-0 p-0">
-                                                                <li class="d-flex mb-4 align-items-center">
-                                                                    <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                                    <div class="ms-3">
-                                                                        <h6>Add Place</h6>
-                                                                    </div>
-                                                                </li>
+                                                                </c:forEach>
                                                             </ul>
                                                         </div>
-                                                        <div class="tab-pane fade" id="v-pills-details-tab" role="tabpanel" aria-labelledby="v-pills-details-tab">
-                                                            <h4 class="mb-3">About You</h4>
-                                                            <p>Hi, I’m Bni, I’m 26 and I work as a Web Designer for the iqonicdesign.</p>
-                                                            <h4 class="mt-3 mb-3">Other Name</h4>
-                                                            <p>Bini Rock</p>
-                                                            <h4 class="mt-3 mb-3">Favorite Quotes</h4>
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                                        <div class="tab-pane fade" id="v-pills-skills-tab" role="tabpanel" aria-labelledby="v-pills-skills-tab">
+                                                            <c:forEach var="skill" items="#{userskillsManagedBean.showUserSkillInfo()}">
+                                                                <h4 class="mb-3">#{skill.skillname}</h4>
+                                                                <p>Info : #{skill.skillinfo}</p>
+                                                                <p>Portfolio : #{skill.skillportfolio}</p>
+                                                            </c:forEach>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -7,48 +7,39 @@ package ManageBean;
 
 import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
-import entity.User;
-import entity.UserContactInfo;
+import entity.UserEducation;
 import entity.UserWork;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+
 /**
  *
  * @author pooja
  */
 
-@Named(value = "userworkManagedBean")
+@Named(value = "usereduManagedBean")
 @ApplicationScoped
 
-public class UserWorkManagedBean {
+public class UserEduManagedBean {
     
     @EJB
     private VibeSessionBeanLocal vibeSessionBean;
     private final VibeClient vibeClient = new VibeClient();
     
-    private String uw_id;
+    private String ue_id;
     private String userid;
-    private String companyname;
+    private String institutename;
     private String joiningdate;
     private String endingdate;
-    private String companyaddress;
+    private String instituteaddress;
 
     public VibeSessionBeanLocal getVibeSessionBean() {
         return vibeSessionBean;
@@ -58,12 +49,12 @@ public class UserWorkManagedBean {
         this.vibeSessionBean = vibeSessionBean;
     }
 
-    public String getUw_id() {
-        return uw_id;
+    public String getUe_id() {
+        return ue_id;
     }
 
-    public void setUw_id(String uw_id) {
-        this.uw_id = uw_id;
+    public void setUe_id(String ue_id) {
+        this.ue_id = ue_id;
     }
 
     public String getUserid() {
@@ -74,12 +65,12 @@ public class UserWorkManagedBean {
         this.userid = userid;
     }
 
-    public String getCompanyname() {
-        return companyname;
+    public String getInstitutename() {
+        return institutename;
     }
 
-    public void setCompanyname(String companyname) {
-        this.companyname = companyname;
+    public void setInstitutename(String institutename) {
+        this.institutename = institutename;
     }
 
     public String getJoiningdate() {
@@ -98,32 +89,33 @@ public class UserWorkManagedBean {
         this.endingdate = endingdate;
     }
 
-    public String getCompanyaddress() {
-        return companyaddress;
+    public String getInstituteaddress() {
+        return instituteaddress;
     }
 
-    public void setCompanyaddress(String companyaddress) {
-        this.companyaddress = companyaddress;
+    public void setInstituteaddress(String instituteaddress) {
+        this.instituteaddress = instituteaddress;
     }
     
-    public UserWorkManagedBean()
-    {
+    public UserEduManagedBean(){
         
     }
     
-    public List<UserWork> showUserWorkInfo() {
+    public List<UserEducation> showUserEduInfo() {
         
         HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
                     .getExternalContext().getRequest();
         HttpSession userSessions = requests.getSession();
         
-        Response response = vibeClient.user_work_FindByUserId(Response.class, userSessions.getAttribute("UuserId").toString());
-        ArrayList<UserWork> workArrayList = new ArrayList<>();
-        GenericType<List<UserWork>> showAllwork  = new GenericType<List<UserWork>>() {
+        Response response = vibeClient.user_education_FindByUserId(Response.class, userSessions.getAttribute("UuserId").toString());
+        ArrayList<UserEducation> eduArrayList = new ArrayList<>();
+        GenericType<List<UserEducation>> showAllwork  = new GenericType<List<UserEducation>>() {
         };
-        workArrayList = (ArrayList<UserWork>) response.readEntity(showAllwork);
-        System.out.println(workArrayList);
-        return workArrayList;
+        eduArrayList = (ArrayList<UserEducation>) response.readEntity(showAllwork);
+        System.out.println(eduArrayList);
+        return eduArrayList;
     }
     
 }
+
+
