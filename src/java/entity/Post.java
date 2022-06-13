@@ -58,10 +58,8 @@ public class Post implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "post", nullable = false, length = 1000)
     private String post;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "caption", nullable = false, length = 1000)
+    @Size(max = 1000)
+    @Column(name = "caption", length = 1000)
     private String caption;
     @Column(name = "upload_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -72,8 +70,10 @@ public class Post implements Serializable {
     private boolean isDeleted;
     @Column(name = "likecount")
     private Integer likecount;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "posttype", length = 45)
+    @Column(name = "posttype", nullable = false, length = 45)
     private String posttype;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postid")
     private Collection<Comments> commentsCollection;
@@ -93,10 +93,9 @@ public class Post implements Serializable {
         this.postid = postid;
     }
 
-    public Post(Integer postid, String post, String caption, boolean isDeleted, String posttype) {
+    public Post(Integer postid, String post, boolean isDeleted, String posttype) {
         this.postid = postid;
         this.post = post;
-        this.caption = caption;
         this.isDeleted = isDeleted;
         this.posttype = posttype;
     }

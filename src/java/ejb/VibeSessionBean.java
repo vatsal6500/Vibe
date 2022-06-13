@@ -580,26 +580,26 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, String dob, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, int countryId, int stateId, int cityId) {
 
         try {
-            
+
             Country country = em.find(Country.class, countryId);
             State state = em.find(State.class, stateId);
             City city = em.find(City.class, cityId);
-            
+
             Collection<User> countryCollection = country.getUserCollection();
             Collection<User> stateCollection = state.getUserCollection();
             Collection<User> cityCollection = city.getUserCollection();
-            
+
             User user = em.find(User.class, userId);
-            
+
             user.setUserid(userId);
             user.setFirstname(firstName);
             user.setMiddlename(middleName);
             user.setLastname(lastName);
             user.setGender(gender);
-            
+
             Date DOB = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
             user.setDob(DOB);
-            
+
             user.setEmail(email);
             user.setUsername(username);
             user.setPassword(hashPassword.getHashPassword(password));
@@ -609,20 +609,20 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             user.setCountryid(country);
             user.setStateid(state);
             user.setCityid(city);
-            
+
             countryCollection.add(user);
             stateCollection.add(user);
             cityCollection.add(user);
-            
+
             country.setUserCollection(countryCollection);
             state.setUserCollection(stateCollection);
             city.setUserCollection(cityCollection);
-            
+
             em.persist(user);
             em.merge(country);
             em.merge(state);
             em.merge(city);
-            
+
             return "User Updated";
 
         } catch (Exception e) {
@@ -662,15 +662,13 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             List<User> user = em.createNamedQuery("User.findByUserid")
                     .setParameter("userid", userId)
                     .getResultList();
-            
-            if(user.isEmpty()) {
+
+            if (user.isEmpty()) {
                 return null;
             }
 
             return user;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -683,8 +681,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<User> user = em.createNamedQuery("User.findAll")
                     .getResultList();
-            
-            if(user.isEmpty()) {
+
+            if (user.isEmpty()) {
                 return null;
             }
 
@@ -740,23 +738,23 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     @Override
     public List<User> peopleYouMayKnow(int senderId, int Id) {
         try {
-            
+
             List<User> fr = em.createNamedQuery("User.peopleYouMayKnow")
                     .setParameter("userid", senderId)
                     .setParameter("currentUserId", Id)
                     .getResultList();
-            
+
             return fr;
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getMessage());
-            
+
             return null;
-            
+
         }
     }
-    
+
     //User_Contact_Info
     @Override
     public String user_contact_info_Insert(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, int userId) {
@@ -865,8 +863,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<UserContactInfo> usercontact = em.createNamedQuery("UserContactInfo.findAll")
                     .getResultList();
-            
-            if(usercontact.isEmpty()) {
+
+            if (usercontact.isEmpty()) {
                 return null;
             }
 
@@ -879,17 +877,17 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public List<UserContactInfo> user_contact_info_FindByUserId(int userId) {
-        
+
         try {
 
             List<UserContactInfo> usercontact = em.createNamedQuery("UserContactInfo.findByUserId")
                     .setParameter("userid", userId)
                     .getResultList();
-            
-            if(usercontact.isEmpty()) {
+
+            if (usercontact.isEmpty()) {
                 return null;
             }
 
@@ -900,7 +898,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             return null;
 
         }
-        
+
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -1014,8 +1012,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<UserEducation> usered = em.createNamedQuery("UserEducation.findAll")
                     .getResultList();
-            
-            if(usered.isEmpty()) {
+
+            if (usered.isEmpty()) {
                 return null;
             }
 
@@ -1028,21 +1026,19 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public List<UserEducation> user_education_FindByUserId(int userId) {
-        
+
         try {
 
-            List<UserEducation> useredu =  em.createNamedQuery("UserEducation.findByUserId")
+            List<UserEducation> useredu = em.createNamedQuery("UserEducation.findByUserId")
                     .setParameter("userid", userId)
                     .getResultList();
-            
-            if(useredu.isEmpty())
-            {
+
+            if (useredu.isEmpty()) {
                 return null;
             }
-            
 
             return useredu;
 
@@ -1053,7 +1049,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     //User_Skills
     @Override
@@ -1157,8 +1152,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<UserSkills> userskill = em.createNamedQuery("UserSkills.findAll")
                     .getResultList();
-            
-            if(userskill.isEmpty()) {
+
+            if (userskill.isEmpty()) {
                 return null;
             }
 
@@ -1171,18 +1166,17 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
     @Override
     public List<UserSkills> user_skills_FindByUserId(int userId) {
-        
+
         try {
 
-            List<UserSkills> userskill =  em.createNamedQuery("UserSkills.findByUserId")
+            List<UserSkills> userskill = em.createNamedQuery("UserSkills.findByUserId")
                     .setParameter("userid", userId)
                     .getResultList();
 
-            if(userskill.isEmpty()){
+            if (userskill.isEmpty()) {
                 return null;
             }
 
@@ -1306,8 +1300,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<UserWork> userwork = em.createNamedQuery("UserWork.findAll")
                     .getResultList();
-            
-            if(userwork.isEmpty()) {
+
+            if (userwork.isEmpty()) {
                 return null;
             }
 
@@ -1320,22 +1314,19 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
     @Override
     public List<UserWork> user_work_FindByUserId(int userId) {
-        
+
         try {
 
-            List<UserWork> userwork =  em.createNamedQuery("UserWork.findByUserId")
+            List<UserWork> userwork = em.createNamedQuery("UserWork.findByUserId")
                     .setParameter("userid", userId)
                     .getResultList();
-            
-            if(userwork.isEmpty())
-            {
+
+            if (userwork.isEmpty()) {
                 return null;
             }
-            
 
             return userwork;
 
@@ -1346,7 +1337,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     //Groups
     @Override
@@ -1454,8 +1444,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<Groups> group = em.createNamedQuery("Groups.findAll")
                     .getResultList();
-            
-            if(group.isEmpty()) {
+
+            if (group.isEmpty()) {
                 return null;
             }
 
@@ -1586,8 +1576,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<GroupMembers> groupmember = em.createNamedQuery("GroupMembers.findAll")
                     .getResultList();
-            
-            if(groupmember.isEmpty()) {
+
+            if (groupmember.isEmpty()) {
                 return null;
             }
 
@@ -1603,78 +1593,143 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Posts
     @Override
-    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId) {
-        
+    public String postInsert(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId, int groupId) {
+
         try {
 
-            User u = em.find(User.class, userId);
+            if (groupId != 0) {
+                User u = em.find(User.class, userId);
+                Groups g = em.find(Groups.class, groupId);
 
-            Collection<Post> puc = u.getPostCollection();
+                Collection<Post> puc = u.getPostCollection();
+                Collection<Post> guc = g.getPostCollection();
 
-            Post p = new Post();
+                Post p = new Post();
 
-            p.setPostid(postId);
-            p.setPost(post);
-            p.setCaption(caption);
-            p.setIsDeleted(is_deleted);
-            p.setLikecount(likeCount);
-            p.setPosttype(postType);
-            p.setUploadDate(new Date());
-            p.setUserid(u);
-            p.setGroupid(null);
+                p.setPostid(postId);
+                p.setPost(post);
+                p.setCaption(caption);
+                p.setIsDeleted(is_deleted);
+                p.setLikecount(likeCount);
+                p.setPosttype(postType);
+                p.setUploadDate(new Date());
+                p.setUserid(u);
+                p.setGroupid(g);
 
-            puc.add(p);
-            u.setPostCollection(puc);
+                puc.add(p);
+                u.setPostCollection(puc);
+                g.setPostCollection(guc);
 
-            em.persist(p);
-            em.merge(u);
+                em.persist(p);
+                em.merge(u);
+                em.merge(g);
 
-            return "true";
+                return "Group Insert";
+
+            } else {
+
+                User u = em.find(User.class, userId);
+
+                Collection<Post> puc = u.getPostCollection();
+
+                Post p = new Post();
+
+                p.setPostid(postId);
+                p.setPost(post);
+                p.setCaption(caption);
+                p.setIsDeleted(is_deleted);
+                p.setLikecount(likeCount);
+                p.setPosttype(postType);
+                p.setUploadDate(new Date());
+                p.setUserid(u);
+
+                puc.add(p);
+                u.setPostCollection(puc);
+
+                em.persist(p);
+                em.merge(u);
+
+                return "Post Insert";
+
+            }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return "false";
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
-    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId) {
-        
+    public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId, int groupId) {
+
         try {
 
-            User u = em.find(User.class, userId);
+            if (groupId != 0) {
+                User u = em.find(User.class, userId);
+                Groups g = em.find(Groups.class, groupId);
 
-            Collection<Post> puc = u.getPostCollection();
+                Collection<Post> puc = u.getPostCollection();
+                Collection<Post> guc = g.getPostCollection();
 
-            Post p = em.find(Post.class, postId);
+                Post p = em.find(Post.class, postId);
 
-            p.setPostid(postId);
-            p.setPost(post);
-            p.setCaption(caption);
-            p.setIsDeleted(is_deleted);
-            p.setLikecount(likeCount);
-            p.setPosttype(postType);
-            p.setUserid(u);
-            p.setGroupid(null);
+                p.setPostid(postId);
+                p.setPost(post);
+                p.setCaption(caption);
+                p.setIsDeleted(is_deleted);
+                p.setLikecount(likeCount);
+                p.setPosttype(postType);
+                p.setUploadDate(new Date());
+                p.setUserid(u);
+                p.setGroupid(g);
 
-            puc.add(p);
-            u.setPostCollection(puc);
+                puc.add(p);
+                u.setPostCollection(puc);
+                g.setPostCollection(guc);
 
-            em.persist(p);
-            em.merge(u);
+                em.persist(p);
+                em.merge(u);
+                em.merge(g);
 
-            return "Post Updated";
+                return "Group Post Updated";
+
+            } else {
+
+                User u = em.find(User.class, userId);
+
+                Collection<Post> puc = u.getPostCollection();
+
+                Post p = em.find(Post.class, postId);
+
+                p.setPostid(postId);
+                p.setPost(post);
+                p.setCaption(caption);
+                p.setIsDeleted(is_deleted);
+                p.setLikecount(likeCount);
+                p.setPosttype(postType);
+                p.setUploadDate(new Date());
+                p.setUserid(u);
+
+                puc.add(p);
+                u.setPostCollection(puc);
+
+                em.persist(p);
+                em.merge(u);
+
+                return "Post Updated";
+
+            }
 
         } catch (Exception e) {
             return e.getMessage();
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public String postDelete(int postId) {
-        
+
         try {
 
             Post p = em.find(Post.class, postId);
@@ -1692,7 +1747,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public Post postFindById(int postId) {
-        
+
         try {
 
             Post p = em.find(Post.class, postId);
@@ -1709,13 +1764,13 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public List<Post> postShowAll() {
-        
+
         try {
 
             List<Post> posts = em.createNamedQuery("Post.findAll")
                     .getResultList();
-            
-            if(posts.isEmpty()) {
+
+            if (posts.isEmpty()) {
                 return null;
             }
 
@@ -1732,7 +1787,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //Likes
     @Override
     public String likeInsert(int likeId, boolean isRemoved, int postId, int senderId, int receiverId) {
-        
+
         try {
 
             User s = em.find(User.class, senderId);
@@ -1774,7 +1829,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String likeUpdate(int likeId, boolean isRemoved, int postId, int senderId, int receiverId) {
-        
+
         try {
 
             User s = em.find(User.class, senderId);
@@ -1815,7 +1870,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String likeDelete(int likeId) {
-        
+
         try {
 
             Likes l = em.find(Likes.class, likeId);
@@ -1833,7 +1888,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public Likes likeFindById(int likeId) {
-        
+
         try {
 
             Likes l = em.find(Likes.class, likeId);
@@ -1850,13 +1905,13 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public List<Likes> likeShowAll() {
-        
+
         try {
 
             List<Likes> likelist = em.createNamedQuery("Likes.findAll")
                     .getResultList();
-            
-            if(likelist.isEmpty()) {
+
+            if (likelist.isEmpty()) {
                 return null;
             }
 
@@ -1873,34 +1928,34 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //Friend_Request
     @Override
     public String friend_request_Insert(int frId, String status, int senderId, int receiverId) {
-        
+
         try {
-            
+
             User sender = em.find(User.class, senderId);
             User receiver = em.find(User.class, receiverId);
-            
+
             Collection<FriendRequest> senderCollection = sender.getFriendRequestCollection();
             Collection<FriendRequest> receiverCollection = receiver.getFriendRequestCollection();
-            
+
             FriendRequest fr = new FriendRequest();
-            
+
             fr.setFrId(frId);
             // status as requested or accepted or deleted
             fr.setStatus(status);
             fr.setRequestdate(new Date());
             fr.setSenderid(sender);
             fr.setReceiverid(receiver);
-            
+
             senderCollection.add(fr);
             receiverCollection.add(fr);
-            
+
             sender.setFriendRequestCollection(senderCollection);
             receiver.setFriendRequestCollection(receiverCollection);
-            
+
             em.persist(fr);
             em.merge(sender);
             em.merge(receiver);
-            
+
 //            String senderMessage = "Friend Request Send to "+ receiver.getFirstname() + " " 
 //                                    + receiver.getLastname() + ".";
 //            String receiverMessage = sender.getFirstname() + " " + sender.getLastname() + " " +
@@ -1908,346 +1963,343 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 //            String description = "";
 //            String targetURL = "null";
 //            String activityType = "FriendRequest";
-            
             return "Friend Request send ";
-            
+
         } catch (Exception e) {
-            
+
             return e.getMessage();
-            
+
         }
-        
+
     }
 
     @Override
     public String friend_request_Update(int frId, String status, int senderId, int receiverId) {
-        
+
         try {
-            
+
             User sender = em.find(User.class, senderId);
             User receiver = em.find(User.class, receiverId);
-            
+
             Collection<FriendRequest> senderCollection = sender.getFriendRequestCollection();
             Collection<FriendRequest> receiverCollection = receiver.getFriendRequestCollection();
-            
+
             FriendRequest fr = em.find(FriendRequest.class, frId);
-            
+
             fr.setFrId(frId);
             fr.setStatus(status);
             fr.setReceiverid(receiver);
             fr.setSenderid(sender);
-            
+
             senderCollection.add(fr);
             receiverCollection.add(fr);
-            
+
             sender.setFriendRequestCollection(receiverCollection);
             receiver.setFriendRequestCollection(senderCollection);
-            
+
             em.persist(fr);
             em.merge(sender);
             em.merge(receiver);
-            
+
             return "Friend Request Updated";
-            
+
         } catch (Exception e) {
-            
+
             return e.getMessage();
-            
+
         }
-        
+
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String friend_request_Delete(int frId) {
-        
+
         try {
-            
+
             FriendRequest fr = em.find(FriendRequest.class, frId);
-            
+
             fr.setStatus("deleted");
-            
+
             em.merge(fr);
-            
+
             return "Request Deleted";
-            
+
         } catch (Exception e) {
-            
+
             return e.getMessage();
-            
+
         }
-        
+
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public FriendRequest friend_request_FindById(int frId) {
-        
+
         try {
-            
-            FriendRequest fr = em.find(FriendRequest.class,frId);
-            
+
+            FriendRequest fr = em.find(FriendRequest.class, frId);
+
             return fr;
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getMessage());
-            
+
             return null;
-            
+
         }
-        
+
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public List<FriendRequest> friend_request_FindBySenderId(int senderId, String status) {
-        
+
         try {
-            
+
             List<FriendRequest> fr = em.createNamedQuery("FriendRequest.findBySenderId")
                     .setParameter("senderid", senderId)
                     .setParameter("status", status)
                     .getResultList();
-            
+
             return fr;
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getMessage());
-            
+
             return null;
-            
+
         }
     }
-    
+
     @Override
     public List<FriendRequest> friend_request_FindByReceiverId(int receiverId, String status) {
-        
+
         try {
-            
+
             List<FriendRequest> fr = em.createNamedQuery("FriendRequest.findByReceiverId")
                     .setParameter("receiverid", receiverId)
                     .setParameter("status", status)
                     .getResultList();
-            
+
             return fr;
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getMessage());
-            
+
             return null;
-            
+
         }
     }
-    
+
     @Override
     public List<FriendRequest> friend_request_ShowAll() {
-        
+
         try {
-            
+
             List<FriendRequest> friendRequests = em.createNamedQuery("FriendRequest.findAll")
                     .getResultList();
-            
-            if(friendRequests.isEmpty()) {
+
+            if (friendRequests.isEmpty()) {
                 return null;
             }
-            
+
             return friendRequests;
-            
+
         } catch (Exception e) {
-            
+
             return null;
         }
-        
+
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public List<FriendRequest> friend_request_CheckStatus(int senderId, int receiverId) {
         try {
-            
+
             List<FriendRequest> fr = em.createNamedQuery("FriendRequest.checkStatus")
                     .setParameter("senderid", senderId)
                     .setParameter("receiverid", receiverId)
                     .getResultList();
-            
+
             return fr;
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getMessage());
-            
+
             return null;
-            
+
         }
     }
 
     //Friend_List
     @Override
     public String friend_list_Insert(int flId, boolean friendStatus, int userId, int friendId) {
-        
+
         try {
-            
+
             User user = em.find(User.class, userId);
             User friend = em.find(User.class, friendId);
-            
+
             Collection<FriendList> userCollection = user.getFriendListCollection();
             Collection<FriendList> friendCollection = friend.getFriendListCollection();
-            
+
             FriendList fl = new FriendList();
-            
+
             fl.setFlId(flId);
             fl.setUserid(user);
             fl.setFriendid(friend);
             fl.setAcceptedDatetime(new Date());
             fl.setFriendStatus(friendStatus);
-            
+
             userCollection.add(fl);
             friendCollection.add(fl);
-            
-            
+
             user.setFriendListCollection(userCollection);
             friend.setFriendListCollection(friendCollection);
-            
+
             em.persist(fl);
             em.merge(user);
             em.merge(friend);
-            
+
             return "Friend List Inserted";
-            
+
         } catch (Exception e) {
-            
+
             return e.getMessage();
-            
+
         }
-        
+
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public String friend_list_Update(int flId, boolean friendStatus, int userId, int friendId) {
-        
+
         try {
-            
+
             User user = em.find(User.class, userId);
             User friend = em.find(User.class, friendId);
-            
+
             Collection<FriendList> userCollection = user.getFriendListCollection();
             Collection<FriendList> friendCollection = friend.getFriendListCollection();
-            
+
             FriendList fl = em.find(FriendList.class, flId);
-            
+
             fl.setFlId(flId);
             fl.setUserid(user);
             fl.setFriendid(friend);
             fl.setFriendStatus(friendStatus);
-            
+
             userCollection.add(fl);
             friendCollection.add(fl);
-            
-            
+
             user.setFriendListCollection(userCollection);
             friend.setFriendListCollection(friendCollection);
-            
+
             em.persist(fl);
             em.merge(user);
             em.merge(friend);
-            
+
             return "Friend List Updated";
-            
+
         } catch (Exception e) {
-            
+
             return e.getMessage();
-            
+
         }
     }
 
     @Override
     public String friend_list_Delete(int flId) {
-        
+
         try {
-            
+
             FriendList fl = em.find(FriendList.class, flId);
-            
+
             fl.setFriendStatus(false);
-            
+
             em.merge(fl);
-            
+
             return "Friend List deleted";
-            
+
         } catch (Exception e) {
-            
+
             return e.getMessage();
-            
+
         }
     }
 
     @Override
     public FriendList friend_list_FindById(int flId) {
-        
+
         try {
-            
+
             return em.find(FriendList.class, flId);
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getMessage());
-            
+
             return null;
-            
+
         }
     }
-    
+
     @Override
     public List<FriendList> friend_list_ShowAllByUserId(int userId) {
         try {
-            
+
             List<FriendList> fl = em.createNamedQuery("FriendList.findAllByUserId")
                     .setParameter("userId", userId)
                     .getResultList();
-            
+
             return fl;
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getMessage());
-            
+
             return null;
-            
+
         }
     }
 
     @Override
     public List<FriendList> friend_list_ShowAll() {
-        
+
         try {
-            
+
             List<FriendList> fl = em.createNamedQuery("FriendList.findAll")
                     .getResultList();
-            
+
             return fl;
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getMessage());
-            
+
             return null;
-            
+
         }
-        
+
     }
 
     //Events
     @Override
     public String eventInsert(int eventId, String eventName, String post, String eventStartDate, String eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId) {
-        
+
         try {
 
             Date sdate = new SimpleDateFormat("yyyy-MM-dd").parse(eventStartDate);
             Date edate = new SimpleDateFormat("yyyy-MM-dd").parse(eventEndDate);
-            
+
             User host = em.find(User.class, hostId);
 
             Collection<Events> hostCollection = host.getEventsCollection();
@@ -2285,12 +2337,12 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String eventUpdate(int eventId, String eventName, String post, String eventStartDate, String eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId) {
-        
+
         try {
 
             Date sdate = new SimpleDateFormat("yyyy-MM-dd").parse(eventStartDate);
             Date edate = new SimpleDateFormat("yyyy-MM-dd").parse(eventEndDate);
-            
+
             User host = em.find(User.class, hostId);
 
             Collection<Events> hostCollection = host.getEventsCollection();
@@ -2327,15 +2379,15 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String eventDelete(int eventId) {
-        
+
         try {
-            
+
             Events e = em.find(Events.class, eventId);
             e.setIsRemoved(true);
             em.merge(e);
-            
+
             return "Event Deleted";
-            
+
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -2344,12 +2396,12 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public Events eventFindById(int eventId) {
-         try {
-             
+        try {
+
             Events e = em.find(Events.class, eventId);
-            
+
             return e;
-            
+
         } catch (Exception e) {
             return null;
         }
@@ -2358,32 +2410,31 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public List<Events> eventShowAll() {
-        
+
         try {
-            
+
             List<Events> events = em.createNamedQuery("Events.findAll")
                     .getResultList();
-            
-            if(events.isEmpty()) {
+
+            if (events.isEmpty()) {
                 return null;
             }
-            
+
             return events;
-            
+
         } catch (Exception e) {
-            
+
             return null;
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Events_UserCount
-    
     @Override
     public String event_usercount_Insert(int euc_Id, boolean isIntrested, int eventId, int userId) {
-        
+
         try {
-            
+
             User u = em.find(User.class, userId);
             Events e = em.find(Events.class, eventId);
 
@@ -2411,15 +2462,15 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         } catch (Exception e) {
             return e.getMessage();
         }
-        
+
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String event_usercount_Update(int euc_Id, boolean isIntrested, int eventId, int userId) {
-        
+
         try {
-            
+
             User u = em.find(User.class, userId);
             Events e = em.find(Events.class, eventId);
 
@@ -2452,17 +2503,17 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String event_usercount_Delete(int euc_Id) {
-        
+
         try {
-             
+
             EventUsercount eu = em.find(EventUsercount.class, euc_Id);
             eu.setIsInterested(false);
             em.merge(eu);
-            
+
             return "Event User Count Deleted";
-                
+
         } catch (Exception e) {
-            
+
             return e.getMessage();
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -2470,36 +2521,36 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public EventUsercount event_usercount_FindById(int euc_Id) {
-        
-         try {
-             
+
+        try {
+
             EventUsercount eu = em.find(EventUsercount.class, euc_Id);
             return eu;
-                
+
         } catch (Exception e) {
-            
+
             return null;
         }
-         
+
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<EventUsercount> event_usercount_ShowAll() {
-        
+
         try {
-            
+
             List<EventUsercount> eventusers = em.createNamedQuery("EventUsercount.findAll")
                     .getResultList();
-            
-            if(eventusers.isEmpty()) {
+
+            if (eventusers.isEmpty()) {
                 return null;
             }
-            
+
             return eventusers;
-            
+
         } catch (Exception e) {
-            
+
             return null;
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -2508,7 +2559,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //Comments
     @Override
     public String commentsInsert(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId) {
-        
+
         try {
 
             User s = em.find(User.class, senderId);
@@ -2551,7 +2602,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String commentsUpdate(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId) {
-        
+
         try {
 
             User s = em.find(User.class, senderId);
@@ -2593,7 +2644,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String commentsdelete(int commentId) {
-        
+
         try {
 
             Comments c = em.find(Comments.class, commentId);
@@ -2611,7 +2662,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public Comments commentsFindById(int commentId) {
-        
+
         try {
 
             Comments c = em.find(Comments.class, commentId);
@@ -2628,21 +2679,21 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public List<Comments> commentsShowAll() {
-        
-         try {
+
+        try {
 
             List<Comments> commentlist = em.createNamedQuery("Comments.findAll")
                     .getResultList();
 
-            if(commentlist.isEmpty()) {
+            if (commentlist.isEmpty()) {
                 return null;
             }
-           
+
             return commentlist;
 
         } catch (Exception e) {
 
-             System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
             return null;
 
         }
@@ -2663,13 +2714,12 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     //Ads_User
     @Override
     public String ads_user_Insert(int auId, String adsContent, String description, String link, String endDate, boolean isRemoved, boolean isExpired, int userId, int adsId) {
-        
+
         try {
 
 //            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 //            LocalDateTime now = LocalDateTime.now();
 //            Date sdate = new SimpleDateFormat("yyyy-MM-dd").parse(dtf.format(now));
-            
             User u = em.find(User.class, userId);
             Ads a = em.find(Ads.class, adsId);
 
@@ -2687,11 +2737,11 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             au.setIsRemoved(isRemoved);
             au.setIsExpried(isExpired);
             au.setUserid(u);
-            au.setAdsid(a);            
+            au.setAdsid(a);
 
             gmuc.add(au);
             gmac.add(au);
-            
+
             u.setAdsUserCollection(gmuc);
             a.setAdsUserCollection(gmac);
 
@@ -2709,13 +2759,12 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String ads_user_Update(int auId, String adsContent, String description, String link, String endDate, boolean isRemoved, boolean isExpired, int userId, int adsId) {
-        
+
         try {
 
 //            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 //            LocalDateTime now = LocalDateTime.now();
 //            Date sdate = new SimpleDateFormat("yyyy-MM-dd").parse(dtf.format(now));
-
             User u = em.find(User.class, userId);
             Ads a = em.find(Ads.class, adsId);
 
@@ -2733,11 +2782,11 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             au.setIsRemoved(isRemoved);
             au.setIsExpried(isExpired);
             au.setUserid(u);
-            au.setAdsid(a);            
+            au.setAdsid(a);
 
             gmuc.add(au);
             gmac.add(au);
-            
+
             u.setAdsUserCollection(gmuc);
             a.setAdsUserCollection(gmac);
 
@@ -2755,7 +2804,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public String ads_user_Delete(int auId) {
-        
+
         try {
 
             AdsUser au = em.find(AdsUser.class, auId);
@@ -2773,7 +2822,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public AdsUser ads_user_FindById(int auId) {
-        
+
         try {
 
             AdsUser au = em.find(AdsUser.class, auId);
@@ -2790,13 +2839,13 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     @Override
     public List<AdsUser> ads_user_ShowAll() {
-        
+
         try {
 
             List<AdsUser> userads = em.createNamedQuery("AdsUser.findAll")
                     .getResultList();
-            
-            if(userads.isEmpty()) {
+
+            if (userads.isEmpty()) {
                 return null;
             }
 
@@ -2826,7 +2875,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             a.setIsRemoved(isRemoved);
 
             em.persist(a);
-
 
         } catch (Exception e) {
         }
@@ -2863,22 +2911,22 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             Ads a = em.find(Ads.class, adsId);
-            
-            if(a.getIsRemoved() == true) {
+
+            if (a.getIsRemoved() == true) {
                 a.setIsRemoved(false);
                 em.merge(a);
 
                 return "Ad Added Again";
             }
-            if(a.getIsRemoved() == false) {
+            if (a.getIsRemoved() == false) {
                 a.setIsRemoved(true);
                 em.merge(a);
 
                 return "Ad Removed";
             }
-            
+
             return "null";
-            
+
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -2905,8 +2953,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
             List<Ads> ad = em.createNamedQuery("Ads.findAll")
                     .getResultList();
-            
-            if(ad.isEmpty()) {
+
+            if (ad.isEmpty()) {
                 return null;
             }
 
@@ -2923,16 +2971,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            if(groupId != 0)
-            {
+            if (groupId != 0) {
                 User s = em.find(User.class, senderId);
                 User r = em.find(User.class, receiverId);
                 Groups g = em.find(Groups.class, groupId);
 
-                Collection<ActivityFeed> gmgc = g.getActivityFeedCollection();            
+                Collection<ActivityFeed> gmgc = g.getActivityFeedCollection();
                 Collection<ActivityFeed> gmsc = s.getActivityFeedCollection();
                 Collection<ActivityFeed> gmrc = r.getActivityFeedCollection();
-
 
                 ActivityFeed af = new ActivityFeed();
 
@@ -2947,7 +2993,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                 af.setIsDeleted(isDeleted);
                 af.setSenderid(s);
                 af.setReceiverid(r);
-                af.setGroupid(g);         
+                af.setGroupid(g);
 
                 gmsc.add(af);
                 gmrc.add(af);
@@ -2962,15 +3008,12 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                 em.merge(g);
 
                 return "Group Feed Inserted";
-            }
-            else
-            {
+            } else {
                 User s = em.find(User.class, senderId);
                 User r = em.find(User.class, receiverId);
-           
+
                 Collection<ActivityFeed> gmsc = s.getActivityFeedCollection();
                 Collection<ActivityFeed> gmrc = r.getActivityFeedCollection();
-
 
                 ActivityFeed af = new ActivityFeed();
 
@@ -2984,7 +3027,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                 af.setIsRead(isRead);
                 af.setIsDeleted(isDeleted);
                 af.setSenderid(s);
-                af.setReceiverid(r);         
+                af.setReceiverid(r);
 
                 gmsc.add(af);
                 gmrc.add(af);
@@ -2997,7 +3040,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
                 return "Activity Feed Inserted";
             }
-                
 
         } catch (Exception e) {
             return e.getMessage();
@@ -3092,10 +3134,10 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         try {
 
             List<ActivityFeed> feed = em.createNamedQuery("ActivityFeed.findMsgByReceiverId")
-                    .setParameter("userid",receiverId)
+                    .setParameter("userid", receiverId)
                     .getResultList();
-            
-            if(feed.isEmpty()) {
+
+            if (feed.isEmpty()) {
                 System.out.println("empty");
                 return null;
             }
@@ -3108,7 +3150,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         }
     }
-    
+
     @Override
     public List<ActivityFeed> activity_feed_ShowAll() {
 
@@ -3116,8 +3158,8 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             List<ActivityFeed> feed = em.createNamedQuery("ActivityFeed.findAll")
                     .getResultList();
-            
-            if(feed.isEmpty()) {
+
+            if (feed.isEmpty()) {
                 return null;
             }
 
@@ -3150,7 +3192,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     if (!PassToHash) {
                         return null;
                     }
-                    
+
                     return user;
                 }
 
