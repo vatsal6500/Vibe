@@ -247,7 +247,11 @@ public class FriendManagedBean {
     
     //private methods
     
-    
+    private void Activity(String senderMsg, String receiverMsg, String targerURL, String senderId, String receiverId) {
+        
+        vibeClient.activity_feed_Insert("0", "desc", senderMsg, receiverMsg, targerURL, "Friend", "false", "false", senderId, receiverId, "0");
+        
+    }
     
     //private methods ends
     
@@ -312,7 +316,7 @@ public class FriendManagedBean {
         return userArrayList;
     }
     
-    public void sendRequest(String receiverid) {
+    public void sendRequest(String receiverid, String receiverName) {
         
         try {
             
@@ -321,6 +325,14 @@ public class FriendManagedBean {
             HttpSession userSessions = requests.getSession(); 
 
             vibeClient.friend_request_Insert("0","requested",userSessions.getAttribute("UuserId").toString(),receiverid);
+            
+            String senderMsg = "Friend request sent to " + receiverName + ".";
+            String receiverMsg = userSessions.getAttribute("UfullName").toString() + 
+                                " has sent a friend request.";
+            String targetUrl = "ok";
+
+            Activity(senderMsg, receiverMsg, targetUrl, userSessions.getAttribute("UuserId").toString(), receiverid);
+            
             
         } catch (ClientErrorException e) {
             
@@ -331,7 +343,7 @@ public class FriendManagedBean {
         
     }
     
-    public void confirmRequest(String senderid, String frId) {
+    public void confirmRequest(String senderid, String frId, String receiverName) {
         try {
             
             HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
@@ -344,6 +356,12 @@ public class FriendManagedBean {
             
             vibeClient.friend_request_Update(frId, "accepted", senderid, userSessions.getAttribute("UuserId").toString());
             
+            String senderMsg = "Friend request accepted of " + receiverName + ".";
+            String receiverMsg = userSessions.getAttribute("UfullName").toString() + 
+                                " has accepted your friend request.";
+            String targetUrl = "null";
+
+            Activity(senderMsg, receiverMsg, targetUrl, userSessions.getAttribute("UuserId").toString(), senderid);
             
             
         } catch (ClientErrorException e) {

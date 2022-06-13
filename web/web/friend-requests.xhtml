@@ -82,7 +82,7 @@
                                                                 <p class="mb-0">#{friendManagedBean.showAllFriends(friendRequest.senderid.userid).size()} Friends</p>
                                                             </div>
                                                             <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                                <h:commandButton class="me-3 btn btn-primary rounded" action="#{friendManagedBean.confirmRequest(friendRequest.senderid.userid, friendRequest.frId)}" value="Confirm"></h:commandButton>
+                                                                <h:commandButton class="me-3 btn btn-primary rounded" action="#{friendManagedBean.confirmRequest(friendRequest.senderid.userid, friendRequest.frId, friendRequest.senderid.firstname)}" value="Confirm"></h:commandButton>
                                                                 <h:commandButton class="btn btn-secondary rounded" action="#{friendManagedBean.deleteRequest(friendRequest.frId)}" value="Delete Request"></h:commandButton>
                                                             </div>
                                                         </li>
@@ -119,7 +119,7 @@
                                                                     <p class="mb-0">#{friendManagedBean.showAllFriends(people.userid).size()} Friends</p>
                                                                 </div>
                                                                 <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                                    <h:commandButton class="me-3 btn btn-primary rounded" action="#{friendManagedBean.sendRequest(people.userid)}"  value="AddFriend" ></h:commandButton>
+                                                                    <h:commandButton class="me-3 btn btn-primary rounded" action="#{friendManagedBean.sendRequest(people.userid, people.firstname)}"  value="AddFriend" ></h:commandButton>
                                                                 </div>
                                                             </li>
                                                             <hr/>
