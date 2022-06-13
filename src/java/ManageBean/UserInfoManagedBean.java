@@ -136,6 +136,7 @@ public class UserInfoManagedBean {
                     .getExternalContext().getRequest();
         HttpSession userSessions = requests.getSession();
         
+        System.out.println(userSessions.getAttribute("UuserId").toString());
         Response response = vibeClient.user_contact_info_FindByUserId(Response.class, userSessions.getAttribute("UuserId").toString());
         ArrayList<UserContactInfo> contactArrayList = new ArrayList<>();
         GenericType<List<UserContactInfo>> showAllcontact  = new GenericType<List<UserContactInfo>>() {
