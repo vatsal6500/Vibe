@@ -11,6 +11,7 @@ import entity.City;
 import entity.Country;
 import entity.State;
 import entity.User;
+import entity.UserContactInfo;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -500,6 +501,21 @@ public class UserManagedBean {
         dob = Users.getDob();
         gender = Users.getGender();
         
+        
+    }
+    
+    public List<User> showUserInfo() {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession();
+        
+        Response response = vibeClient.userFindById(Response.class, userSessions.getAttribute("UuserId").toString());
+        ArrayList<User> infoArrayList = new ArrayList<>();
+        GenericType<List<User>> showAllinfo  = new GenericType<List<User>>() {
+        };
+        infoArrayList = (ArrayList<User>) response.readEntity(showAllinfo);
+        return infoArrayList;
     }
     
 }

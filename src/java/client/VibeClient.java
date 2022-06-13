@@ -196,6 +196,12 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T user_contact_info_FindByUserId(Class<T> responseType, String userid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("user_contact_info_findbyuserid/{0}", new Object[]{userid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String friend_list_Insert(String flId, String friendStatus, String userId, String friendId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("friendlistinsert/{0}/{1}/{2}/{3}", new Object[]{flId, friendStatus, userId, friendId})).request().post(null, String.class);
     }
@@ -230,6 +236,12 @@ public class VibeClient {
 
     public String countryDelete(String countryId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("countrydelete/{0}", new Object[]{countryId})).request().post(null, String.class);
+    }
+
+    public <T> T user_skills_FindByUserId(Class<T> responseType, String userId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("user_skills_findbyuserid/{0}", new Object[]{userId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public String friend_list_Update(String flId, String friendStatus, String userId, String friendId) throws ClientErrorException {
@@ -317,6 +329,12 @@ public class VibeClient {
     public <T> T user_contact_info_ShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("user_contact_info_showall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T user_work_FindByUserId(Class<T> responseType, String userId) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("user_work_findbyuserid/{0}", new Object[]{userId}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -505,6 +523,12 @@ public class VibeClient {
     public <T> T user_skills_FindById(Class<T> responseType, String usId) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("user_skills_findbyid/{0}", new Object[]{usId}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T user_education_FindByUserId(Class<T> responseType, String userid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("user_education_findbyuserid/{0}", new Object[]{userid}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 

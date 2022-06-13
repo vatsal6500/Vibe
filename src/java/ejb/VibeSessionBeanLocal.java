@@ -52,7 +52,7 @@ public interface VibeSessionBeanLocal {
     public String userRegister(int userId, String firstName, String lastName, String dob, String email, String password, boolean isActive, boolean isAdmin, boolean access);
     public String userUpdate(int userId, String firstName, String middleName, String lastName, String gender, String dob, String email, String username, String password, long mobile, String profilePhoto, String coverPhoto, int countryId, int stateId, int cityId);
     public String userDelete(int userId); //admin
-    public User userFindById(int userId);
+    public List<User> userFindById(int userId);
     public List<User> userFindByName(String userName);
     public List<User> userShowAll(); //admin
     public List<User> adminShowAll(); //admin
@@ -63,6 +63,7 @@ public interface VibeSessionBeanLocal {
     public String user_contact_info_Update(int uciId, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, int userId);
     public String user_contact_info_Delete(int uciId);
     public UserContactInfo user_contact_info_FindById(int uciId);
+    public List<UserContactInfo> user_contact_info_FindByUserId(int userId);
     public List<UserContactInfo> user_contact_info_ShowAll(); //admin
     
     //User_Education
@@ -70,6 +71,7 @@ public interface VibeSessionBeanLocal {
     public String user_education_Update(int ueId, String instituteName, String joiningDate, String endingDate, String instituteAddress, int userId);
     public String user_education_Delete(int ueId);
     public UserEducation user_education_FindById(int ueId);
+    public List<UserEducation> user_education_FindByUserId(int userId);
     public List<UserEducation> user_education_ShowAll(); //admin
     
     //User_Skills
@@ -77,6 +79,7 @@ public interface VibeSessionBeanLocal {
     public String user_skills_Update(int usId, String skillName, String skillInfo, String skillPortfolio, int userId);
     public String user_skills_Delete(int usId);
     public UserSkills user_skills_FindById(int usId);
+    public List<UserSkills> user_skills_FindByUserId(int userId);
     public List<UserSkills> user_skills_ShowAll(); //admin
     
     //User_Work
@@ -84,6 +87,7 @@ public interface VibeSessionBeanLocal {
     public String user_work_Update(int uwId, String companyName, String joiningDate, String endingDate, String companyAddress, int userId);
     public String user_work_Delete(int uwId);
     public UserWork user_work_FindById(int uwId);
+    public List<UserWork> user_work_FindByUserId(int userId);
     public List<UserWork> user_work_ShowALl();  //admin
     
     

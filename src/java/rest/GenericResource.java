@@ -245,7 +245,7 @@ public class GenericResource {
     @Path("userfindbyid/{userId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public User userFindById(@PathParam("userId")int userId) {
+    public List<User> userFindById(@PathParam("userId")int userId) {
         return vibe.userFindById(userId);
     }
     
@@ -307,6 +307,13 @@ public class GenericResource {
         return vibe.user_contact_info_FindById(uciid);
     }
     
+    @Path("user_contact_info_findbyuserid/{userid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserContactInfo> user_contact_info_FindByUserId(@PathParam("userid")int userid) {
+        return vibe.user_contact_info_FindByUserId(userid);
+    }
+    
     
     @Path("user_contact_info_showall")
     @GET
@@ -343,6 +350,13 @@ public class GenericResource {
     @Produces(MediaType.APPLICATION_JSON)
     public UserEducation user_education_FindById(@PathParam("ueId")int ueId) {
         return vibe.user_education_FindById(ueId);
+    }
+    
+    @Path("user_education_findbyuserid/{userid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserEducation> user_education_FindByUserId(@PathParam("userid")int userid) {
+        return vibe.user_education_FindByUserId(userid);
     }
     
     
@@ -383,7 +397,13 @@ public class GenericResource {
     public UserSkills user_skills_FindById(@PathParam("usId")int usId) {
         return vibe.user_skills_FindById(usId);
     }
-    
+
+    @Path("user_skills_findbyuserid/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserSkills> user_skills_FindByUserId(@PathParam("userId")int userId) {
+        return vibe.user_skills_FindByUserId(userId);
+    }
     
     @Path("user_skills_showall")
     @GET
@@ -420,6 +440,13 @@ public class GenericResource {
     @Produces(MediaType.APPLICATION_JSON)
     public UserWork user_work_FindById(@PathParam("uwId")int uwId) {
         return vibe.user_work_FindById(uwId);
+    }
+    
+    @Path("user_work_findbyuserid/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserWork> user_work_FindByUserId(@PathParam("userId")int userId) {
+        return vibe.user_work_FindByUserId(userId);
     }
     
     

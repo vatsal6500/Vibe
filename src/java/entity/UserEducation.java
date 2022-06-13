@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "user_education", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "UserEducation.findByUserId", query = "SELECT u FROM UserEducation u WHERE u.userid.userid = :userid"),
     @NamedQuery(name = "UserEducation.findAll", query = "SELECT u FROM UserEducation u"),
     @NamedQuery(name = "UserEducation.findByUeId", query = "SELECT u FROM UserEducation u WHERE u.ueId = :ueId"),
     @NamedQuery(name = "UserEducation.findByInstitutename", query = "SELECT u FROM UserEducation u WHERE u.institutename = :institutename"),

@@ -655,20 +655,24 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     @Override
-    public User userFindById(int userId) {
+    public List<User> userFindById(int userId) {
 
         try {
 
-            User user = em.find(User.class, userId);
+            List<User> user = em.createNamedQuery("User.findByUserid")
+                    .setParameter("userid", userId)
+                    .getResultList();
+            
+            if(user.isEmpty()) {
+                return null;
+            }
 
             return user;
-
-        } catch (Exception e) {
-
-            return null;
-
         }
-
+        catch(Exception e)
+        {
+            return null;
+        }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -875,6 +879,30 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public List<UserContactInfo> user_contact_info_FindByUserId(int userId) {
+        
+        try {
+
+            List<UserContactInfo> usercontact = em.createNamedQuery("UserContactInfo.findByUserId")
+                    .setParameter("userid", userId)
+                    .getResultList();
+            
+            if(usercontact.isEmpty()) {
+                return null;
+            }
+
+            return usercontact;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     //User_Education
     @Override
@@ -1000,6 +1028,32 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public List<UserEducation> user_education_FindByUserId(int userId) {
+        
+        try {
+
+            List<UserEducation> useredu =  em.createNamedQuery("UserEducation.findByUserId")
+                    .setParameter("userid", userId)
+                    .getResultList();
+            
+            if(useredu.isEmpty())
+            {
+                return null;
+            }
+            
+
+            return useredu;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     //User_Skills
     @Override
@@ -1105,6 +1159,30 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     .getResultList();
             
             if(userskill.isEmpty()) {
+                return null;
+            }
+
+            return userskill;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    @Override
+    public List<UserSkills> user_skills_FindByUserId(int userId) {
+        
+        try {
+
+            List<UserSkills> userskill =  em.createNamedQuery("UserSkills.findByUserId")
+                    .setParameter("userid", userId)
+                    .getResultList();
+
+            if(userskill.isEmpty()){
                 return null;
             }
 
@@ -1242,6 +1320,33 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    @Override
+    public List<UserWork> user_work_FindByUserId(int userId) {
+        
+        try {
+
+            List<UserWork> userwork =  em.createNamedQuery("UserWork.findByUserId")
+                    .setParameter("userid", userId)
+                    .getResultList();
+            
+            if(userwork.isEmpty())
+            {
+                return null;
+            }
+            
+
+            return userwork;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     //Groups
     @Override

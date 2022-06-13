@@ -70,6 +70,7 @@ public class AdminManagedBean {
     public void setAds_id(String ads_id) {
         this.ads_id = ads_id;
     }
+    
     private String adstype;
     private String price;
     private String timelimit;
