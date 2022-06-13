@@ -2818,42 +2818,81 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            User s = em.find(User.class, senderId);
-            User r = em.find(User.class, receiverId);
-            Groups g = em.find(Groups.class, groupId);
+            if(groupId != 0)
+            {
+                User s = em.find(User.class, senderId);
+                User r = em.find(User.class, receiverId);
+                Groups g = em.find(Groups.class, groupId);
 
-            Collection<ActivityFeed> gmsc = s.getActivityFeedCollection();
-            Collection<ActivityFeed> gmrc = r.getActivityFeedCollection();
-            Collection<ActivityFeed> gmgc = g.getActivityFeedCollection();
+                Collection<ActivityFeed> gmgc = g.getActivityFeedCollection();            
+                Collection<ActivityFeed> gmsc = s.getActivityFeedCollection();
+                Collection<ActivityFeed> gmrc = r.getActivityFeedCollection();
 
-            ActivityFeed af = new ActivityFeed();
 
-            af.setAfId(afId);
-            af.setDescription(description);
-            af.setSendermessage(senderMsg);
-            af.setReceivermessage(receiverMsg);
-            af.setTargetUrl(targerURL);
-            af.setActivityType(activityType);
-            af.setActivityDate(new Date());
-            af.setIsRead(isRead);
-            af.setIsDeleted(isDeleted);
-            af.setSenderid(r);
-            af.setReceiverid(r);
-            af.setGroupid(g);
+                ActivityFeed af = new ActivityFeed();
 
-            gmsc.add(af);
-            gmrc.add(af);
-            gmgc.add(af);
-            s.setActivityFeedCollection(gmsc);
-            r.setActivityFeedCollection(gmrc);
-            g.setActivityFeedCollection(gmgc);
+                af.setAfId(afId);
+                af.setDescription(description);
+                af.setSendermessage(senderMsg);
+                af.setReceivermessage(receiverMsg);
+                af.setTargetUrl(targerURL);
+                af.setActivityType(activityType);
+                af.setActivityDate(new Date());
+                af.setIsRead(isRead);
+                af.setIsDeleted(isDeleted);
+                af.setSenderid(s);
+                af.setReceiverid(r);
+                af.setGroupid(g);         
 
-            em.persist(af);
-            em.merge(s);
-            em.merge(r);
-            em.merge(g);
+                gmsc.add(af);
+                gmrc.add(af);
+                gmgc.add(af);
+                s.setActivityFeedCollection(gmsc);
+                r.setActivityFeedCollection(gmrc);
+                g.setActivityFeedCollection(gmgc);
 
-            return "Activity Feed Inserted";
+                em.persist(af);
+                em.merge(s);
+                em.merge(r);
+                em.merge(g);
+
+                return "Group Feed Inserted";
+            }
+            else
+            {
+                User s = em.find(User.class, senderId);
+                User r = em.find(User.class, receiverId);
+           
+                Collection<ActivityFeed> gmsc = s.getActivityFeedCollection();
+                Collection<ActivityFeed> gmrc = r.getActivityFeedCollection();
+
+
+                ActivityFeed af = new ActivityFeed();
+
+                af.setAfId(afId);
+                af.setDescription(description);
+                af.setSendermessage(senderMsg);
+                af.setReceivermessage(receiverMsg);
+                af.setTargetUrl(targerURL);
+                af.setActivityType(activityType);
+                af.setActivityDate(new Date());
+                af.setIsRead(isRead);
+                af.setIsDeleted(isDeleted);
+                af.setSenderid(s);
+                af.setReceiverid(r);         
+
+                gmsc.add(af);
+                gmrc.add(af);
+                s.setActivityFeedCollection(gmsc);
+                r.setActivityFeedCollection(gmrc);
+
+                em.persist(af);
+                em.merge(s);
+                em.merge(r);
+
+                return "Activity Feed Inserted";
+            }
+                
 
         } catch (Exception e) {
             return e.getMessage();
