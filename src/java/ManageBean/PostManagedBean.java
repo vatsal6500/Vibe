@@ -176,73 +176,77 @@ public class PostManagedBean {
 
         try {
 
-            InputStream input = file.getInputStream();
-            
-            if (file.getSubmittedFileName().contains(".jpg") || file.getSubmittedFileName().contains(".jpeg") || file.getSubmittedFileName().contains(".png")) {
-                String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Images\\";
-
-                Random random = new Random();
-                StringBuilder sb = new StringBuilder();
-
-                sb.append(random.nextInt(9) + 1);
-                for (int i = 0; i < 11; i++) {
-                    sb.append(random.nextInt(10));
-                }
-                String temp = sb.toString();
-
-                post = "IMG_" + temp + file.getSubmittedFileName();
-                Files.copy(input, new File(fullPath, post).toPath());
-
-                vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Image", userSessions.getAttribute("UuserId").toString(), groupId);
-
-            }
-            
-            if (file.getSubmittedFileName().contains(".mp4") || file.getSubmittedFileName().contains(".mov") || file.getSubmittedFileName().contains(".mkv") || file.getSubmittedFileName().contains(".avi")) {
-                String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Videos\\";
-
-                Random random = new Random();
-                StringBuilder sb = new StringBuilder();
-
-                sb.append(random.nextInt(9) + 1);
-                for (int i = 0; i < 11; i++) {
-                    sb.append(random.nextInt(10));
-                }
-                String temp = sb.toString();
-
-                post = "VID_" + temp + file.getSubmittedFileName();
-                Files.copy(input, new File(fullPath, post).toPath());
-
-                vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Video", userSessions.getAttribute("UuserId").toString(), groupId);
-
-            }
-            
-            if (file.getSubmittedFileName().contains(".mp3") || file.getSubmittedFileName().contains(".wav") || file.getSubmittedFileName().contains(".m4a")) {
-                String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Audio\\";
-
-                Random random = new Random();
-                StringBuilder sb = new StringBuilder();
-
-                sb.append(random.nextInt(9) + 1);
-                for (int i = 0; i < 11; i++) {
-                    sb.append(random.nextInt(10));
-                }
-                String temp = sb.toString();
-
-                post = "AUD_" + temp + file.getSubmittedFileName();
-                Files.copy(input, new File(fullPath, post).toPath());
-
-                vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Audio", userSessions.getAttribute("UuserId").toString(), groupId);
-
-            }
-            
             if (file == null) {
 
                 vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Text", userSessions.getAttribute("UuserId").toString(), groupId);
 
+            } else {
+                if (file.getSubmittedFileName().contains(".jpg") || file.getSubmittedFileName().contains(".jpeg") || file.getSubmittedFileName().contains(".png")) {
+
+                    InputStream input = file.getInputStream();
+                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Images\\";
+
+                    Random random = new Random();
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.append(random.nextInt(9) + 1);
+                    for (int i = 0; i < 11; i++) {
+                        sb.append(random.nextInt(10));
+                    }
+                    String temp = sb.toString();
+
+                    post = "IMG_" + temp + file.getSubmittedFileName();
+                    Files.copy(input, new File(fullPath, post).toPath());
+
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Image", userSessions.getAttribute("UuserId").toString(), groupId);
+
+                }
+
+                if (file.getSubmittedFileName().contains(".mp4") || file.getSubmittedFileName().contains(".mov") || file.getSubmittedFileName().contains(".mkv") || file.getSubmittedFileName().contains(".avi")) {
+
+                    InputStream input = file.getInputStream();
+                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Videos\\";
+
+                    Random random = new Random();
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.append(random.nextInt(9) + 1);
+                    for (int i = 0; i < 11; i++) {
+                        sb.append(random.nextInt(10));
+                    }
+                    String temp = sb.toString();
+
+                    post = "VID_" + temp + file.getSubmittedFileName();
+                    Files.copy(input, new File(fullPath, post).toPath());
+
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Video", userSessions.getAttribute("UuserId").toString(), groupId);
+
+                }
+
+                if (file.getSubmittedFileName().contains(".mp3") || file.getSubmittedFileName().contains(".wav") || file.getSubmittedFileName().contains(".m4a")) {
+
+                    InputStream input = file.getInputStream();
+                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Audio\\";
+
+                    Random random = new Random();
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.append(random.nextInt(9) + 1);
+                    for (int i = 0; i < 11; i++) {
+                        sb.append(random.nextInt(10));
+                    }
+                    String temp = sb.toString();
+
+                    post = "AUD_" + temp + file.getSubmittedFileName();
+                    Files.copy(input, new File(fullPath, post).toPath());
+
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Audio", userSessions.getAttribute("UuserId").toString(), groupId);
+
+                }
             }
-            
+
             this.caption = "";
-            
+
         } catch (ClientErrorException | IOException e) {
             System.out.println(e.getMessage());
         }
