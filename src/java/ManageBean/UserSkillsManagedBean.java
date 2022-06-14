@@ -8,6 +8,7 @@ package ManageBean;
 
 import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
+import entity.UserContactInfo;
 import entity.UserEducation;
 import entity.UserSkills;
 import entity.UserWork;
@@ -19,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 /**
@@ -108,5 +110,33 @@ public class UserSkillsManagedBean {
         skillArrayList = (ArrayList<UserSkills>) response.readEntity(showAllskill);
         System.out.println(skillArrayList);
         return skillArrayList;
+    }
+    
+     public String editUserSkill(String Id) {
+        
+        Response response = vibeClient.user_skills_FindById(Response.class, Id);
+        UserSkills skillArrayList = new UserSkills();
+        GenericType<UserSkills> showAllskill  = new GenericType<UserSkills>() {
+        };
+        skillArrayList = (UserSkills) response.readEntity(showAllskill);
+        us_id = skillArrayList.getUsId().toString();
+        userid = skillArrayList.getUserid().getUserid().toString();
+        skillname = skillArrayList.getSkillname();
+        skillinfo = skillArrayList.getSkillinfo();
+        skillportfolio = skillArrayList.getSkillportfolio();
+        
+        return "/web/editskills.xhtml?faces-redirect=true";
+    }
+    
+    public String updateUserSkill() {
+        
+        try {
+               vibeClient.user_skills_Update(us_id, skillname, skillinfo, skillportfolio, userid);
+               return "/web/profile.xhtml?faces-redirect=true";
+              
+        } catch (ClientErrorException e) {
+            System.out.println(e);
+            return e.getMessage();
+        }
     }
 }

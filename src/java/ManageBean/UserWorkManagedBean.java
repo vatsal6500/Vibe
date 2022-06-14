@@ -126,4 +126,36 @@ public class UserWorkManagedBean {
         return workArrayList;
     }
     
+    public String editUserWork(String Id) {
+        
+        Response response = vibeClient.user_work_FindById(Response.class, Id);
+        UserWork workArrayList = new UserWork();
+        GenericType<UserWork> showAllwork  = new GenericType<UserWork>() {
+        };
+        workArrayList = (UserWork) response.readEntity(showAllwork);
+        uw_id = workArrayList.getUwId().toString();
+        userid = workArrayList.getUserid().getUserid().toString();
+        companyname = workArrayList.getCompanyname();
+        joiningdate = workArrayList.getJoiningdate().toString();
+        endingdate = workArrayList.getEndingdate().toString();
+        companyaddress = workArrayList.getCompanyaddress();     
+        
+        
+        return "/web/editwork.xhtml?faces-redirect=true";
+    }
+    
+  
+    public String updateUserWork() {
+        
+        try {
+               System.out.println(companyaddress);
+               vibeClient.user_work_Update(uw_id, companyname, joiningdate, endingdate, companyaddress, userid);
+               return "/web/profile.xhtml?faces-redirect=true";
+              
+        } catch (ClientErrorException e) {
+            System.out.println(e);
+            return e.getMessage();
+        }
+    }
+    
 }

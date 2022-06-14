@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
@@ -114,6 +115,37 @@ public class UserEduManagedBean {
         eduArrayList = (ArrayList<UserEducation>) response.readEntity(showAllwork);
         System.out.println(eduArrayList);
         return eduArrayList;
+    }
+    
+    public String editUserEdu(String Id) {
+        
+        Response response = vibeClient.user_education_FindById(Response.class, Id);
+        UserEducation eduArrayList = new UserEducation();
+        GenericType<UserEducation> showAlledu  = new GenericType<UserEducation>() {
+        };
+        eduArrayList = (UserEducation) response.readEntity(showAlledu);
+        ue_id = eduArrayList.getUeId().toString();
+        userid = eduArrayList.getUserid().getUserid().toString();
+        institutename = eduArrayList.getInstitutename();
+        joiningdate = eduArrayList.getJoiningdate().toString();
+        endingdate = eduArrayList.getEndingdate().toString();
+        instituteaddress = eduArrayList.getInstituteaddress();     
+        
+        
+        return "/web/editedu.xhtml?faces-redirect=true";
+    }
+    
+  
+    public String updateUserEdu() {
+        
+        try {
+               vibeClient.user_education_Update(ue_id, institutename, joiningdate, endingdate, instituteaddress, userid);
+               return "/web/profile.xhtml?faces-redirect=true";
+              
+        } catch (ClientErrorException e) {
+            System.out.println(e);
+            return e.getMessage();
+        }
     }
     
 }

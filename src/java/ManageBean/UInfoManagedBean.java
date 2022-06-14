@@ -7,24 +7,15 @@ package ManageBean;
 
 import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
-import entity.User;
 import entity.UserContactInfo;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -33,14 +24,14 @@ import javax.ws.rs.core.Response;
  *
  * @author pooja
  */
-@Named(value = "userinfoManagedBean")
+@Named(value = "uinfoManagedBean")
 @ApplicationScoped
 
-public class UserInfoManagedBean {
-    
+public class UInfoManagedBean {
+
     @EJB
     private VibeSessionBeanLocal vibeSessionBean;
-    private final VibeClient vibeClient = new VibeClient();
+    private VibeClient vibeClient = new VibeClient();
     
     private String uci_id;
     private String userid;
@@ -57,6 +48,14 @@ public class UserInfoManagedBean {
 
     public void setVibeSessionBean(VibeSessionBeanLocal vibeSessionBean) {
         this.vibeSessionBean = vibeSessionBean;
+    }
+
+    public VibeClient getVibeClient() {
+        return vibeClient;
+    }
+
+    public void setVibeClient(VibeClient vibeClient) {
+        this.vibeClient = vibeClient;
     }
 
     public String getUci_id() {
@@ -124,11 +123,12 @@ public class UserInfoManagedBean {
     }
     
     
-    
-    public UserInfoManagedBean()
-    {
-        
+    /**
+     * Creates a new instance of UInfoManagedBean
+     */
+    public UInfoManagedBean() {
     }
+    
     
     public List<UserContactInfo> showUserContactInfo() {
         
@@ -145,6 +145,55 @@ public class UserInfoManagedBean {
         return contactArrayList;
     }
     
+    public String editUserContact(String Id) {
+        
+        Response response = vibeClient.user_contact_info_FindById(Response.class, Id);
+        UserContactInfo contactArrayList = new UserContactInfo();
+        GenericType<UserContactInfo> showAllcontact  = new GenericType<UserContactInfo>() {
+        };
+        contactArrayList = (UserContactInfo) response.readEntity(showAllcontact);
+        uci_id = contactArrayList.getUciId().toString();
+        userid = contactArrayList.getUserid().getUserid().toString();
+        website = contactArrayList.getWebsite();
+        language = contactArrayList.getLanguage();
+        intrested_in = contactArrayList.getIntrestedIn();
+        fb_link = contactArrayList.getFbLink();
+        insta_link = contactArrayList.getInstaLink();
+        bio = contactArrayList.getBio();
+        
+        
+        return "/web/editsociallink.xhtml?faces-redirect=true";
+    }
     
+    public String editUserInterest(String Id) {
+        
+        Response response = vibeClient.user_contact_info_FindById(Response.class, Id);
+        UserContactInfo contactArrayList = new UserContactInfo();
+        GenericType<UserContactInfo> showAllcontact  = new GenericType<UserContactInfo>() {
+        };
+        contactArrayList = (UserContactInfo) response.readEntity(showAllcontact);
+        uci_id = contactArrayList.getUciId().toString();
+        userid = contactArrayList.getUserid().getUserid().toString();
+        website = contactArrayList.getWebsite();
+        language = contactArrayList.getLanguage();
+        intrested_in = contactArrayList.getIntrestedIn();
+        fb_link = contactArrayList.getFbLink();
+        insta_link = contactArrayList.getInstaLink();
+        bio = contactArrayList.getBio();
+        
+        
+        return "/web/editinterest.xhtml?faces-redirect=true";
+    }
     
+    public String updateUserContact() {
+        
+        try {
+               vibeClient.user_contact_info_Update(uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid);
+               return "/web/profile.xhtml?faces-redirect=true";
+              
+        } catch (ClientErrorException e) {
+            System.out.println(e);
+            return e.getMessage();
+        }
+    }
 }
