@@ -517,5 +517,4 @@ public class UserManagedBean {
         infoArrayList = (ArrayList<User>) response.readEntity(showAllinfo);
         return infoArrayList;
     }
-    
 }

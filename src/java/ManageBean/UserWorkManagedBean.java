@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -124,6 +125,16 @@ public class UserWorkManagedBean {
         workArrayList = (ArrayList<UserWork>) response.readEntity(showAllwork);
         System.out.println(workArrayList);
         return workArrayList;
+    }
+    
+    public List<UserWork> showUserWork(String Id){
+        Response response = vibeClient.user_work_FindByUserId(Response.class, Id);
+        ArrayList<UserWork> workArrayList = new ArrayList<>();
+        GenericType<List<UserWork>> showAllwork  = new GenericType<List<UserWork>>() {
+        };
+        workArrayList = (ArrayList<UserWork>) response.readEntity(showAllwork);
+        System.out.println(workArrayList);
+        return workArrayList; 
     }
     
     public String editUserWork(String Id) {

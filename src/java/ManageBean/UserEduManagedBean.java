@@ -117,6 +117,16 @@ public class UserEduManagedBean {
         return eduArrayList;
     }
     
+    public List<UserEducation> showUserEdu(String Id){
+        Response response = vibeClient.user_education_FindByUserId(Response.class, Id);
+        ArrayList<UserEducation> eduArrayList = new ArrayList<>();
+        GenericType<List<UserEducation>> showAllwork  = new GenericType<List<UserEducation>>() {
+        };
+        eduArrayList = (ArrayList<UserEducation>) response.readEntity(showAllwork);
+        System.out.println(eduArrayList);
+        return eduArrayList;
+    }
+    
     public String editUserEdu(String Id) {
         
         Response response = vibeClient.user_education_FindById(Response.class, Id);

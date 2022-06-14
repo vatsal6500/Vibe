@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -109,6 +110,16 @@ public class UserSkillsManagedBean {
         };
         skillArrayList = (ArrayList<UserSkills>) response.readEntity(showAllskill);
         System.out.println(skillArrayList);
+        return skillArrayList;
+    }
+    
+    public List<UserSkills> showUserSkill(String Id) {
+        
+        Response response = vibeClient.user_skills_FindByUserId(Response.class, Id);
+        ArrayList<UserSkills> skillArrayList = new ArrayList<>();
+        GenericType<List<UserSkills>> showAllskill  = new GenericType<List<UserSkills>>() {
+        };
+        skillArrayList = (ArrayList<UserSkills>) response.readEntity(showAllskill);
         return skillArrayList;
     }
     
