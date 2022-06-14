@@ -691,6 +691,19 @@ public class GenericResource {
         return vibe.postFindById(postId);
     }
     
+    @Path("postshowallbyuserid/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Post> postShowAllByUserId(@PathParam("userId")int userId) {
+        return vibe.postShowAllByUserId(userId);
+    }
+    
+    @Path("postshowallbygroupid/{groupId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Post> postShowAllByGroupId(@PathParam("groupId")int groupId) {
+        return vibe.postShowAllByGroupId(groupId);
+    }
     
     @Path("postshowall")
     @GET

@@ -110,6 +110,8 @@ public interface VibeSessionBeanLocal {
     public String postUpdate(int postId, String post, String caption, boolean is_deleted, int likeCount, String postType, int userId, int groupId);
     public String postDelete(int postId);
     public Post postFindById(int postId);
+    public List<Post> postShowAllByUserId(int userId);
+    public List<Post> postShowAllByGroupId(int groupId);
     public List<Post> postShowAll(); //admin
     
     //Likes

@@ -253,9 +253,39 @@ public class PostManagedBean {
 
     }
 
-    public List<Post> postView() {
+    public List<Post> feedView() {
 
         Response response = vibeClient.postShowAll(Response.class);
+
+        ArrayList<Post> postArrayList = new ArrayList<>();
+        GenericType<List<Post>> postGenericType = new GenericType<List<Post>>() {
+        };
+
+        postArrayList = (ArrayList<Post>) response.readEntity(postGenericType);
+
+        return postArrayList;
+    }
+    
+    public List<Post> feedByUserId() {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession();
+        
+        Response response = vibeClient.postShowAllByUserId(Response.class, userSessions.getAttribute("UuserId").toString());
+
+        ArrayList<Post> postArrayList = new ArrayList<>();
+        GenericType<List<Post>> postGenericType = new GenericType<List<Post>>() {
+        };
+
+        postArrayList = (ArrayList<Post>) response.readEntity(postGenericType);
+
+        return postArrayList;
+    }
+    
+    public List<Post> feedByGroupId(String Id) {
+        
+        Response response = vibeClient.postShowAllByUserId(Response.class, Id);
 
         ArrayList<Post> postArrayList = new ArrayList<>();
         GenericType<List<Post>> postGenericType = new GenericType<List<Post>>() {
