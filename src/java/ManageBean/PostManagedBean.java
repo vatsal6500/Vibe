@@ -7,7 +7,6 @@ package ManageBean;
 
 import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
-import entity.FriendRequest;
 import entity.Post;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +39,7 @@ public class PostManagedBean {
     private VibeSessionBeanLocal vibeSessionBean;
 
     private final VibeClient vibeClient = new VibeClient();
-    
+
     private String postId;
     private String userId;
     private String groupId;
@@ -50,20 +49,23 @@ public class PostManagedBean {
     private String isDeleted;
     private String likeCount;
     private String postType;
-    
+
     private List<Post> postList;
-    
+
     Part file;
-    
+
     /**
      * Creates a new instance of PostManagedBean
      */
     public PostManagedBean() {
     }
-    
+
     @PostConstruct
     public void init() {
-        
+        this.likeCount = "0";
+        this.isDeleted = "false";
+        this.groupId = "0";
+        this.post = "0";
     }
 
     public VibeSessionBeanLocal getVibeSessionBean() {
@@ -161,54 +163,137 @@ public class PostManagedBean {
     public void setFile(Part file) {
         this.file = file;
     }
-    
-    
+
     public void postinsert() {
         System.out.println("Done");
     }
-    
-    
+
     public void postInsert() {
-        
+
         HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
-                    .getExternalContext().getRequest();
-        HttpSession userSessions = requests.getSession(); 
-        
+                .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession();
+
         try {
-            
-            InputStream input = file.getInputStream();
-            String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\";
-            
-            Random random = new Random();
-            StringBuilder sb = new StringBuilder();
 
-            sb.append(random.nextInt(9) + 1);
-            for (int i = 0; i < 11; i++) {
-                sb.append(random.nextInt(10));
+            if (file == null) {
+
+                vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Text", userSessions.getAttribute("UuserId").toString(), groupId);
+
+            } else {
+                if (file.getSubmittedFileName().contains(".jpg") || file.getSubmittedFileName().contains(".jpeg") || file.getSubmittedFileName().contains(".png")) {
+
+                    InputStream input = file.getInputStream();
+                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Images\\";
+
+                    Random random = new Random();
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.append(random.nextInt(9) + 1);
+                    for (int i = 0; i < 11; i++) {
+                        sb.append(random.nextInt(10));
+                    }
+                    String temp = sb.toString();
+
+                    post = "IMG_" + temp + file.getSubmittedFileName();
+                    Files.copy(input, new File(fullPath, post).toPath());
+
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Image", userSessions.getAttribute("UuserId").toString(), groupId);
+
+                }
+
+                if (file.getSubmittedFileName().contains(".mp4") || file.getSubmittedFileName().contains(".mov") || file.getSubmittedFileName().contains(".mkv") || file.getSubmittedFileName().contains(".avi")) {
+
+                    InputStream input = file.getInputStream();
+                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Videos\\";
+
+                    Random random = new Random();
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.append(random.nextInt(9) + 1);
+                    for (int i = 0; i < 11; i++) {
+                        sb.append(random.nextInt(10));
+                    }
+                    String temp = sb.toString();
+
+                    post = "VID_" + temp + file.getSubmittedFileName();
+                    Files.copy(input, new File(fullPath, post).toPath());
+
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Video", userSessions.getAttribute("UuserId").toString(), groupId);
+
+                }
+
+                if (file.getSubmittedFileName().contains(".mp3") || file.getSubmittedFileName().contains(".wav") || file.getSubmittedFileName().contains(".m4a")) {
+
+                    InputStream input = file.getInputStream();
+                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Audio\\";
+
+                    Random random = new Random();
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.append(random.nextInt(9) + 1);
+                    for (int i = 0; i < 11; i++) {
+                        sb.append(random.nextInt(10));
+                    }
+                    String temp = sb.toString();
+
+                    post = "AUD_" + temp + file.getSubmittedFileName();
+                    Files.copy(input, new File(fullPath, post).toPath());
+
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Audio", userSessions.getAttribute("UuserId").toString(), groupId);
+
+                }
             }
-            String temp = sb.toString();
 
-            post = "IMG_" + temp + file.getSubmittedFileName();
-            Files.copy(input, new File(fullPath, post).toPath());
-            
-            vibeClient.postInsert("0", post, "null", "false", "0", "Image", userSessions.getAttribute("UuserId").toString(),"0");
-            
+            this.caption = "";
+
         } catch (ClientErrorException | IOException e) {
             System.out.println(e.getMessage());
         }
-        
+
     }
-    
-    public List<Post> postView() {
-        
+
+    public List<Post> feedView() {
+
         Response response = vibeClient.postShowAll(Response.class);
-        
+
         ArrayList<Post> postArrayList = new ArrayList<>();
-        GenericType<List<Post>> postGenericType = new GenericType<List<Post>>(){};
-        
-        postArrayList = (ArrayList<Post>)response.readEntity(postGenericType);
-        
+        GenericType<List<Post>> postGenericType = new GenericType<List<Post>>() {
+        };
+
+        postArrayList = (ArrayList<Post>) response.readEntity(postGenericType);
+
         return postArrayList;
     }
     
+    public List<Post> feedByUserId() {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession();
+        
+        Response response = vibeClient.postShowAllByUserId(Response.class, userSessions.getAttribute("UuserId").toString());
+
+        ArrayList<Post> postArrayList = new ArrayList<>();
+        GenericType<List<Post>> postGenericType = new GenericType<List<Post>>() {
+        };
+
+        postArrayList = (ArrayList<Post>) response.readEntity(postGenericType);
+
+        return postArrayList;
+    }
+    
+    public List<Post> feedByGroupId(String Id) {
+        
+        Response response = vibeClient.postShowAllByUserId(Response.class, Id);
+
+        ArrayList<Post> postArrayList = new ArrayList<>();
+        GenericType<List<Post>> postGenericType = new GenericType<List<Post>>() {
+        };
+
+        postArrayList = (ArrayList<Post>) response.readEntity(postGenericType);
+
+        return postArrayList;
+    }
+
 }

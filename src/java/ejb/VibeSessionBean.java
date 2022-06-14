@@ -1761,6 +1761,48 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public List<Post> postShowAllByUserId(int userId) {
+        try {
+
+            List<Post> posts = em.createNamedQuery("Post.postShowAllByUserId")
+                    .setParameter("userid", userId)
+                    .getResultList();
+
+            if (posts.isEmpty()) {
+                return null;
+            }
+
+            return posts;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+    }
+    
+    @Override
+    public List<Post> postShowAllByGroupId(int groupId) {
+        try {
+
+            List<Post> posts = em.createNamedQuery("Post.postShowAllByGroupId")
+                    .setParameter("groupid", groupId)
+                    .getResultList();
+
+            if (posts.isEmpty()) {
+                return null;
+            }
+
+            return posts;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+    }
 
     @Override
     public List<Post> postShowAll() {
@@ -1781,7 +1823,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             return null;
 
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //Likes
