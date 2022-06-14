@@ -195,7 +195,7 @@ public class PostManagedBean {
                     }
                     String temp = sb.toString();
 
-                    post = "IMG_" + temp + file.getSubmittedFileName();
+                    post = "IMG_" + temp + ".jpg";
                     Files.copy(input, new File(fullPath, post).toPath());
 
                     vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Image", userSessions.getAttribute("UuserId").toString(), "0");
@@ -216,7 +216,7 @@ public class PostManagedBean {
                     }
                     String temp = sb.toString();
 
-                    post = "VID_" + temp + file.getSubmittedFileName();
+                    post = "VID_" + temp + ".mp4";
                     Files.copy(input, new File(fullPath, post).toPath());
 
                     vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Video", userSessions.getAttribute("UuserId").toString(), "0");
@@ -237,11 +237,11 @@ public class PostManagedBean {
                     }
                     String temp = sb.toString();
 
-                    post = "AUD_" + temp + file.getSubmittedFileName();
+                    post = "AUD_" + temp + ".mp3";
                     Files.copy(input, new File(fullPath, post).toPath());
 
                     vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Audio", userSessions.getAttribute("UuserId").toString(), "0");
-
+                    
                 }
             }
 
@@ -256,7 +256,7 @@ public class PostManagedBean {
     public List<Post> feedView() {
 
         this.caption = "";
-        
+
         Response response = vibeClient.postShowAll(Response.class);
 
         ArrayList<Post> postArrayList = new ArrayList<>();
@@ -267,15 +267,15 @@ public class PostManagedBean {
 
         return postArrayList;
     }
-    
+
     public List<Post> feedByUserId() {
-        
+
         this.caption = "";
-        
+
         HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
         HttpSession userSessions = requests.getSession();
-        
+
         Response response = vibeClient.postShowAllByUserId(Response.class, userSessions.getAttribute("UuserId").toString());
 
         ArrayList<Post> postArrayList = new ArrayList<>();
@@ -286,11 +286,11 @@ public class PostManagedBean {
 
         return postArrayList;
     }
-    
+
     public List<Post> feedByGroupId(String Id) {
-        
+
         this.caption = "";
-        
+
         Response response = vibeClient.postShowAllByUserId(Response.class, Id);
 
         ArrayList<Post> postArrayList = new ArrayList<>();

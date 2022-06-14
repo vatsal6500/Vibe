@@ -44,9 +44,6 @@
             <!-- Page Content  -->       <div id="content-page" class="content-page">
                 <div class="container">
                     <div class="row">
-                        <c:if test="#{postManagedBean.feedByUserId().size() eq null}">
-                            <h3>No Videos Uploaded</h3>
-                        </c:if>
                         <c:forEach var="mypost" items="#{postManagedBean.feedByUserId()}">
                             <c:if test="#{mypost.posttype eq 'Video'}">
                                 <div class="col-lg-4 col-md-6">
