@@ -402,6 +402,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("activity_feed_insert/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}", new Object[]{afId, description, senderMsg, receiverMsg, targerURL, activityType, isRead, isDeleted, senderId, receiverId, groupId})).request().post(null, String.class);
     }
 
+    public <T> T suggestedEvents(Class<T> responseType, String userid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("suggestedevents/{0}", new Object[]{userid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String user_contact_info_Insert(String uci_id, String website, String language, String intrested_in, String fb_link, String insta_link, String bio, String userid) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("user_contact_info_insert/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}", new Object[]{uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid})).request().post(null, String.class);
     }
@@ -483,6 +489,12 @@ public class VibeClient {
     public <T> T adsShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("adsshowall");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T subscribedEvents(Class<T> responseType, String userid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("subscribedEvents/{0}", new Object[]{userid}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 

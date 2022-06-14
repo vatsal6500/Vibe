@@ -143,6 +143,8 @@ public interface VibeSessionBeanLocal {
     public String eventUpdate(int eventId, String eventName, String post, String eventStartDate, String eventEndDate, String eventInfo, String venue, String type, int fees, String mode, int guestCount, boolean is_removed, int hostId);
     public String eventDelete(int eventId);
     public Events eventFindById(int eventId);
+    public List<Events> suggestedEvents(int userId);
+    public List<Events> subscribedEvents(int userId);
     public List<Events> eventShowAll();  //admin
     
     //Event Usercount

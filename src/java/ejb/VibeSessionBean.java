@@ -2428,6 +2428,44 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public List<Events> suggestedEvents(int Id) {
+        try {
+
+            List<Events> sevents = em.createNamedQuery("Events.suggestedevents")
+                    .setParameter("userid", Id)
+                    .getResultList();
+
+            return sevents;
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+
+            return null;
+
+        }
+    }
+    
+    @Override
+    public List<Events> subscribedEvents(int Id) {
+        try {
+
+            List<Events> sevents = em.createNamedQuery("Events.subscribedevents")
+                    .setParameter("userid", Id)
+                    .getResultList();
+
+            return sevents;
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+
+            return null;
+
+        }
+    }
 
     //Events_UserCount
     @Override

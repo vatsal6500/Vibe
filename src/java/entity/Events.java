@@ -37,6 +37,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "events", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    
+    //Suggestedevents
+    @NamedQuery(name = "Events.suggestedevents", query = "SELECT e FROM Events e WHERE e.eventid NOT IN(SELECT ec.eventid.eventid FROM EventUsercount ec WHERE ec.userid.userid = :userid)"),
+    
+    //Subscribedevents
+    @NamedQuery(name = "Events.subscribedevents", query = "SELECT e FROM Events e WHERE e.eventid IN(SELECT ec.eventid.eventid FROM EventUsercount ec WHERE ec.userid.userid = :userid AND ec.isInterested = true)"),
+
+    
     @NamedQuery(name = "Events.findAll", query = "SELECT e FROM Events e"),
     @NamedQuery(name = "Events.findByEventid", query = "SELECT e FROM Events e WHERE e.eventid = :eventid"),
     @NamedQuery(name = "Events.findByEventname", query = "SELECT e FROM Events e WHERE e.eventname = :eventname"),

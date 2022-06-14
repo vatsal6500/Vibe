@@ -880,6 +880,22 @@ public class GenericResource {
 
     }
     
+    @Path("suggestedevents/{userid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Events> suggestedEvents(@PathParam("userid")int userid) {
+        return vibe.suggestedEvents(userid);
+
+    }
+    
+    @Path("subscribedEvents/{userid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Events> subscribedEvents(@PathParam("userid")int userid) {
+        return vibe.subscribedEvents(userid);
+
+    }
+    
     //FriendList
     
     @Path("friendlistinsert/{flId}/{friendStatus}/{userId}/{friendId}")
