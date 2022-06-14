@@ -184,7 +184,7 @@ public class PostManagedBean {
                 if (file.getSubmittedFileName().contains(".jpg") || file.getSubmittedFileName().contains(".jpeg") || file.getSubmittedFileName().contains(".png")) {
 
                     InputStream input = file.getInputStream();
-                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Images\\";
+                    String fullPath = "\\E:\\VIBE\\Vibe\\web\\Images\\Post\\Images\\";
 
                     Random random = new Random();
                     StringBuilder sb = new StringBuilder();
@@ -205,7 +205,7 @@ public class PostManagedBean {
                 if (file.getSubmittedFileName().contains(".mp4") || file.getSubmittedFileName().contains(".mov") || file.getSubmittedFileName().contains(".mkv") || file.getSubmittedFileName().contains(".avi")) {
 
                     InputStream input = file.getInputStream();
-                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Videos\\";
+                    String fullPath = "\\E:\\VIBE\\Vibe\\web\\Images\\Post\\Videos\\";
 
                     Random random = new Random();
                     StringBuilder sb = new StringBuilder();
@@ -226,7 +226,7 @@ public class PostManagedBean {
                 if (file.getSubmittedFileName().contains(".mp3") || file.getSubmittedFileName().contains(".wav") || file.getSubmittedFileName().contains(".m4a")) {
 
                     InputStream input = file.getInputStream();
-                    String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\Post\\Audio\\";
+                    String fullPath = "\\E:\\VIBE\\Vibe\\web\\Images\\Post\\Audio\\";
 
                     Random random = new Random();
                     StringBuilder sb = new StringBuilder();
