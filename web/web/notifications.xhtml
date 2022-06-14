@@ -48,7 +48,51 @@
                                                         <div class="d-flex justify-content-between">
                                                             <div class=" ms-3">
                                                                 <h6>#{noti.receivermessage}</h6>
-                                                                <p class="mb-0">#{noti.afId}</p>
+                                                                <p class="mb-0">On #{noti.activityDate.date} </p>
+                                                            </div>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="card-header-toolbar d-flex align-items-center">
+                                                                    <div class="dropdown">
+                                                                        <span class="dropdown-toggle" data-bs-toggle="dropdown">
+                                                                            <i class="ri-more-fill h4"></i>
+                                                                        </span>
+                                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                                            <a class="dropdown-item" href="#"><i class="ri-eye-fill me-2"></i>View</a>
+                                                                            <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill me-2"></i>Delete</a>
+                                                                            <a class="dropdown-item" href="#"><i class="ri-pencil-fill me-2"></i>Edit</a>
+                                                                            <a class="dropdown-item" href="#"><i class="ri-printer-fill me-2"></i>Print</a>
+                                                                            <a class="dropdown-item" href="#"><i class="ri-file-download-fill me-2"></i>Download</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </h:form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="card-title">Your Activity</h4>
+                        </div>
+                        <div class="col-sm-12">
+                            <h:form>
+                                <c:forEach var="noti" items="#{activityManagedBean.showAllNotification()}">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="notification-list m-0 p-0">
+                                                <li class="d-flex align-items-center justify-content-between">
+                                                    <div class="user-img img-fluid"><img src="../assets/images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
+                                                    <div class="w-100">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class=" ms-3">
+                                                                <h6>#{noti.sendermessage}</h6>
+                                                                <p class="mb-0">On #{noti.activityDate.date} </p>
                                                             </div>
                                                             <div class="d-flex align-items-center">
                                                                 <div class="card-header-toolbar d-flex align-items-center">
