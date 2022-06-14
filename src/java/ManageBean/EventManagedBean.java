@@ -256,6 +256,35 @@ public class EventManagedBean {
         return "/web/eventinfo.xhtml?faces-redirect=true";
     }
     
+    public String showEventInfo(String Id) {
+         
+        
+        Response response = vibeClient.eventFindById(Response.class, Id);
+        Events eventArrayList = new Events();
+        GenericType<Events> showAllinfo  = new GenericType<Events>() {
+        };
+        eventArrayList = (Events) response.readEntity(showAllinfo);
+        eventid = eventArrayList.getEventid().toString();
+        hostid = eventArrayList.getHostid().getFirstname() + " " + eventArrayList.getHostid().getLastname();
+        eventname = eventArrayList.getEventname();
+        post = eventArrayList.getPost();
+        eventstartdate = eventArrayList.getEventstartdate().toString();
+        eventenddate = eventArrayList.getEventenddate().toString();
+        eventinfo = eventArrayList.getEventinfo();
+        venue = eventArrayList.getVenue();
+        type = eventArrayList.getType();
+        fees = String.valueOf(eventArrayList.getFees());
+        mode = eventArrayList.getMode();
+        guestcount = String.valueOf(eventArrayList.getGuestcount());
+        is_removed = eventArrayList.getIsRemoved();
+        
+        return "/admin/eventinfo.xhtml?faces-redirect=true";
+    }
+    
+    
+    
+    
+    
     public String getInterest(String eventid){
         
         HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
