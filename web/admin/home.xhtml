@@ -10,7 +10,7 @@
     <h:head>
         <title>Admin | Home</title>
         <ui:include src="includes/css.xhtml" />
-        
+
     </h:head>
     <h:body>
         <!-- loader Start -->
@@ -33,52 +33,102 @@
                 <div class="container">
                     <div class="col-sm-12">
                         <div class="admin_card">
-                            <div class="card-header d-flex justify-content-between">
-                                <div class="header-title">
-                                    <h4 class="card-title">Vibe User</h4>
+                            <h:form>
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="header-title">
+                                        <h4 class="card-title">Vibe User</h4>
+                                        <div class="d-flex">
+                                            <h:inputText class="form-control" a:placeholder="Enter Name.." value="#{adminManagedBean.firstname}"></h:inputText>
+                                            <h:commandButton class="btn btn-primary btn-rounded mx-3" value="Search"></h:commandButton>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <c:if test="#{adminManagedBean.findByName().size() ne 0}">
+                                                    <h:dataTable class="table table-striped table-bordered" value="#{adminManagedBean.findByName()}" var="item">
+                                                        <h:column>
+                                                            <f:facet name="header">Profile</f:facet>
+                                                                #{item.profilephoto}
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">Full Name</f:facet>
+                                                                #{item.firstname} #{item.lastname}
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">Gender</f:facet>
+                                                                #{item.gender}
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">Email</f:facet>
+                                                                #{item.email}
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">User Name</f:facet>
+                                                                #{item.username}
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">Mobile</f:facet>
+                                                                #{item.mobile}
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">Active</f:facet>
+                                                                #{item.isactive}
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">State</f:facet>
+                                                                #{item.stateid.statename}
+                                                        </h:column>
+                                                        <h:column>
+                                                            <f:facet name="header">Info</f:facet>
+                                                            <h:commandButton class="btn mb-1 btn-primary" action="#{uinfoManagedBean.showUserContact(item.userid)}" value="Know More"/>                            
+                                                        </h:column>
+                                                    </h:dataTable>                                        
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </h:form>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <h:form>
-                                    <h:dataTable class="table table-striped table-bordered" value="#{adminManagedBean.userShowAll()}" var="item">
-                                        <h:column>
-                                            <f:facet name="header">Profile</f:facet>
-                                                #{item.profilephoto}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Full Name</f:facet>
-                                                #{item.firstname} #{item.lastname}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Gender</f:facet>
-                                                #{item.gender}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Email</f:facet>
-                                                #{item.email}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">User Name</f:facet>
-                                                #{item.username}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Mobile</f:facet>
-                                                #{item.mobile}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Active</f:facet>
-                                                #{item.isactive}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">State</f:facet>
-                                                #{item.stateid.statename}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Info</f:facet>
-                                            <h:commandButton class="btn mb-1 btn-primary" action="#{uinfoManagedBean.showUserContact(item.userid)}" value="Know More"/>                            
-                                        </h:column>
-                                    </h:dataTable>
+                                        <h:dataTable class="table table-striped table-bordered" value="#{adminManagedBean.userShowAll()}" var="item">
+                                            <h:column>
+                                                <f:facet name="header">Profile</f:facet>
+                                                    #{item.profilephoto}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Full Name</f:facet>
+                                                    #{item.firstname} #{item.lastname}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Gender</f:facet>
+                                                    #{item.gender}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Email</f:facet>
+                                                    #{item.email}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">User Name</f:facet>
+                                                    #{item.username}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Mobile</f:facet>
+                                                    #{item.mobile}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Active</f:facet>
+                                                    #{item.isactive}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">State</f:facet>
+                                                    #{item.stateid.statename}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Info</f:facet>
+                                                <h:commandButton class="btn mb-1 btn-primary" action="#{uinfoManagedBean.showUserContact(item.userid)}" value="Know More"/>                            
+                                            </h:column>
+                                        </h:dataTable>
                                     </h:form>
                                 </div>
                             </div>
@@ -94,8 +144,8 @@
 
         <!-- Scripts -->
         <ui:include src="includes/bottomscript.xhtml" />
-        
-        
+
+
     </h:body>
 </html>
 

@@ -115,7 +115,8 @@ public class AdminManagedBean {
     // Declare customs Variables
     
     private String fullname;
-
+    private boolean search;
+    
     // Declare customs Variables ends
     
     // Declare Lists
@@ -324,6 +325,16 @@ public class AdminManagedBean {
         this.fullname = fullname;
     }
 
+    public boolean isSearch() {
+        return search;
+    }
+
+    public void setSearch(boolean search) {
+        this.search = search;
+    }
+
+    
+    
     //Getters And Setters ends
     
     //Private Methods
@@ -397,6 +408,15 @@ public class AdminManagedBean {
         GenericType<User> userById = new GenericType<User>() {};
         User user = response.readEntity(userById);
         setVariable(user);
+    }
+    
+    public List<User> findByName() {
+        Response response = vibeClient.userFindByName(Response.class, firstname);
+        ArrayList<User> userArrayList = new ArrayList<>();
+        GenericType<List<User>> showAllUser = new GenericType<List<User>>() {
+        };
+        userArrayList = (ArrayList<User>) response.readEntity(showAllUser);
+        return userArrayList;
     }
     
     //ADS
