@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author LENOVO
+ * @author pooja
  */
 public class VibeClient {
 
@@ -548,6 +548,12 @@ public class VibeClient {
 
     public String groupInsert(String groupid, String groupName, String description, String membersCount, String isDeleted, String adminId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("groupinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{groupid, groupName, description, membersCount, isDeleted, adminId})).request().post(null, String.class);
+    }
+
+    public <T> T hostedEvents(Class<T> responseType, String userid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("hostedevents/{0}", new Object[]{userid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public <T> T user_skills_FindById(Class<T> responseType, String usId) throws ClientErrorException {

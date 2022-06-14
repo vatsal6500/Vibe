@@ -7,7 +7,7 @@
        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
        xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
   <h:head>
-      <title>Event Info</title>
+      <title>Host Event</title>
       <ui:include src="includes/css.xhtml"/>
   </h:head>
   <body class="  ">
@@ -54,12 +54,12 @@
                                      <p>Mode : #{eventManagedBean.mode}</p>
                                      <p>Guests : #{eventManagedBean.guestcount}</p>
                                      
-                                     <c:if test="#{eventManagedBean.isInterested ne 'true'}">
-                                         <h:commandButton  id="btn_unsub" class="btn btn-danger"  action="#{eventManagedBean.UnsubscribeEvent(eventManagedBean.eventid, eventManagedBean.euc_id)}" value="Unsubscribe"/><br/><br/>
+                                     <c:if test="#{eventManagedBean.isInterested eq 'true'}">
+                                         <h:commandButton  id="btn_update" class="btn btn-danger"  action="#{eventManagedBean.UnsubscribeEvent(eventManagedBean.eventid, euc_id)}" value="Unsubscribe"/><br/><br/>
                                      </c:if>
                                      
-                                     <c:if test="#{eventManagedBean.isInterested ne 'false'}">
-                                         <h:commandButton  id="btn_sub" class="btn btn-success"  action="#{eventManagedBean.subscribeEvent(eventManagedBean.eventid)}" value="Subscribe"/><br/><br/>
+                                     <c:if test="#{eventManagedBean.isInterested eq 'false'}">
+                                         <h:commandButton  id="btn_update" class="btn btn-success"  action="#{eventManagedBean.subscribeEvent(eventManagedBean.eventid)}" value="Subscribe"/><br/><br/>
                                      </c:if>
                                  </div>
                                   </h:form>

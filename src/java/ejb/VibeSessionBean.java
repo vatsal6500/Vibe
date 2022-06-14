@@ -2507,6 +2507,25 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         }
     }
+    
+    @Override
+    public List<Events> hostedEvents(int Id) {
+        try {
+
+            List<Events> hevents = em.createNamedQuery("Events.findByHostid")
+                    .setParameter("hostid", Id)
+                    .getResultList();
+
+            return hevents;
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+
+            return null;
+
+        }
+    }
 
     //Events_UserCount
     @Override

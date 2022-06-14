@@ -44,6 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     //Subscribedevents
     @NamedQuery(name = "Events.subscribedevents", query = "SELECT e FROM Events e WHERE e.eventid IN(SELECT ec.eventid.eventid FROM EventUsercount ec WHERE ec.userid.userid = :userid AND ec.isInterested = true)"),
 
+    //Hostedevents
+    @NamedQuery(name = "Events.findByHostid", query = "SELECT e FROM Events e WHERE e.hostid.userid = :hostid"),
     
     @NamedQuery(name = "Events.findAll", query = "SELECT e FROM Events e"),
     @NamedQuery(name = "Events.findByEventid", query = "SELECT e FROM Events e WHERE e.eventid = :eventid"),

@@ -909,6 +909,14 @@ public class GenericResource {
 
     }
     
+    @Path("hostedevents/{userid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Events> hostedEvents(@PathParam("userid")int userid) {
+        return vibe.hostedEvents(userid);
+
+    }
+    
     //FriendList
     
     @Path("friendlistinsert/{flId}/{friendStatus}/{userId}/{friendId}")

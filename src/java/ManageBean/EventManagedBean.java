@@ -231,6 +231,22 @@ public class EventManagedBean {
         return sugeventsArrayList;
     }
     
+    public List<Events> showHostedEvents() {
+        
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession(); 
+        
+        Response response = vibeClient.hostedEvents(Response.class, userSessions.getAttribute("UuserId").toString());
+        
+        ArrayList<Events> sugeventsArrayList = new ArrayList<>();
+        GenericType<List<Events>> eventsGenericType = new GenericType<List<Events>>(){};
+        
+        sugeventsArrayList = (ArrayList<Events>)response.readEntity(eventsGenericType);
+        
+        return sugeventsArrayList;
+    }
+    
     public String getEventInfo(String Id) {
          
         
@@ -254,6 +270,31 @@ public class EventManagedBean {
         is_removed = eventArrayList.getIsRemoved();
         
         return "/web/eventinfo.xhtml?faces-redirect=true";
+    }
+    
+    public String getHostedEventInfo(String Id) {
+         
+        
+        Response response = vibeClient.eventFindById(Response.class, Id);
+        Events eventArrayList = new Events();
+        GenericType<Events> showAllinfo  = new GenericType<Events>() {
+        };
+        eventArrayList = (Events) response.readEntity(showAllinfo);
+        eventid = eventArrayList.getEventid().toString();
+        hostid = eventArrayList.getHostid().getFirstname() + " " + eventArrayList.getHostid().getLastname();
+        eventname = eventArrayList.getEventname();
+        post = eventArrayList.getPost();
+        eventstartdate = eventArrayList.getEventstartdate().toString();
+        eventenddate = eventArrayList.getEventenddate().toString();
+        eventinfo = eventArrayList.getEventinfo();
+        venue = eventArrayList.getVenue();
+        type = eventArrayList.getType();
+        fees = String.valueOf(eventArrayList.getFees());
+        mode = eventArrayList.getMode();
+        guestcount = String.valueOf(eventArrayList.getGuestcount());
+        is_removed = eventArrayList.getIsRemoved();
+        
+        return "/web/hosteventinfo.xhtml?faces-redirect=true";
     }
     
     public String showEventInfo(String Id) {
@@ -328,7 +369,7 @@ public class EventManagedBean {
                     .getExternalContext().getRequest();
             HttpSession userSessions = requests.getSession();
             
-            vibeClient.event_usercount_Update(euc_id, "false", eventid, userSessions.getAttribute("UuserId").toString());
+            vibeClient.event_usercount_Update(euc_id, "0", eventid, userSessions.getAttribute("UuserId").toString());
             
             return "/web/profile-events.xhtml?faces-redirect=true";
             
@@ -337,6 +378,30 @@ public class EventManagedBean {
             
             return e.getMessage();
             
+        }
+    }
+    
+    public String updateHostEvent() {
+        
+        try {
+            
+            HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+            HttpSession userSessions = requests.getSession();
+            
+            if(eventid == null)
+            {
+                vibeClient.eventInsert("0", userSessions.getAttribute("UuserId").toString(), eventname, post, eventstartdate, eventenddate, eventinfo, venue, type, fees, mode, "1", mode);
+            }
+            else{
+                vibeClient.eventUpdate(eventid, userSessions.getAttribute("UuserId").toString(), eventname, post, eventstartdate, eventenddate, eventinfo, venue, type, fees, mode, guestcount, mode);
+            }
+               
+            return "/web/profile-events.xhtml?faces-redirect=true";
+              
+        } catch (ClientErrorException e) {
+            System.out.println(e);
+            return e.getMessage();
         }
     }
     

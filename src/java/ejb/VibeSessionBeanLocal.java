@@ -147,6 +147,7 @@ public interface VibeSessionBeanLocal {
     public Events eventFindById(int eventId);
     public List<Events> suggestedEvents(int userId);
     public List<Events> subscribedEvents(int userId);
+    public List<Events> hostedEvents(int userId);
     public List<Events> eventShowAll();  //admin
     
     //Event Usercount
