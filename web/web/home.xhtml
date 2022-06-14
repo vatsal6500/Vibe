@@ -41,27 +41,25 @@
                                             <h4 class="card-title">Create Post</h4>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-img">
-                                                <img src="../assets/images/user/1.jpg" alt="userimg" class="avatar-60 rounded-circle"/>
+                                    <h:form enctype="multipart/form-data">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="user-img">
+                                                    <img src="../assets/images/user/1.jpg" alt="userimg" class="avatar-60 rounded-circle"/>
+                                                </div>
+                                                <h:inputText class="form-control rounded" value="#{postManagedBean.caption}" a:placeholder="Write something here..." style="border:none;" ></h:inputText>
                                             </div>
-                                            <form class="post-text ms-3 w-100 "  data-bs-toggle="modal" data-bs-target="#post-modal" action="javascript:void();">
-                                                <input type="text" class="form-control rounded" placeholder="Write something here..." style="border:none;"/>
-                                            </form>
-                                        </div>
-                                        <hr/>
-                                        <ul class=" post-opt-block d-flex list-inline m-0 p-0 flex-wrap">
-                                            <h:form enctype="multipart/form-data">
+                                            <hr/>
+                                            <ul class=" post-opt-block d-flex list-inline m-0 p-0 flex-wrap">
                                                 <li class="me-3 mb-md-0 mb-2">
-                                                    <h:inputFile class="bg-soft-primary rounded p-2 pointer me-3" id="pic" value="#{postManagedBean.file}"/>
+                                                    <h:inputFile class="bg-soft-primary rounded p-2 pointer me-3" value="#{postManagedBean.file}"/>
                                                 </li>
                                                 <li class="me-3 mb-md-0 mb-2">
                                                     <h:commandButton class="bg-soft-primary rounded p-2 pointer me-3" action="#{postManagedBean.postInsert()}" value="Post" />
                                                 </li>
-                                            </h:form>
-                                        </ul>
-                                    </div>
+                                            </ul>
+                                        </div>
+                                    </h:form>
                                 </div>
                             </div>
                             <div class="col-sm-12">
