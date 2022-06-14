@@ -604,6 +604,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("ads_user_update/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}", new Object[]{auId, adsContent, description, link, endDate, isRemoved, isExpired, userId, adsId})).request().post(null, String.class);
     }
 
+    public <T> T eventFindSubscribe(Class<T> responseType, String eventid, String userid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("eventfindsubscribe/{0}/{1}", new Object[]{eventid, userid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String likeInsert(String likeId, String isRemoved, String postId, String senderId, String receiverId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("likeinsert/{0}/{1}/{2}/{3}/{4}", new Object[]{likeId, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
     }

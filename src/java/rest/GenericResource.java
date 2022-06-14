@@ -997,6 +997,13 @@ public class GenericResource {
         return vibe.event_usercount_ShowAll();
 
     }
+    
+    @Path("eventfindsubscribe/{eventid}/{userid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public EventUsercount eventFindSubscribe(@PathParam("eventid")int eventid, @PathParam("userid")int userid) {
+        return vibe.eventFindSubscribe(eventid, userid);
+    }
 
     //Login
 

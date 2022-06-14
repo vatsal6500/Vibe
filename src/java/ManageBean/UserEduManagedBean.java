@@ -139,8 +139,20 @@ public class UserEduManagedBean {
     public String updateUserEdu() {
         
         try {
-               vibeClient.user_education_Update(ue_id, institutename, joiningdate, endingdate, instituteaddress, userid);
-               return "/web/profile.xhtml?faces-redirect=true";
+            
+            HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+            HttpSession userSessions = requests.getSession();
+            
+            if(ue_id == null)
+            {
+                vibeClient.user_education_Insert("0", institutename, joiningdate, endingdate, instituteaddress, userSessions.getAttribute("UuserId").toString());
+            }
+            else{
+                vibeClient.user_education_Update(ue_id, institutename, joiningdate, endingdate, instituteaddress, userid);
+            }
+               
+            return "/web/profile.xhtml?faces-redirect=true";
               
         } catch (ClientErrorException e) {
             System.out.println(e);

@@ -188,7 +188,19 @@ public class UInfoManagedBean {
     public String updateUserContact() {
         
         try {
-               vibeClient.user_contact_info_Update(uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid);
+            
+            HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+            HttpSession userSessions = requests.getSession();
+        
+            if(uci_id == null)
+            {
+                vibeClient.user_contact_info_Insert("0", website, language, intrested_in, fb_link, insta_link, bio, userSessions.getAttribute("UuserId").toString());
+            }
+            else{
+                vibeClient.user_contact_info_Update(uci_id, website, language, intrested_in, fb_link, insta_link, bio, userid);
+            }
+               
                return "/web/profile.xhtml?faces-redirect=true";
               
         } catch (ClientErrorException e) {

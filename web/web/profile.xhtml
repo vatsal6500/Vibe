@@ -1162,8 +1162,16 @@
                                                                 </div>
                                                             </c:forEach>
 
+                                                            
                                                             <h4 class="mt-3">Websites and Social Links</h4>
                                                             <hr/>
+                                                            <h:form>
+                                                            <c:if test="#{uinfoManagedBean.showUserContactInfo().size() eq null}">
+                                                                <li class="d-block text-center mb-0 pb-0">
+                                                                    <h:commandButton  id="btn_add" class="btn btn-primary"  action="addwebsite.xhtml" value="Add"/><br/><br/>
+                                                                </li>                                                            
+                                                            </c:if>
+                                                            <c:if test="#{uinfoManagedBean.showUserContactInfo().size() > 0}">
                                                             <c:forEach var="links" items="#{uinfoManagedBean.showUserContactInfo()}">
                                                                 <div class="row">
                                                                     <div class="col-3">
@@ -1184,11 +1192,13 @@
                                                                     <div class="col-9">
                                                                         <p class="mb-0">#{links.instaLink}</p>
                                                                     </div>
-                                                                    <h:form>
                                                                         <h:commandLink id="btn_edit" action="#{uinfoManagedBean.editUserContact(links.uciId)}" value="edit"/>
-                                                                    </h:form>  
                                                                 </div>
                                                             </c:forEach>
+                                                            </c:if>
+                                                            </h:form>
+                                                            
+                                                            
                                                             <h4 class="mt-3">Basic Information</h4>
                                                             <hr/>
                                                             <c:forEach var="basicinfo" items="#{userManagedBean.showUserInfo()}">
@@ -1241,15 +1251,17 @@
                                                                 </div>
                                                             </c:forEach>
                                                         </div>
+                                                        
                                                         <div class="tab-pane fade" id="v-pills-work-tab" role="tabpanel" aria-labelledby="v-pills-work-tab">
                                                             <h4 class="mb-3">Work</h4>
-                                                            <ul class="suggestions-lists m-0 p-0">
-                                                                <li class="d-flex justify-content-between mb-4  align-items-center">
-                                                                    <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                                    <div class="ms-3">
-                                                                        <h6>Add Work Place</h6>
-                                                                    </div>
-                                                                </li>
+                                                            <hr/>
+                                                            <h:form>
+                                                            <c:if test="#{userworkManagedBean.showUserWorkInfo().size() eq null}">
+                                                                <li class="d-block text-center mb-0 pb-0">
+                                                                    <h:commandButton  id="btn_add" class="btn btn-primary"  action="addwork.xhtml" value="Add"/><br/><br/>
+                                                                </li>                                                            
+                                                            </c:if>
+                                                            <c:if test="#{userworkManagedBean.showUserWorkInfo().size() > 0}">
                                                                 <c:forEach var="works" items="#{userworkManagedBean.showUserWorkInfo()}">
                                                                 <li class="d-flex mb-4 align-items-center justify-content-between">
                                                                     <div class="user-img img-fluid"><img src="../assets/images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
@@ -1260,18 +1272,25 @@
                                                                                 <p class="mb-0">#{works.companyaddress}</p>
                                                                                 <p class="mb-0">#{works.joiningdate} - #{works.endingdate}</p>
                                                                             </div>
-                                                                            <h:form>
-                                                                                <h:commandLink id="btn_edit" action="#{userworkManagedBean.editUserWork(works.uwId)}" value="edit"/>
-                                                                            </h:form> 
+                                                                                <h:commandLink id="btn_edit" action="#{userworkManagedBean.editUserWork(works.uwId)}" value="edit"/> 
                                                                         </div>
                                                                     </div>
                                                                 </li>
                                                                 </c:forEach>
-                                                            </ul>
+                                                            </c:if>
+                                                            </h:form>
                                                         </div>
+                                                        
                                                         <div class="tab-pane fade" id="v-pills-edu-tab" role="tabpanel" aria-labelledby="v-pills-edu-tab">
                                                             <h4 class="mb-3">Education</h4>
                                                             <ul class="suggestions-lists m-0 p-0">
+                                                                <h:form>
+                                                                <c:if test="#{usereduManagedBean.showUserEduInfo().size() eq null}">
+                                                                    <li class="d-block text-center mb-0 pb-0">
+                                                                        <h:commandButton  id="btn_add" class="btn btn-primary"  action="addedu.xhtml" value="Add"/><br/><br/>
+                                                                    </li>                                                            
+                                                                </c:if>
+                                                                <c:if test="#{usereduManagedBean.showUserEduInfo().size() > 0}">
                                                                 <c:forEach var="edu" items="#{usereduManagedBean.showUserEduInfo()}">
                                                                 <li class="d-flex mb-4 align-items-center justify-content-between">
                                                                     <div class="user-img img-fluid"><img src="../assets/images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"/></div>
@@ -1289,17 +1308,27 @@
                                                                     </div>
                                                                 </li>
                                                                 </c:forEach>
+                                                                </c:if>
+                                                                </h:form>                                                                 
                                                             </ul>
                                                         </div>
+                                                        
                                                         <div class="tab-pane fade" id="v-pills-skills-tab" role="tabpanel" aria-labelledby="v-pills-skills-tab">
+                                                            <h:form>
+                                                                <c:if test="#{userskillsManagedBean.showUserSkillInfo().size() eq null}">
+                                                                    <li class="d-block text-center mb-0 pb-0">
+                                                                        <h:commandButton  id="btn_add" class="btn btn-primary"  action="addskill.xhtml" value="Add"/><br/><br/>
+                                                                    </li>                                                            
+                                                                </c:if>
+                                                            <c:if test="#{userskillsManagedBean.showUserSkillInfo().size() > 0}">
                                                             <c:forEach var="skill" items="#{userskillsManagedBean.showUserSkillInfo()}">
                                                                 <h4 class="mb-3">#{skill.skillname}</h4>
                                                                 <p>Info : #{skill.skillinfo}</p>
                                                                 <p>Portfolio : #{skill.skillportfolio}</p>
-                                                                <h:form>
                                                                     <h:commandLink id="btn_edit" action="#{userskillsManagedBean.editUserSkill(skill.usId)}" value="edit"/>
-                                                                </h:form> 
                                                             </c:forEach>
+                                                            </c:if>
+                                                            </h:form>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -148,8 +148,19 @@ public class UserWorkManagedBean {
     public String updateUserWork() {
         
         try {
-               System.out.println(companyaddress);
-               vibeClient.user_work_Update(uw_id, companyname, joiningdate, endingdate, companyaddress, userid);
+            
+                HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+                HttpSession userSessions = requests.getSession();
+                
+                if(uw_id == null)
+                {
+                    vibeClient.user_work_Insert("0", companyname, joiningdate, endingdate, companyaddress, userSessions.getAttribute("UuserId").toString());
+                }
+                else
+                {
+                    vibeClient.user_work_Update(uw_id, companyname, joiningdate, endingdate, companyaddress, userid);
+                }
                return "/web/profile.xhtml?faces-redirect=true";
               
         } catch (ClientErrorException e) {

@@ -131,8 +131,19 @@ public class UserSkillsManagedBean {
     public String updateUserSkill() {
         
         try {
-               vibeClient.user_skills_Update(us_id, skillname, skillinfo, skillportfolio, userid);
-               return "/web/profile.xhtml?faces-redirect=true";
+            
+            HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+            HttpSession userSessions = requests.getSession();
+            
+            if(us_id == null)
+            {
+                vibeClient.user_skills_Insert("0", skillname, skillinfo, skillportfolio, userSessions.getAttribute("UuserId").toString());
+            }
+            else{
+                vibeClient.user_skills_Update(us_id, skillname, skillinfo, skillportfolio, userid);
+            }
+            return "/web/profile.xhtml?faces-redirect=true";
               
         } catch (ClientErrorException e) {
             System.out.println(e);
