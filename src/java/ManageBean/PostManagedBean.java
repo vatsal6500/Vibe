@@ -178,7 +178,7 @@ public class PostManagedBean {
 
             if (file == null) {
 
-                vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Text", userSessions.getAttribute("UuserId").toString(), groupId);
+                vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Text", userSessions.getAttribute("UuserId").toString(), "0");
 
             } else {
                 if (file.getSubmittedFileName().contains(".jpg") || file.getSubmittedFileName().contains(".jpeg") || file.getSubmittedFileName().contains(".png")) {
@@ -198,7 +198,7 @@ public class PostManagedBean {
                     post = "IMG_" + temp + file.getSubmittedFileName();
                     Files.copy(input, new File(fullPath, post).toPath());
 
-                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Image", userSessions.getAttribute("UuserId").toString(), groupId);
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Image", userSessions.getAttribute("UuserId").toString(), "0");
 
                 }
 
@@ -219,7 +219,7 @@ public class PostManagedBean {
                     post = "VID_" + temp + file.getSubmittedFileName();
                     Files.copy(input, new File(fullPath, post).toPath());
 
-                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Video", userSessions.getAttribute("UuserId").toString(), groupId);
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Video", userSessions.getAttribute("UuserId").toString(), "0");
 
                 }
 
@@ -240,7 +240,7 @@ public class PostManagedBean {
                     post = "AUD_" + temp + file.getSubmittedFileName();
                     Files.copy(input, new File(fullPath, post).toPath());
 
-                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Audio", userSessions.getAttribute("UuserId").toString(), groupId);
+                    vibeClient.postInsert("0", post, caption, isDeleted, likeCount, "Audio", userSessions.getAttribute("UuserId").toString(), "0");
 
                 }
             }
@@ -255,6 +255,8 @@ public class PostManagedBean {
 
     public List<Post> feedView() {
 
+        this.caption = "";
+        
         Response response = vibeClient.postShowAll(Response.class);
 
         ArrayList<Post> postArrayList = new ArrayList<>();
@@ -267,6 +269,8 @@ public class PostManagedBean {
     }
     
     public List<Post> feedByUserId() {
+        
+        this.caption = "";
         
         HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
@@ -284,6 +288,8 @@ public class PostManagedBean {
     }
     
     public List<Post> feedByGroupId(String Id) {
+        
+        this.caption = "";
         
         Response response = vibeClient.postShowAllByUserId(Response.class, Id);
 

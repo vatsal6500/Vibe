@@ -39,12 +39,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     
     //Post by userId
-    @NamedQuery(name = "Post.postShowAllByUserId", query = "SELECT p FROM Post p WHERE p.userid.userid = :userid"),
+    @NamedQuery(name = "Post.postShowAllByUserId", query = "SELECT p FROM Post p WHERE p.userid.userid = :userid AND p.isDeleted = false"),
     
     //Post by groupId
-    @NamedQuery(name = "Post.postShowAllByGroupId", query = "SELECT p FROM Post p WHERE p.groupid.groupid = :groupid"),
+    @NamedQuery(name = "Post.postShowAllByGroupId", query = "SELECT p FROM Post p WHERE p.groupid.groupid = :groupid AND p.isDeleted = false"),
     
-    @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p"),
+    @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p WHERE p.isDeleted = false ORDER BY p.postid DESC"),
     @NamedQuery(name = "Post.findByPostid", query = "SELECT p FROM Post p WHERE p.postid = :postid"),
     @NamedQuery(name = "Post.findByPost", query = "SELECT p FROM Post p WHERE p.post = :post"),
     @NamedQuery(name = "Post.findByCaption", query = "SELECT p FROM Post p WHERE p.caption = :caption"),
