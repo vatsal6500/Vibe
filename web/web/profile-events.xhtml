@@ -45,14 +45,21 @@
             <!-- Page Content  -->       
             <div id="content-page" class="content-page">
         <div class="container">
-            <div class="d-grid gap-3 d-grid-template-1fr-19">
+            
+                <h:form>
+                    <c:if test="#{eventManagedBean.showSubscribedEvents().size() eq 0}">
+                        <li class="d-block text-center mb-0 pb-0">
+                            <span class="me-3 btn">No Event Subscriptions</span>
+                        </li>
+                    </c:if>
+                <c:if test="#{eventManagedBean.showSubscribedEvents().size() > 0}">
+                    
+                  <div class="d-grid gap-0 d-grid-template-1fr-19">  
                 <c:forEach var="subevents" items="#{eventManagedBean.showSubscribedEvents()}">
-                    <div class="">
-                        <div class="card rounded  mb-0">
+                    
+                        <div class="card rounded mb-0" >
                            <div class="event-images">
-                              <a href="#">
-                              <img src="../assets/images/page-img/51.jpg" class="img-fluid" alt="Responsive image"/>
-                              </a>
+                                  <img src="../assets/images/page-img/51.jpg" class="img-fluid" alt="Responsive image"/>                              
                            </div>
                            <div class="card-body">
                               <div class="d-flex">
@@ -66,10 +73,16 @@
                                  </div>
                                </div>
                            </div>
+                            
+                            <h:commandButton class="btn mb-1 btn-primary" action="#{eventManagedBean.getEventInfo(subevents.eventid)}" value="Know More"/>                            
                         </div>
-                    </div>
+                    <br></br><br></br>
+                    
                 </c:forEach> 
-            </div>
+                  </div>
+                </c:if>
+                </h:form> 
+            
                   
         </div>
          </div>
@@ -92,7 +105,15 @@
                     <!-- Page Content  -->       
                     <div id="content-page" class="content-page">
                 <div class="container">
-                    <div class="d-grid gap-3 d-grid-template-1fr-19">
+                    
+                        <h:form>
+                            <c:if test="#{eventManagedBean.showSuggestedEvents().size() eq 0}">
+                                <li class="d-block text-center mb-0 pb-0">
+                                    <span class="me-3 btn">No Suggestions</span>
+                                </li>
+                            </c:if>
+                        <c:if test="#{eventManagedBean.showSuggestedEvents().size() > 0}">
+                            <div class="d-grid gap-3 d-grid-template-1fr-19">
                         <c:forEach var="sugevents" items="#{eventManagedBean.showSuggestedEvents()}">
                             <div class="">
                                 <div class="card rounded  mb-0">
@@ -113,10 +134,15 @@
                                          </div>
                                        </div>
                                    </div>
+                                    
+                                    <h:commandButton class="btn mb-1 btn-primary" action="#{eventManagedBean.getEventInfo(sugevents.eventid)}" value="Know More"/>                            
                                 </div>
                             </div>
-                        </c:forEach> 
-                    </div>
+                        </c:forEach>
+                                 </div>
+                        </c:if>
+                        </h:form> 
+                   
 
                 </div>
                  </div>

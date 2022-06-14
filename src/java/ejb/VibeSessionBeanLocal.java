@@ -152,6 +152,7 @@ public interface VibeSessionBeanLocal {
     public String event_usercount_Update(int euc_Id, boolean isIntrested, int eventId, int userId);
     public String event_usercount_Delete(int euc_Id);
     public EventUsercount event_usercount_FindById(int euc_Id);
+    public EventUsercount eventFindSubscribe(int eventId, int userId);
     public List<EventUsercount> event_usercount_ShowAll();  //admin
     
     //Comments

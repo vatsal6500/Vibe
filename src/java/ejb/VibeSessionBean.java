@@ -2593,6 +2593,21 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public EventUsercount eventFindSubscribe(int eventId,int userId) {
+        try {
+
+            EventUsercount e = (EventUsercount) em.createNamedQuery("EventUsercount.findsubscribe")
+                    .setParameter("eventid", eventId)
+                    .setParameter("userid", userId);
+            return e;
+
+        } catch (Exception e) {
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     //Comments
     @Override
