@@ -77,8 +77,6 @@ public class EventManagedBean {
     public void setIsInterested(boolean isInterested) {
         this.isInterested = isInterested;
     }
-    
-    
 
     public VibeSessionBeanLocal getVibe() {
         return vibe;
@@ -247,10 +245,13 @@ public class EventManagedBean {
         return sugeventsArrayList;
     }
     
-    public String getEventInfo(String Id) {
+    public String getEventInfo(String eventId) {
          
+        HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSessions = requests.getSession();
         
-        Response response = vibeClient.eventFindById(Response.class, Id);
+        Response response = vibeClient.eventFindById(Response.class, eventId);
         Events eventArrayList = new Events();
         GenericType<Events> showAllinfo  = new GenericType<Events>() {
         };
@@ -268,6 +269,22 @@ public class EventManagedBean {
         mode = eventArrayList.getMode();
         guestcount = String.valueOf(eventArrayList.getGuestcount());
         is_removed = eventArrayList.getIsRemoved();
+        
+        Response res = vibeClient.eventFindSubscribe(Response.class, eventid, userSessions.getAttribute("UuserId").toString());
+        EventUsercount ucountArrayList = new EventUsercount();
+        GenericType<EventUsercount> showAllcount  = new GenericType<EventUsercount>() {
+        };
+        ucountArrayList = (EventUsercount) res.readEntity(showAllcount);
+        if(ucountArrayList != null)
+        {
+            euc_id = ucountArrayList.getEucId().toString();
+            isInterested = ucountArrayList.getIsInterested();
+        }
+        else
+        {
+            euc_id = null;
+        }
+        
         
         return "/web/eventinfo.xhtml?faces-redirect=true";
     }
@@ -343,14 +360,28 @@ public class EventManagedBean {
         return "/web/profile-events.xhtml?faces-redirect=true";
     }
     
-    public String subscribeEvent(String eventid) {
+    public String subscribeEvent() {
         try {
             
             HttpServletRequest requests = (HttpServletRequest) FacesContext.getCurrentInstance()
                     .getExternalContext().getRequest();
             HttpSession userSessions = requests.getSession();
             
-            vibeClient.event_usercount_Insert("0", "true", eventid, userSessions.getAttribute("UuserId").toString());
+            Response res = vibeClient.eventFindSubscribe(Response.class, eventid, userSessions.getAttribute("UuserId").toString());
+            EventUsercount ecountArrayList = new EventUsercount();
+            GenericType<EventUsercount> showAllcount  = new GenericType<EventUsercount>() {
+            };
+            ecountArrayList = (EventUsercount) res.readEntity(showAllcount);
+            if(ecountArrayList != null)
+            {
+                euc_id =  ecountArrayList.getEucId().toString();
+                eventid = ecountArrayList.getEventid().getEventid().toString();
+                vibeClient.event_usercount_Update(euc_id, "true", eventid, userSessions.getAttribute("UuserId").toString());
+            }else
+            {
+                vibeClient.event_usercount_Insert("0", "true", eventid, userSessions.getAttribute("UuserId").toString());
+            }
+            
             
             return "/web/profile-events.xhtml?faces-redirect=true";
             

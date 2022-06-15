@@ -54,12 +54,12 @@
                                      <p>Mode : #{eventManagedBean.mode}</p>
                                      <p>Guests : #{eventManagedBean.guestcount}</p>
                                      
-                                     <c:if test="#{eventManagedBean.isInterested ne 'true'}">
+                                     <c:if test="#{eventManagedBean.isInterested eq 'true'}">
                                          <h:commandButton  id="btn_unsub" class="btn btn-danger"  action="#{eventManagedBean.UnsubscribeEvent(eventManagedBean.eventid, eventManagedBean.euc_id)}" value="Unsubscribe"/><br/><br/>
                                      </c:if>
                                      
-                                     <c:if test="#{eventManagedBean.isInterested ne 'false'}">
-                                         <h:commandButton  id="btn_sub" class="btn btn-success"  action="#{eventManagedBean.subscribeEvent(eventManagedBean.eventid)}" value="Subscribe"/><br/><br/>
+                                     <c:if test="#{eventManagedBean.isInterested eq 'false'}">
+                                         <h:commandButton  id="btn_sub" class="btn btn-success"  action="#{eventManagedBean.subscribeEvent()}" value="Subscribe"/><br/><br/>
                                      </c:if>
                                  </div>
                                   </h:form>
