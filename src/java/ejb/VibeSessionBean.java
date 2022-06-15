@@ -1965,6 +1965,36 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public List<Likes> isLiked(int postId,int userId) {
+        try {
+
+            List<Likes> l = em.createNamedQuery("Likes.isliked")
+                    .setParameter("postid", postId)
+                    .setParameter("senderid", userId).getResultList();
+            return l;
+
+        } catch (Exception e) {
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<Likes> likeCount(int postId) {
+        try {
+
+            List<Likes> l = em.createNamedQuery("Likes.likecount")
+                    .setParameter("postid", postId).getResultList();
+            return l;
+
+        } catch (Exception e) {
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 
     //Friend_Request
     @Override
@@ -2811,6 +2841,22 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    @Override
+    public List<Comments> commentsFindByPostId(int postId)
+    {
+        try {
+
+            List<Comments> c = em.createNamedQuery("Comments.findByPostid")
+                    .setParameter("postid", postId)
+                    .getResultList();
+            return c;
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     //Chats

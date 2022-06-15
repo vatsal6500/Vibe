@@ -32,6 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "comments", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    //Comment by postid
+    @NamedQuery(name = "Comments.findByPostid", query = "SELECT c FROM Comments c WHERE c.postid.postid = :postid"),
+    
     @NamedQuery(name = "Comments.findAll", query = "SELECT c FROM Comments c"),
     @NamedQuery(name = "Comments.findByCommentid", query = "SELECT c FROM Comments c WHERE c.commentid = :commentid"),
     @NamedQuery(name = "Comments.findByComment", query = "SELECT c FROM Comments c WHERE c.comment = :comment"),

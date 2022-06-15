@@ -744,6 +744,20 @@ public class GenericResource {
         return vibe.likeFindById(likeId);
     }
     
+    @Path("isliked/{postid}/{userid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Likes> isLiked(@PathParam("postid")int postid, @PathParam("userid")int userid) {
+        return vibe.isLiked(postid, userid);
+    }
+    
+    @Path("likecount/{postid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Likes> likeCount(@PathParam("postid")int postid) {
+        return vibe.likeCount(postid);
+    }
+    
     
     @Path("likeshowall")
     @GET
@@ -852,6 +866,16 @@ public class GenericResource {
         return vibe.commentsShowAll();
 
     }
+    
+    @Path("commentsfindbypostid/{postid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Comments> commentsFindByPostId(@PathParam("postid")int postid) {
+        return vibe.commentsFindByPostId(postid);
+
+    }
+    
+    
     
     //Events
     

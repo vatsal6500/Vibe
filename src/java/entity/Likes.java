@@ -31,6 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "likes", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    
+    //IsLiked Post
+    @NamedQuery(name = "Likes.isliked", query = "SELECT l FROM Likes l WHERE l.postid.postid = :postid AND l.senderid.userid = :senderid"),
+    
+    //Likecount
+    @NamedQuery(name = "Likes.likecount", query = "SELECT l FROM Likes l WHERE l.postid.postid = :postid"),
+    
     @NamedQuery(name = "Likes.findAll", query = "SELECT l FROM Likes l"),
     @NamedQuery(name = "Likes.findByLikeid", query = "SELECT l FROM Likes l WHERE l.likeid = :likeid"),
     @NamedQuery(name = "Likes.findByLikeDate", query = "SELECT l FROM Likes l WHERE l.likeDate = :likeDate"),

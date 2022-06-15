@@ -119,6 +119,8 @@ public interface VibeSessionBeanLocal {
     public String likeUpdate(int likeId, boolean isRemoved, int postId, int senderId, int receiverId);
     public String likeDelete(int likeId);
     public Likes likeFindById(int likeId);
+    public List<Likes> isLiked(int postId, int userId);
+    public List<Likes> likeCount(int postId);
     public List<Likes> likeShowAll(); //admin
     
     //Friend Request
@@ -163,6 +165,7 @@ public interface VibeSessionBeanLocal {
     public String commentsUpdate(int commentId, String comment, boolean isRemoved, int postId, int senderId, int receiverId);
     public String commentsdelete(int commentId);
     public Comments commentsFindById(int commentId);
+    public List<Comments> commentsFindByPostId(int postId);
     public List<Comments> commentsShowAll(); //admin
     
     //Chat

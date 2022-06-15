@@ -80,6 +80,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("friend_request_insert/{0}/{1}/{2}/{3}", new Object[]{frId, status, senderId, receiverId})).request().post(null, String.class);
     }
 
+    public <T> T likeCount(Class<T> responseType, String postid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("likecount/{0}", new Object[]{postid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String eventInsert(String eventid, String hostid, String eventname, String post, String eventstartdate, String eventenddate, String eventinfo, String venue, String type, String fees, String mode, String guestcount, String isremoved) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("eventinsert/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}", new Object[]{eventid, hostid, eventname, post, eventstartdate, eventenddate, eventinfo, venue, type, fees, mode, guestcount, isremoved})).request().post(null, String.class);
     }
@@ -396,6 +402,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("commentsinsert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{commentId, comment, isRemoved, postId, senderId, receiverId})).request().post(null, String.class);
     }
 
+    public <T> T commentsFindByPostId(Class<T> responseType, String postid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("commentsfindbypostid/{0}", new Object[]{postid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T countryFindByName(Class<T> responseType, String countryName) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("countryfindbyname/{0}", new Object[]{countryName}));
@@ -476,6 +488,12 @@ public class VibeClient {
 
     public String user_education_Insert(String ueId, String instituteName, String joiningDate, String endingDate, String instituteAddress, String userid) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("user_education_insert/{0}/{1}/{2}/{3}/{4}/{5}", new Object[]{ueId, instituteName, joiningDate, endingDate, instituteAddress, userid})).request().post(null, String.class);
+    }
+
+    public <T> T isLiked(Class<T> responseType, String postid, String userid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("isliked/{0}/{1}", new Object[]{postid, userid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public void adsInsert(String adsId, String adsType, String price, String timeLimit, String description, String isRemoved) throws ClientErrorException {
