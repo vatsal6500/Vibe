@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EventUsercount.findsubscribe", query = "SELECT e FROM EventUsercount e WHERE e.eventid.eventid = :eventid AND e.userid.userid = :userid "),
     
     //EventUserCount
-    @NamedQuery(name = "EventUsercount.findByEventId", query = "SELECT e FROM EventUsercount e WHERE e.eventid.eventid = :eventid"),
+    @NamedQuery(name = "EventUsercount.findByEventId", query = "SELECT e FROM EventUsercount e WHERE e.eventid.eventid = :eventid AND e.isInterested = true"),
     
     @NamedQuery(name = "EventUsercount.findAll", query = "SELECT e FROM EventUsercount e"),
     @NamedQuery(name = "EventUsercount.findByEucId", query = "SELECT e FROM EventUsercount e WHERE e.eucId = :eucId"),
