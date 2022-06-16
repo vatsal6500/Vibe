@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     
     //Suggestedevents
-    @NamedQuery(name = "Events.suggestedevents", query = "SELECT e FROM Events e WHERE e.eventid NOT IN(SELECT ec.eventid.eventid FROM EventUsercount ec WHERE ec.userid.userid = :userid) AND e.hostid.userid != :userid"),
+    @NamedQuery(name = "Events.suggestedevents", query = "SELECT e FROM Events e WHERE e.eventid NOT IN(SELECT ec.eventid.eventid FROM EventUsercount ec WHERE ec.userid.userid = :userid AND ec.isInterested = true) AND e.hostid.userid != :userid"),
     
     //Subscribedevents
     @NamedQuery(name = "Events.subscribedevents", query = "SELECT e FROM Events e WHERE e.eventid IN(SELECT ec.eventid.eventid FROM EventUsercount ec WHERE ec.userid.userid = :userid AND ec.isInterested = true)"),

@@ -1062,6 +1062,14 @@ public class GenericResource {
 
     }
     
+    @Path("event_usercount_findbyeventid/{eventid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<EventUsercount> event_usercount_FindByEventId(@PathParam("eventid")int eventid) {
+        return vibe.event_usercount_FindByEventId(eventid);
+
+    }
+    
     @Path("eventfindsubscribe/{eventid}/{userid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

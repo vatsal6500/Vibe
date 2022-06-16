@@ -33,6 +33,9 @@
                         <div class="data-block">
                             <h2>Your Events</h2>
                         </div>
+                        <h:form>
+                            <h:commandButton class="btn mb-1 btn-primary" action="addevent.xhtml" value="Host Event"/>    
+                        </h:form>
                     </div>
                 </div>
             </div>
@@ -45,7 +48,7 @@
                         <c:if test="#{eventManagedBean.showHostedEvents().size() eq 0}">
                             <li class="d-block text-center mb-0 pb-0">
                                 <span class="me-3 btn">No events found hosted by you</span>
-                                <h:commandButton class="btn mb-1 btn-primary" action="addevent.xhtml" value="Host Event"/>                            
+                                                        
                             </li>
                         </c:if>
                         <c:if test="#{eventManagedBean.showHostedEvents().size() > 0}">

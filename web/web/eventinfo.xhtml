@@ -52,8 +52,12 @@
                                      <p>Type : #{eventManagedBean.type}</p>
                                      <p>Fees : #{eventManagedBean.fees}</p>
                                      <p>Mode : #{eventManagedBean.mode}</p>
-                                     <p>Guests : #{eventManagedBean.guestcount}</p>
-                                     
+                                     <c:if test="#{eventManagedBean.showeventmembers(eventManagedBean.eventid).size() eq null}">
+                                         <p>Guests : 0</p>
+                                     </c:if>
+                                     <c:if test="#{eventManagedBean.showeventmembers(eventManagedBean.eventid).size() > 0}">
+                                         <p>Guests : #{eventManagedBean.showeventmembers(eventManagedBean.eventid).size()}</p>
+                                     </c:if>
                                      <c:if test="#{eventManagedBean.isInterested eq 'true'}">
                                          <h:commandButton  id="btn_unsub" class="btn btn-danger"  action="#{eventManagedBean.UnsubscribeEvent(eventManagedBean.eventid, eventManagedBean.euc_id)}" value="Unsubscribe"/><br/><br/>
                                      </c:if>
