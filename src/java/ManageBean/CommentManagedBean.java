@@ -41,6 +41,16 @@ public class CommentManagedBean {
     private String comment;
     private String commentdate;
     private String isRemoved;
+    
+    private String rName;
+
+    public String getrName() {
+        return rName;
+    }
+
+    public void setrName(String rName) {
+        this.rName = rName;
+    }
 
     public VibeSessionBeanLocal getVibeSessionBean() {
         return vibeSessionBean;
@@ -113,6 +123,13 @@ public class CommentManagedBean {
     public CommentManagedBean() {
     }
     
+    //private Methods
+    private void Activity(String senderMsg, String receiverMsg, String targerURL, String senderId, String receiverId) {
+        
+        vibeClient.activity_feed_Insert("0", "desc", senderMsg, receiverMsg, targerURL, "Comment", "false", "false", senderId, receiverId, "0");
+        
+    }
+    
     private void clearall()
     {
         setComment("");
@@ -130,9 +147,17 @@ public class CommentManagedBean {
             };
             postArrayList = (Post) response.readEntity(showAllpostinfo);
             receiverid = postArrayList.getUserid().getUserid().toString();
+            rName = postArrayList.getUserid().getFirstname() + postArrayList.getUserid().getLastname();
             
             vibeClient.commentsInsert("0", comment, "false", postid, userSessions.getAttribute("UuserId").toString(), receiverid);
             clearall();
+            
+            String senderMsg = "You Commented on " + rName + "'s Post.";
+            String receiverMsg = userSessions.getAttribute("UfullName").toString() + 
+                                " has commented on your Post";
+            String targetUrl = "ok";
+
+            Activity(senderMsg, receiverMsg, targetUrl, userSessions.getAttribute("UuserId").toString(), receiverid);
             return "/web/home.xhtml?faces-redirect=true";
     }
     

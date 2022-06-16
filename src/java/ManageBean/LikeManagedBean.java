@@ -41,6 +41,18 @@ public class LikeManagedBean {
     private String receiverid;
     private String likedate;
     private String isRemoved;
+    
+    private String rName;
+
+    public String getrName() {
+        return rName;
+    }
+
+    public void setrName(String rName) {
+        this.rName = rName;
+    }
+    
+    
 
     public VibeSessionBeanLocal getVibeSessionBean() {
         return vibeSessionBean;
@@ -105,6 +117,13 @@ public class LikeManagedBean {
     public LikeManagedBean() {
     }
     
+    //private methods
+    
+    private void Activity(String senderMsg, String receiverMsg, String targerURL, String senderId, String receiverId) {
+        
+        vibeClient.activity_feed_Insert("0", "desc", senderMsg, receiverMsg, targerURL, "Like", "false", "false", senderId, receiverId, "0");
+        
+    }
     
     public String likepost(String postid){
         
@@ -118,8 +137,16 @@ public class LikeManagedBean {
             };
             postArrayList = (Post) response.readEntity(showAllpostinfo);
             receiverid = postArrayList.getUserid().getUserid().toString();
+            rName = postArrayList.getUserid().getFirstname() + postArrayList.getUserid().getLastname();
             
             vibeClient.likeInsert("0", "false", postid, userSessions.getAttribute("UuserId").toString(), receiverid);
+            
+            String senderMsg = "You liked " + rName + "'s Post.";
+            String receiverMsg = userSessions.getAttribute("UfullName").toString() + 
+                                " has liked your Post.";
+            String targetUrl = "ok";
+
+            Activity(senderMsg, receiverMsg, targetUrl, userSessions.getAttribute("UuserId").toString(), receiverid);
             
             return "/web/home.xhtml?faces-redirect=true";
     }
