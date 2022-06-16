@@ -338,6 +338,16 @@ public class UInfoManagedBean {
         return contactArrayList;
     }
     
+    public List<UserContactInfo> showUserContactInfoByProfileId(String Id) {
+        
+        Response response = vibeClient.user_contact_info_FindByUserId(Response.class, Id);
+        ArrayList<UserContactInfo> contactArrayList = new ArrayList<>();
+        GenericType<List<UserContactInfo>> showAllcontact  = new GenericType<List<UserContactInfo>>() {
+        };
+        contactArrayList = (ArrayList<UserContactInfo>) response.readEntity(showAllcontact);
+        return contactArrayList;
+    }
+    
     public String editUserContact(String Id) {
         
         Response response = vibeClient.user_contact_info_FindById(Response.class, Id);

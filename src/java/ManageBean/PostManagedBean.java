@@ -286,6 +286,21 @@ public class PostManagedBean {
 
         return postArrayList;
     }
+    
+    public List<Post> feedByProfileId(String Id) {
+
+        this.caption = "";
+
+        Response response = vibeClient.postShowAllByUserId(Response.class, Id);
+
+        ArrayList<Post> postArrayList = new ArrayList<>();
+        GenericType<List<Post>> postGenericType = new GenericType<List<Post>>() {
+        };
+
+        postArrayList = (ArrayList<Post>) response.readEntity(postGenericType);
+
+        return postArrayList;
+    }
 
     public List<Post> feedByGroupId(String Id) {
 

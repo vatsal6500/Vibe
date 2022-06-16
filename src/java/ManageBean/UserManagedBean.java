@@ -517,4 +517,37 @@ public class UserManagedBean {
         infoArrayList = (ArrayList<User>) response.readEntity(showAllinfo);
         return infoArrayList;
     }
+    
+    public List<User> showUserInfoByProfileId(String Id) {
+        
+        Response response = vibeClient.userFindById(Response.class, Id);
+        ArrayList<User> infoArrayList = new ArrayList<>();
+        GenericType<List<User>> showAllinfo  = new GenericType<List<User>>() {
+        };
+        infoArrayList = (ArrayList<User>) response.readEntity(showAllinfo);
+        return infoArrayList;
+    }
+    
+    //Page Profile
+    
+    public String showProfileInfo(String Id) {
+       
+        Response response = vibeClient.userFindById(Response.class, Id);
+        ArrayList<User> infoArrayList = new ArrayList<>();
+        GenericType<List<User>> showAllinfo  = new GenericType<List<User>>() {
+        };
+        System.out.println("Profile info " + showAllinfo);
+        infoArrayList = (ArrayList<User>) response.readEntity(showAllinfo);
+        
+        for(User ui : infoArrayList)
+        {
+            userId = ui.getUserid().toString();
+            firstName = ui.getFirstname();
+            lastName = ui.getLastname();
+            email = ui.getEmail();
+            dob = ui.getDob();
+            
+        }
+        return "/web/profileinfo.xhtml?faces-redirect=true";
+    }
 }
