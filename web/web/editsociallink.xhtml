@@ -60,6 +60,21 @@
                                             <h:outputLabel for="" class="form-label"> Insta Link : </h:outputLabel> 
                                             <h:inputText id="instalink" class="form-control" value="#{uinfoManagedBean.insta_link}"/>
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <h:outputLabel for="" class="form-label"> Language : </h:outputLabel> 
+                                            <h:inputText id="lang" class="form-control" value="#{uinfoManagedBean.language}"/>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <h:outputLabel for="" class="form-label"> Interested In : </h:outputLabel> 
+                                            <h:inputText id="interest" class="form-control" value="#{uinfoManagedBean.intrested_in}"/>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <h:outputLabel for="" class="form-label"> Bio : </h:outputLabel> 
+                                            <h:inputText id="bio" class="form-control" value="#{uinfoManagedBean.bio}"/>
+                                        </div>
                                         <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{uinfoManagedBean.updateUserContact()}" value="Update"/><br/><br/>
                                     </h:form>
                                 </div>

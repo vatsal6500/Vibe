@@ -50,7 +50,7 @@
                                                 <ul class="social-data-block d-flex align-items-center justify-content-between list-inline p-0 m-0">
                                                     <li class="text-center ps-3">
                                                         <h6>Posts</h6>
-                                                        <c:if test="#{postManagedBean.feedByUserId().size() eq null}">
+                                                        <c:if test="#{postManagedBean.feedByUserId().size() eq 0}">
                                                             <p class="mb-0">0</p>
                                                         </c:if>
                                                         <c:if test="#{postManagedBean.feedByUserId().size() > 0}">
@@ -59,7 +59,7 @@
                                                     </li>
                                                     <li class="text-center ps-3">
                                                         <h6>Friends</h6>
-                                                        <c:if test="#{friendManagedBean.showAllFriends().size() eq null}">
+                                                        <c:if test="#{friendManagedBean.showAllFriends().size() eq 0}">
                                                             <p class="mb-0">0</p>
                                                         </c:if>
                                                         <c:if test="#{friendManagedBean.showAllFriends().size() > 0}">
@@ -86,7 +86,7 @@
                                                 <a class="nav-link" href="#pills-friends-tab" data-bs-toggle="pill" data-bs-target="#friends" role="button">Friends</a>
                                             </li>
                                             <li class="nav-item col-12 col-sm-3 p-0">
-                                                <a class="nav-link" href="#pills-photos-tab" data-bs-toggle="pill" data-bs-target="#photos" role="button">Photos</a>
+                                                <a class="nav-link" href="#pills-photos-tab" data-bs-toggle="pill" data-bs-target="#photos" role="button">Media</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -134,7 +134,7 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <ul class="profile-img-gallary p-0 m-0 list-unstyled">
-                                                            <c:if test="#{friendManagedBean.showAllFriends().size() eq null}">
+                                                            <c:if test="#{friendManagedBean.showAllFriends().size() eq 0}">
                                                                 <li class="d-block text-center mb-0 pb-0">
                                                                     <span class="me-3 btn">No Friends found</span>
                                                                 </li>                                                            
@@ -1076,7 +1076,7 @@
                                                             </c:forEach>
 
 
-                                                            <h4 class="mt-3">Websites and Social Links</h4>
+                                                            <h4 class="mt-3">Social Links and Interests</h4>
                                                             <hr/>
                                                             <h:form>
                                                                 <c:if test="#{uinfoManagedBean.showUserContactInfo().size() eq null}">
@@ -1104,6 +1104,26 @@
                                                                             </div>
                                                                             <div class="col-9">
                                                                                 <p class="mb-0">#{links.instaLink}</p>
+                                                                            </div>
+                                                                            
+                                                                            
+                                                                            <div class="col-3">
+                                                                                <h6>Language</h6>
+                                                                            </div>
+                                                                            <div class="col-9">
+                                                                                <p class="mb-0">#{links.language}</p>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <h6>Interested In</h6>
+                                                                            </div>
+                                                                            <div class="col-9">
+                                                                                <p class="mb-0">#{links.intrestedIn}</p>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <h6>Bio</h6>
+                                                                            </div>
+                                                                            <div class="col-9">
+                                                                                <p class="mb-0">#{links.bio}</p>
                                                                             </div>
                                                                             <h:commandLink id="btn_edit" action="#{uinfoManagedBean.editUserContact(links.uciId)}" value="edit"/>
                                                                         </div>
@@ -1133,34 +1153,6 @@
                                                                             <h:commandLink id="btn_edit" action="#{userManagedBean.editUserInfo()}" value="edit"/>
                                                                         </h:form>
                                                                     </div>
-                                                                </div>
-                                                            </c:forEach>
-
-                                                            <h4 class="mt-3">Interests</h4>
-                                                            <hr/>
-                                                            <c:forEach var="interest" items="#{uinfoManagedBean.showUserContactInfo()}">
-                                                                <div class="row">
-                                                                    <div class="col-3">
-                                                                        <h6>Language</h6>
-                                                                    </div>
-                                                                    <div class="col-9">
-                                                                        <p class="mb-0">#{interest.language}</p>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <h6>Interested In</h6>
-                                                                    </div>
-                                                                    <div class="col-9">
-                                                                        <p class="mb-0">#{interest.intrestedIn}</p>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <h6>Bio</h6>
-                                                                    </div>
-                                                                    <div class="col-9">
-                                                                        <p class="mb-0">#{interest.bio}</p>
-                                                                    </div>
-                                                                    <h:form>
-                                                                        <h:commandLink id="btn_edit" action="#{uinfoManagedBean.editUserInterest(interest.uciId)}" value="edit"/>
-                                                                    </h:form> 
                                                                 </div>
                                                             </c:forEach>
                                                         </div>
@@ -1260,9 +1252,9 @@
                                                     <div class="tab-pane fade active show" id="all-friends" role="tabpanel">
                                                         <div class="card-body p-0">
                                                             <div class="row">
-                                                                <c:if test="#{friendManagedBean.showAllFriends().size() eq null}">
+                                                                <c:if test="#{friendManagedBean.showAllFriends().size() eq 0}">
                                                                     <li class="d-block text-center mb-0 pb-0">
-                                                                        <span class="me-3 btn">No Website Found</span>
+                                                                        <span class="me-3 btn">No Friends Found</span>
                                                                     </li>                                                            
                                                                 </c:if>
                                                                 <c:if test="#{friendManagedBean.showAllFriends().size() > 0}">
@@ -1323,27 +1315,110 @@
                                                             <div class="d-grid gap-2 d-grid-template-1fr-13">
                                                                 <c:if test="#{postManagedBean.feedByUserId().size() eq null}">
                                                                     <li class="d-block text-center mb-0 pb-0">
-                                                                        <span class="me-3 btn">No Website Found</span>
+                                                                        <span class="me-3 btn">No Media Found</span>
                                                                     </li>                                                            
                                                                 </c:if>
                                                                 <c:if test="#{postManagedBean.feedByUserId().size() > 0}">
                                                                     <c:forEach var="postinfo" items="#{postManagedBean.feedByUserId()}">
-                                                                    <div class="">
-                                                                        <div class="user-images position-relative overflow-hidden">
-                                                                            <a href="#">
-                                                                                <img src="/Vibe/Images/Post/Images/#{postinfo.post}" class="img-fluid rounded" alt="Images"/>                                                                            </a>
-                                                                            <div class="image-hover-data">
-                                                                                <div class="product-elements-icon">
-                                                                                    <ul class="d-flex align-items-center m-0 p-0 list-inline">
-                                                                                        <li><a href="#" class="pe-3 text-white"> 60 <i class="ri-thumb-up-line"></i> </a></li>
-                                                                                        <li><a href="#" class="pe-3 text-white"> 30 <i class="ri-chat-3-line"></i> </a></li>
-                                                                                        <li><a href="#" class="pe-3 text-white"> 10 <i class="ri-share-forward-line"></i> </a></li>
-                                                                                    </ul>
+                                                                        <c:if test="#{postinfo.posttype eq 'Image'}">
+                                                                            <div class="">
+                                                                                <div class="user-images position-relative overflow-hidden">
+                                                                                    <a href="#">
+                                                                                        <img src="/Vibe/Images/Post/Images/#{postinfo.post}" class="img-fluid rounded" alt="Images"/>                                                                            </a>
+                                                                                    <div class="image-hover-data">
+                                                                                        <div class="product-elements-icon">
+                                                                                            <ul class="d-flex align-items-center m-0 p-0 list-inline">
+                                                                                                <li><a href="#" class="pe-3 text-white"> 60 <i class="ri-thumb-up-line"></i> </a></li>
+                                                                                                <li><a href="#" class="pe-3 text-white"> 30 <i class="ri-chat-3-line"></i> </a></li>
+                                                                                                <li><a href="#" class="pe-3 text-white"> 10 <i class="ri-share-forward-line"></i> </a></li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <a href="#" class="image-edit-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit or Remove"><i class="ri-edit-2-fill"></i></a>
-                                                                        </div>
-                                                                    </div>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </c:if>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <h2>Videos</h2>
+                                            <div class="friend-list-tab mt-2">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade active show" id="photosofyou" role="tabpanel">
+                                                        <div class="card-body p-0">
+                                                            <div class="d-grid gap-2 d-grid-template-1fr-13">
+                                                                <c:if test="#{postManagedBean.feedByUserId().size() eq null}">
+                                                                    <li class="d-block text-center mb-0 pb-0">
+                                                                        <span class="me-3 btn">No Media Found</span>
+                                                                    </li>                                                            
+                                                                </c:if>
+                                                                <c:if test="#{postManagedBean.feedByUserId().size() > 0}">
+                                                                    <c:forEach var="postinfo" items="#{postManagedBean.feedByUserId()}">
+                                                                        <c:if test="#{postinfo.posttype eq 'Video'}">
+                                                                            <div class="">
+                                                                                <div class="user-images position-relative overflow-hidden">
+                                                                                    <a href="#">
+                                                                                    <video controls="controls" width="600px">
+                                                                                        <source src="/Vibe/Images/Post/Videos/#{postinfo.post}" type="video/mp4" />
+                                                                                    </video>
+                                                                                    </a>
+                                                                                    <div class="image-hover-data">
+                                                                                        <div class="product-elements-icon">
+                                                                                            <ul class="d-flex align-items-center m-0 p-0 list-inline">
+                                                                                                <li><a href="#" class="pe-3 text-white"> 60 <i class="ri-thumb-up-line"></i> </a></li>
+                                                                                                <li><a href="#" class="pe-3 text-white"> 30 <i class="ri-chat-3-line"></i> </a></li>
+                                                                                                <li><a href="#" class="pe-3 text-white"> 10 <i class="ri-share-forward-line"></i> </a></li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </c:if>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <h2>Audios</h2>
+                                            <div class="friend-list-tab mt-2">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade active show" id="photosofyou" role="tabpanel">
+                                                        <div class="card-body p-0">
+                                                            <div class="d-grid gap-2 d-grid-template-1fr-13">
+                                                                <c:if test="#{postManagedBean.feedByUserId().size() eq null}">
+                                                                    <li class="d-block text-center mb-0 pb-0">
+                                                                        <span class="me-3 btn">No Media Found</span>
+                                                                    </li>                                                            
+                                                                </c:if>
+                                                                <c:if test="#{postManagedBean.feedByUserId().size() > 0}">
+                                                                    <c:forEach var="postinfo" items="#{postManagedBean.feedByUserId()}">
+                                                                        <c:if test="#{postinfo.posttype eq 'Audio'}">
+                                                                            <div class="">
+                                                                                <div class="user-images position-relative overflow-hidden">
+                                                                                    <a href="#">
+                                                                                    <audio controls="x">
+                                                                                        <source src="/Vibe/Images/Post/Audio/#{postinfo.post}" type="audio/ogg" />
+                                                                                    </audio>
+                                                                                    </a>
+                                                                                    <div class="image-hover-data">
+                                                                                        <div class="product-elements-icon">
+                                                                                            <ul class="d-flex align-items-center m-0 p-0 list-inline">
+                                                                                                <li><a href="#" class="pe-3 text-white"> 60 <i class="ri-thumb-up-line"></i> </a></li>
+                                                                                                <li><a href="#" class="pe-3 text-white"> 30 <i class="ri-chat-3-line"></i> </a></li>
+                                                                                                <li><a href="#" class="pe-3 text-white"> 10 <i class="ri-share-forward-line"></i> </a></li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </c:if>
                                                                     </c:forEach>
                                                                 </c:if>
                                                             </div>
