@@ -240,6 +240,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("commentsdelete/{0}", new Object[]{commentId})).request().post(null, String.class);
     }
 
+    public <T> T event_usercount_FindByEventId(Class<T> responseType, String eventid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("event_usercount_findbyeventid/{0}", new Object[]{eventid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public String countryDelete(String countryId) throws ClientErrorException {
         return webTarget.path(java.text.MessageFormat.format("countrydelete/{0}", new Object[]{countryId})).request().post(null, String.class);
     }
