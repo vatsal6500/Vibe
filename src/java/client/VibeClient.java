@@ -110,6 +110,12 @@ public class VibeClient {
         return webTarget.path(java.text.MessageFormat.format("vibelogin/{0}/{1}", new Object[]{email, password})).request().post(null, responseType);
     }
 
+    public <T> T chatFindBySenderId(Class<T> responseType, String sender, String receiver) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("chatfindbysender/{0}/{1}", new Object[]{sender, receiver}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T stateShowAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("stateshowall");
@@ -356,6 +362,12 @@ public class VibeClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T chatFindByReceiverId(Class<T> responseType, String receiver, String sender) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("chatfindbyreceiver/{0}/{1}", new Object[]{receiver, sender}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T group_member_FindById(Class<T> responseType, String gmId) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("group_member_findbyid/{0}", new Object[]{gmId}));
@@ -486,6 +498,10 @@ public class VibeClient {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("activity_feed_findbyid/{0}", new Object[]{afId}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String chatInsert(String chatId, String message, String isDelevered, String isRead, String isDeleted, String senderId, String receiverId) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("chatinsert/{0}/{1}/{2}/{3}/{4}/{5}/{6}", new Object[]{chatId, message, isDelevered, isRead, isDeleted, senderId, receiverId})).request().post(null, String.class);
     }
 
     public <T> T activity_feed_ShowAll(Class<T> responseType) throws ClientErrorException {

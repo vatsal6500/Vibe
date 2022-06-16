@@ -176,9 +176,8 @@ public interface VibeSessionBeanLocal {
     
     //Chat
     public String chatInsert(int chatId, String message, boolean isDelevered, boolean isRead, boolean isDeleted, int senderId, int receiverId);
-    public String chatDelete(int chatId);
-    //    public Chat chatFindById(int chatId);
-    //    public List<Chat> chatShowAll(); //admin
+    public List<Chat> chatFindByReceiverId(int receiver, int sender);
+    public List<Chat> chatFindBySenderId(int sender, int receiver);
 
     //Ads User
     public String ads_user_Insert(int auId, String adsContent, String description, String link, String endDate, boolean isRemoved, boolean isExpired, int userId, int adsId);
@@ -199,7 +198,7 @@ public interface VibeSessionBeanLocal {
     public String activity_feed_Update(int afId, String description, String senderMsg, String receiverMsg, String targerURL, String activityType, boolean isRead, boolean isDeleted, int senderId, int receiverId, int groupId);
     public String activity_feed_Delete(int afId);
     public ActivityFeed activity_feed_FindById(int afId);
-public List<ActivityFeed> activity_feed_ByReceiverId(int receiverId);
+    public List<ActivityFeed> activity_feed_ByReceiverId(int receiverId);
     public List<ActivityFeed> activity_feed_ShowAll();  //admin
     
 }

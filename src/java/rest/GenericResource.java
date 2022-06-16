@@ -9,6 +9,7 @@ import ejb.VibeSessionBeanLocal;
 import entity.ActivityFeed;
 import entity.Ads;
 import entity.AdsUser;
+import entity.Chat;
 import entity.City;
 import entity.Comments;
 import entity.Country;
@@ -54,6 +55,27 @@ public class GenericResource {
      * Creates a new instance of GenericResource
      */
     public GenericResource() {
+    }
+    
+    @Path("chatinsert/{chatId}/{message}/{isDelevered}/{isRead}/{isDeleted}/{senderId}/{receiverId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String chatInsert(@PathParam("chatId")int chatId, @PathParam("message")String message, @PathParam("isDelevered")boolean isDelevered, @PathParam("isRead")boolean isRead, @PathParam("isDeleted")boolean isDeleted, @PathParam("senderId")int senderId, @PathParam("receiverId")int receiverId) {
+        return vibe.chatInsert(chatId, message, isDelevered, isRead, isDeleted, senderId, receiverId);
+    }
+    
+    @Path("chatfindbyreceiver/{receiver}/{sender}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Chat> chatFindByReceiverId(@PathParam("receiver")int receiver, @PathParam("sender")int sender) {
+        return vibe.chatFindByReceiverId(receiver, sender);
+    }
+    
+    @Path("chatfindbysender/{sender}/{receiver}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Chat> chatFindBySenderId(@PathParam("sender")int sender, @PathParam("receiver")int receiver) {
+        return vibe.chatFindBySenderId(sender, receiver);
     }
     
     
