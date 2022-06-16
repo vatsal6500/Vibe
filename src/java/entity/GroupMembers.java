@@ -31,6 +31,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "group_members", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    
+    //Find Members By group id
+    @NamedQuery(name = "GroupMembers.findAllMemberByGroupId", query = "SELECT g FROM GroupMembers g WHERE g.groupid.groupid = :groupid AND g.isMember = true"),
+    
+    //Find Members By group id
+    @NamedQuery(name = "GroupMembers.findGroupsByUserId", query = "SELECT g FROM GroupMembers g WHERE g.memberid.userid = :userid AND g.isMember = true"),
+    
+    //check group and member
+    @NamedQuery(name = "GroupMembers.checkMember", query = "SELECT g FROM GroupMembers g WHERE g.groupid.groupid = :groupid AND g.memberid.userid = :userid AND g.isMember = true"),
+    
     @NamedQuery(name = "GroupMembers.findAll", query = "SELECT g FROM GroupMembers g"),
     @NamedQuery(name = "GroupMembers.findByGmId", query = "SELECT g FROM GroupMembers g WHERE g.gmId = :gmId"),
     @NamedQuery(name = "GroupMembers.findByIsMember", query = "SELECT g FROM GroupMembers g WHERE g.isMember = :isMember"),

@@ -37,7 +37,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "groups", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g"),
+    
+    //group show all by userid
+    @NamedQuery(name = "Groups.findAllByUserId", query = "SELECT g FROM Groups g WHERE g.adminid.userid = :userid AND g.isDeleted = false"),
+    
+    @NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g Where g.adminid.userid != :userid AND g.isDeleted = false"),
+    
+    @NamedQuery(name = "Groups.findAllInAdmin", query = "SELECT g FROM Groups g"),
     @NamedQuery(name = "Groups.findByGroupid", query = "SELECT g FROM Groups g WHERE g.groupid = :groupid"),
     @NamedQuery(name = "Groups.findByGroupname", query = "SELECT g FROM Groups g WHERE g.groupname = :groupname"),
     @NamedQuery(name = "Groups.findByDescription", query = "SELECT g FROM Groups g WHERE g.description = :description"),
