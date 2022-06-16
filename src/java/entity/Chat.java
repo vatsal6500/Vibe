@@ -33,6 +33,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "chat", catalog = "vibe", schema = "")
 @XmlRootElement
 @NamedQueries({
+    
+    //Chat by sender
+    @NamedQuery(name = "Chat.findAllChatBySender", query = "SELECT c FROM Chat c WHERE (c.senderid.userid = :sender AND c.receiverid.userid = :receiver) OR (c.senderid.userid = :receiver AND c.receiverid.userid = :sender)"),
+    
+    //chat by Receiver
+    @NamedQuery(name = "Chat.findAllChatByReceiver", query = "SELECT c FROM Chat c WHERE c.receiverid.userid = :senderid AND c.senderid.userid = :receiverid"),
+    
     @NamedQuery(name = "Chat.findAll", query = "SELECT c FROM Chat c"),
     @NamedQuery(name = "Chat.findByChatid", query = "SELECT c FROM Chat c WHERE c.chatid = :chatid"),
     @NamedQuery(name = "Chat.findByDatetime", query = "SELECT c FROM Chat c WHERE c.datetime = :datetime"),

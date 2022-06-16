@@ -8,6 +8,7 @@ package ejb;
 import entity.ActivityFeed;
 import entity.Ads;
 import entity.AdsUser;
+import entity.Chat;
 import entity.City;
 import entity.Comments;
 import entity.Country;
@@ -3003,15 +3004,82 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
     }
 
     //Chats
+    
     @Override
     public String chatInsert(int chatId, String message, boolean isDelevered, boolean isRead, boolean isDeleted, int senderId, int receiverId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            User sender = em.find(User.class, senderId);
+            User receiver = em.find(User.class, receiverId);
+
+            Collection<Chat> csc = sender.getChatCollection();
+            Collection<Chat> crc = receiver.getChatCollection();
+            
+            Chat c = new Chat();
+            
+            c.setChatid(chatId);
+            c.setMessage(message);
+            c.setDatetime(new Date());
+            c.setIsDeleted(isDeleted);
+            c.setIsRead(isRead);
+            c.setIsDelevered(isDelevered);
+            c.setReceiverid(receiver);
+            c.setSenderid(sender);
+            
+            csc.add(c);
+            crc.add(c);
+            sender.setChatCollection(csc);
+            receiver.setChatCollection(crc);
+            
+            em.persist(c);
+            em.merge(sender);
+            em.merge(receiver);
+            
+            return "Chat Sent!";
+            
+        } catch (Exception e) {
+            
+            return e.getMessage();
+            
+        }
     }
 
     @Override
-    public String chatDelete(int chatId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Chat> chatFindByReceiverId(int receiver, int sender) {
+        
+        try {
+
+            List<Chat> c = em.createNamedQuery("Chat.findAllChatByReceiver")
+                    .setParameter("senderid", sender)
+                    .setParameter("receiverid", receiver)
+                    .getResultList();
+            return c;
+
+        } catch (Exception e) {
+            
+            System.out.println(e);
+            
+            return null;
+        }
     }
+    
+    @Override
+    public List<Chat> chatFindBySenderId(int sender, int receiver) {
+        
+        try {
+
+            List<Chat> c = em.createNamedQuery("Chat.findAllChatBySender")
+                    .setParameter("sender", sender)
+                    .setParameter("receiver", receiver)
+                    .getResultList();
+            return c;
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
 
     //Ads_User
     @Override
@@ -3474,7 +3542,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     //Login 
     @Override
     public User vibeLogin(String email, String password) {
