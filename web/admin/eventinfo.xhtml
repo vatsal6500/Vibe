@@ -8,7 +8,7 @@
        xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
-        <title>Admin | User Info</title>
+        <title>Admin | Event Info</title>
         <ui:include src="includes/css.xhtml" />
         
     </h:head>
@@ -39,7 +39,7 @@
                                   <h:form>
                                       
                                  <div class="blog-description p-2">
-                                     <h2 class="mb-2">Event Info</h2>
+                                     <h2 class="mb-2">#{eventManagedBean.eventname}</h2>
                                      <p>Info : #{eventManagedBean.eventinfo}</p>
                                      <p>Venue : #{eventManagedBean.venue}</p>
                                      <p>Type : #{eventManagedBean.type}</p>
@@ -54,6 +54,30 @@
                      </div>
                   </div>
                </div>
+             
+             <h2 class="mb-2">Interested Users</h2>
+             <c:if test="#{eventManagedBean.showeventmembers(eventManagedBean.eventid).size() eq 0}">
+                 <p class="text-center">No Interested Users</p>
+             </c:if>
+             
+             
+             <div class="d-inline-flex gap-2">
+             <c:forEach var="mem" items="#{eventManagedBean.showeventmembers(eventManagedBean.eventid)}">
+                 <div class="card" style="width: 300px">
+                        <div class="card-body">
+                            <div class="event-images">
+                                <a href="#">
+                                <img src="../assets/images/page-img/51.jpg" class="img-fluid" alt="Responsive image"/>
+                                </a>
+                            </div><br></br>
+                            <div class="mt-1">
+                                <h5>#{mem.userid.firstname} #{mem.userid.lastname}</h5>
+                                <p>#{mem.userid.email}</p>
+                            </div>
+                        </div>        
+                    </div>
+             </c:forEach>
+              </div>          
          </div>
       </div>
 
