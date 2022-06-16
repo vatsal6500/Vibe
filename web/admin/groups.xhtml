@@ -59,9 +59,9 @@
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header">Info</f:facet>
-                                                <a href="groupinfo.xhtml" class=" ">
-                                                    <span>Know More</span>
-                                                 </a>
+                                            <h:form>
+                                            <h:commandButton class="btn mb-1 btn-primary" action="#{groupManagedBean.groupShowInfo(gp.groupid)}" value="Know More"/>                            
+                                            </h:form>
                                         </h:column>
                                     </h:dataTable>
                                 </div>

@@ -319,4 +319,20 @@ public class GroupManagedBean {
         
         return "/web/group-detail.xhtml?faces-redirect=true";
     }
+    
+    public String groupShowInfo(String id) {
+        
+        System.out.println("Ingroupshowinfo");
+        Response response = vibeClient.groupFindById(Response.class, id);
+        GenericType<Groups> empSearch = new GenericType<Groups>(){};
+        Groups g = response.readEntity(empSearch);
+        
+        groupId = g.getGroupid().toString();
+        groupName = g.getGroupname();
+        description = g.getDescription();
+        adminId = g.getAdminid().getFirstname() + " " + g.getAdminid().getLastname();
+        createDate = g.getCreateDate().toString();
+        
+        return "/admin/groupinfo.xhtml?faces-redirect=true";
+    }
 }
