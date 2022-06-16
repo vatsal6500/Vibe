@@ -117,7 +117,7 @@ public class LikeManagedBean {
             GenericType<Post> showAllpostinfo  = new GenericType<Post>() {
             };
             postArrayList = (Post) response.readEntity(showAllpostinfo);
-            receiverid = postArrayList.getPostid().toString();
+            receiverid = postArrayList.getUserid().getUserid().toString();
             
             vibeClient.likeInsert("0", "false", postid, userSessions.getAttribute("UuserId").toString(), receiverid);
             

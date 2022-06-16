@@ -129,7 +129,7 @@ public class CommentManagedBean {
             GenericType<Post> showAllpostinfo  = new GenericType<Post>() {
             };
             postArrayList = (Post) response.readEntity(showAllpostinfo);
-            receiverid = postArrayList.getPostid().toString();
+            receiverid = postArrayList.getUserid().getUserid().toString();
             
             vibeClient.commentsInsert("0", comment, "false", postid, userSessions.getAttribute("UuserId").toString(), receiverid);
             clearall();

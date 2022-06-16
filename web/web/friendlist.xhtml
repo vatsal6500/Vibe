@@ -55,7 +55,8 @@
                                                                 </div>
                                                                 <div class="user-data-block">
                                                                     <h4>
-                                                                        <a href="friend-profile.html">#{friends.friendid.firstname} #{friends.friendid.lastname}</a>
+                                                                        <h:commandLink action="#{userManagedBean.showProfileInfo(friends.friendid.userid)}" value="#{friends.friendid.firstname} #{friends.friendid.lastname}" class="my-3"></h:commandLink>
+<!--                                                                        <a href="friend-profile.html">#{friends.friendid.firstname} #{friends.friendid.lastname}</a>-->
                                                                     </h4>
                                                                     <h6>From #{friends.friendid.stateid.statename}</h6>
                                                                     <p>#{friends.friendid.email}</p>
