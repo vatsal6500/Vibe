@@ -141,10 +141,14 @@
                                                                 </c:forEach>
                                                              </ul>
                                                             </c:if>
+                                                            <h:form>
                                                             <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
+                                                                
                                                                 <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
                                                                 <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
+                                                                
                                                             </div>
+                                                            </h:form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -186,15 +190,18 @@
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="like-data">
                                                                             <div class="dropdown">
-                                                                                <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                    <img src="../assets/images/icon/01.png" class="img-fluid" alt=""/>
-                                                                                </span>
+                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
+                                                                                    <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
+                                                                                </c:if>
+                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
+                                                                                    <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
+                                                                                </c:if>
                                                                             </div>
                                                                         </div>
                                                                         <div class="total-like-block ms-2 me-3">
                                                                             <div class="dropdown">
                                                                                 <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                    #{feed.likecount} Likes
+                                                                                    #{likeManagedBean.likeCount(feed.postid).size()} Likes
                                                                                 </span>
                                                                             </div>
                                                                         </div>
@@ -202,15 +209,38 @@
                                                                     <div class="total-comment-block">
                                                                         <div class="dropdown">
                                                                             <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                0 Comment
+                                                                                #{commentManagedBean.showcomments(feed.postid).size()} Comments
                                                                             </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <hr/>
+                                                            <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
+                                                            <ul class="post-comments list-inline p-0 m-0">
+                                                                <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
+                                                                <li class="mb-2">
+                                                                   <div class="d-flex">
+                                                                      <div class="user-img">
+                                                                         <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                      </div>
+                                                                      <div class="comment-data-block ms-3">
+                                                                          <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
+                                                                          <p class="mb-0">#{comms.comment}</p>
+                                                                         <div class="d-flex flex-wrap align-items-center comment-activity">
+                                                                             <span> #{comms.commentDate} </span>
+                                                                         </div>
+                                                                      </div>
+                                                                   </div>
+                                                                </li>
+                                                                </c:forEach>
+                                                             </ul>
+                                                            </c:if>
                                                             <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
-                                                                <input type="text" class="form-control rounded" placeholder="Enter Your Comment"/>
+                                                                <h:form>
+                                                                <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
+                                                                <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
+                                                                </h:form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -253,15 +283,18 @@
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="like-data">
                                                                             <div class="dropdown">
-                                                                                <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                    <img src="../assets/images/icon/01.png" class="img-fluid" alt=""/>
-                                                                                </span>
+                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
+                                                                                    <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
+                                                                                </c:if>
+                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
+                                                                                    <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
+                                                                                </c:if>
                                                                             </div>
                                                                         </div>
                                                                         <div class="total-like-block ms-2 me-3">
                                                                             <div class="dropdown">
                                                                                 <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                    #{feed.likecount} Likes
+                                                                                    #{likeManagedBean.likeCount(feed.postid).size()} Likes
                                                                                 </span>
                                                                             </div>
                                                                         </div>
@@ -269,15 +302,38 @@
                                                                     <div class="total-comment-block">
                                                                         <div class="dropdown">
                                                                             <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                0 Comment
+                                                                                #{commentManagedBean.showcomments(feed.postid).size()} Comments
                                                                             </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <hr/>
+                                                            <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
+                                                            <ul class="post-comments list-inline p-0 m-0">
+                                                                <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
+                                                                <li class="mb-2">
+                                                                   <div class="d-flex">
+                                                                      <div class="user-img">
+                                                                         <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                      </div>
+                                                                      <div class="comment-data-block ms-3">
+                                                                          <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
+                                                                          <p class="mb-0">#{comms.comment}</p>
+                                                                         <div class="d-flex flex-wrap align-items-center comment-activity">
+                                                                             <span> #{comms.commentDate} </span>
+                                                                         </div>
+                                                                      </div>
+                                                                   </div>
+                                                                </li>
+                                                                </c:forEach>
+                                                             </ul>
+                                                            </c:if>
                                                             <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
-                                                                <input type="text" class="form-control rounded" placeholder="Enter Your Comment"/>
+                                                                <h:form>
+                                                                <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
+                                                                <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
+                                                                </h:form>
                                                             </div>
                                                         </div>
                                                     </div>
