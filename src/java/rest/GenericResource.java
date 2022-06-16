@@ -462,7 +462,7 @@ public class GenericResource {
     @Path("groupinsert/{groupid}/{groupName}/{description}/{membersCount}/{isDeleted}/{adminId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String groupInsert(@PathParam("groupid")int groupid, @PathParam("groupName")String groupName, @PathParam("description")String description, @PathParam("membersCount")int membersCount, @PathParam("isDeleted")boolean isDeleted, @PathParam("adminId")int adminId) {
+    public Groups groupInsert(@PathParam("groupid")int groupid, @PathParam("groupName")String groupName, @PathParam("description")String description, @PathParam("membersCount")int membersCount, @PathParam("isDeleted")boolean isDeleted, @PathParam("adminId")int adminId) {
         return vibe.groupInsert(groupid, groupName, description, membersCount, isDeleted, adminId);
     }
     
@@ -487,11 +487,24 @@ public class GenericResource {
         return vibe.groupFindById(groupid);
     }
     
-    
-    @Path("groupshowall")
+    @Path("groupshowallbyuser/{userId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Groups> groupShowAll() {
+    public List<Groups> groupShowAllByUser(@PathParam("userId")int userId) {
+        return vibe.groupShowAllByUser(userId);
+    }
+    
+    @Path("groupshowall/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Groups> groupShowAll(@PathParam("userId")int userId) {
+        return vibe.groupShowAll(userId);
+    }
+    
+    @Path("groupshowallinadmin")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Groups> groupShowAllInAdmin() {
         return vibe.groupShowAll();
     }
     
@@ -526,13 +539,32 @@ public class GenericResource {
         return vibe.group_member_FindById(gmId);
     }
     
+    @Path("group_member_findbygroupid/{groupId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<GroupMembers> group_member_FindByGroupid(@PathParam("groupId")int groupId) {
+        return vibe.group_member_FindByGroupid(groupId);
+    }
+    
+    @Path("group_member_checkgroupmember/{userId}/{groupId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<GroupMembers> group_member_checkGroupMember(@PathParam("userId")int userId , @PathParam("groupId")int groupId) {
+        return vibe.group_member_checkGroupMember(userId, groupId);
+    }
+    
+    @Path("group_member_findgroupsbyuserid/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<GroupMembers> group_member_findGroupsByUserId(@PathParam("userId")int userId) {
+        return vibe.group_member_findGroupsByUserId(userId);
+    }
     
     @Path("group_member_showall")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<GroupMembers> group_member_ShowAll() {
         return vibe.group_member_ShowAll();
-
     }
     
     //Activity Feed

@@ -1340,7 +1340,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
     //Groups
     @Override
-    public String groupInsert(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId) {
+    public Groups groupInsert(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId) {
 
         try {
 
@@ -1362,11 +1362,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             em.persist(g);
             em.merge(u);
-
-            return "Group Created";
+            
+            return g;
 
         } catch (Exception e) {
-            return e.getMessage();
+            
+            System.out.println(e.getMessage());
+            
+            return null;
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -1436,13 +1439,37 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
-    public List<Groups> groupShowAll() {
+    public List<Groups> groupShowAllByUser(int userId) {
+        
+        try {
+
+            List<Groups> group = em.createNamedQuery("Groups.findAllByUserId")
+                    .setParameter("userid", userId)
+                    .getResultList();
+
+            if (group.isEmpty()) {
+                return null;
+            }
+
+            return group;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        
+    }
+    
+    @Override
+    public List<Groups> groupShowAll(int userId) {
 
         try {
 
             List<Groups> group = em.createNamedQuery("Groups.findAll")
+                    .setParameter("userid", userId)
                     .getResultList();
 
             if (group.isEmpty()) {
@@ -1457,6 +1484,27 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<Groups> groupShowAll() {
+
+        try {
+
+            List<Groups> group = em.createNamedQuery("Groups.findAllInAdmin")
+                    .getResultList();
+
+            if (group.isEmpty()) {
+                return null;
+            }
+
+            return group;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
     }
 
     //Group_Members
@@ -1567,6 +1615,76 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<GroupMembers> group_member_FindByGroupid(int groupId) {
+        
+        try {
+
+            List<GroupMembers> groupmember = em.createNamedQuery("GroupMembers.findAllMemberByGroupId")
+                    .setParameter("groupid", groupId)
+                    .getResultList();
+
+            if (groupmember.isEmpty()) {
+                return null;
+            }
+
+            return groupmember;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        
+    }
+    
+    @Override
+    public List<GroupMembers> group_member_checkGroupMember(int userId ,int groupId) {
+        
+        try {
+
+            List<GroupMembers> groupmember = em.createNamedQuery("GroupMembers.checkMember")
+                    .setParameter("userid", userId)
+                    .setParameter("groupid", groupId)
+                    .getResultList();
+
+            if (groupmember.isEmpty()) {
+                return groupmember;
+            }
+
+            return groupmember;
+
+        } catch (Exception e) {
+
+            return null;
+
+        }
+        
+    }
+    
+    @Override
+    public List<GroupMembers> group_member_findGroupsByUserId(int userId) {
+        try {
+
+            List<GroupMembers> groupmember = em.createNamedQuery("GroupMembers.findGroupsByUserId")
+                    .setParameter("userid", userId)
+                    .getResultList();
+
+            if (groupmember.isEmpty()) {
+                return null;
+            }
+
+            return groupmember;
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+            
+            return null;
+
+        }
     }
 
     @Override

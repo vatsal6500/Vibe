@@ -483,7 +483,7 @@ public class AdminManagedBean {
     //GROUPS
     
     public List<Groups> groupsShowAll() {
-        Response response = vibeClient.groupShowAll(Response.class);
+        Response response = vibeClient.groupShowAllInAdmin(Response.class);
         ArrayList<Groups> groupsArrayList = new ArrayList<>();
         GenericType<List<Groups>> showAllGroups = new GenericType<List<Groups>>() {
         };

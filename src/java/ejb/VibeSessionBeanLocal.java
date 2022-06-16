@@ -92,17 +92,22 @@ public interface VibeSessionBeanLocal {
     
     
     //Groups
-    public String groupInsert(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId);
+    public Groups groupInsert(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId);
     public String groupUpdate(int groupId, String groupName, String description, int membersCount, boolean isDeleted, int adminId);
     public String groupDelete(int groupId);
     public Groups groupFindById(int groupId);
-    public List<Groups> groupShowAll(); //admin 
+    public List<Groups> groupShowAllByUser(int userId);
+    public List<Groups> groupShowAll(int userId);
+    public List<Groups> groupShowAll(); //admin
     
     //Group Members
     public String group_member_Insert(int gmId, boolean isMember, String becameMember, int groupId, int memberId);
     public String group_member_Update(int gmId, boolean isMember, String becameMember, int groupId, int memberId);
     public String group_member_Delete(int gmId);
     public GroupMembers group_member_FindById(int gmId);
+    public List<GroupMembers> group_member_FindByGroupid(int groupId);
+    public List<GroupMembers> group_member_checkGroupMember(int userId ,int groupId);
+    public List<GroupMembers> group_member_findGroupsByUserId(int userId);
     public List<GroupMembers> group_member_ShowAll(); //admin
     
     //Post
