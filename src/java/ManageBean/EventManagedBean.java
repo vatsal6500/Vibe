@@ -61,6 +61,17 @@ public class EventManagedBean {
     
     private String euc_id;
     private boolean isInterested;
+    
+    private String rName;
+
+    public String getrName() {
+        return rName;
+    }
+
+    public void setrName(String rName) {
+        this.rName = rName;
+    }
+    
 
     public String getEuc_id() {
         return euc_id;
@@ -190,6 +201,13 @@ public class EventManagedBean {
         this.is_removed = is_removed;
     }
     
+    //private methods
+    
+    private void Activity(String senderMsg, String receiverMsg, String targerURL, String senderId, String receiverId) {
+        
+        vibeClient.activity_feed_Insert("0", "desc", senderMsg, receiverMsg, targerURL, "Event", "false", "false", senderId, receiverId, "0");
+        
+    }
     
     /**
      * Creates a new instance of EventManagedBean
@@ -397,6 +415,20 @@ public class EventManagedBean {
                 vibeClient.event_usercount_Insert("0", "true", eventid, userSessions.getAttribute("UuserId").toString());
             }
             
+            Response response = vibeClient.eventFindById(Response.class, eventid);
+            Events eventArrayList = new Events();
+            GenericType<Events> showAllinfo  = new GenericType<Events>() {
+            };
+            eventArrayList = (Events) response.readEntity(showAllinfo);
+            rName = eventArrayList.getHostid().getFirstname() + " " + eventArrayList.getHostid().getLastname();
+            hostid = eventArrayList.getHostid().getUserid().toString();
+        
+            String senderMsg = "You joined " + rName + "'s Event.";
+            String receiverMsg = userSessions.getAttribute("UfullName").toString() + 
+                                " joined your Event.";
+            String targetUrl = "ok";
+
+            Activity(senderMsg, receiverMsg, targetUrl, userSessions.getAttribute("UuserId").toString(), hostid);
             
             return "/web/profile-events.xhtml?faces-redirect=true";
             
@@ -416,6 +448,21 @@ public class EventManagedBean {
             HttpSession userSessions = requests.getSession();
             
             vibeClient.event_usercount_Update(euc_id, "0", eventid, userSessions.getAttribute("UuserId").toString());
+            
+            Response response = vibeClient.eventFindById(Response.class, eventid);
+            Events eventArrayList = new Events();
+            GenericType<Events> showAllinfo  = new GenericType<Events>() {
+            };
+            eventArrayList = (Events) response.readEntity(showAllinfo);
+            rName = eventArrayList.getHostid().getFirstname() + " " + eventArrayList.getHostid().getLastname();
+            hostid = eventArrayList.getHostid().getUserid().toString();
+        
+            String senderMsg = "You left " + rName + "'s Event.";
+            String receiverMsg = userSessions.getAttribute("UfullName").toString() + 
+                                " unsubscribed your Event.";
+            String targetUrl = "ok";
+
+            Activity(senderMsg, receiverMsg, targetUrl, userSessions.getAttribute("UuserId").toString(), hostid);
             
             return "/web/profile-events.xhtml?faces-redirect=true";
             
