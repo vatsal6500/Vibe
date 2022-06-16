@@ -11,12 +11,16 @@ import entity.City;
 import entity.Country;
 import entity.State;
 import entity.User;
-import entity.UserContactInfo;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -24,6 +28,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -68,6 +73,7 @@ public class UserManagedBean {
     @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "Invalid Email")
     private String email;
     
+    Part file;
     
     private String userName;
     
@@ -82,6 +88,8 @@ public class UserManagedBean {
     @NotNull(message = "Date Required")
     @Past(message = "Invalid DOB")
     private Date dob;
+    
+    private String birth;
     
     private String isActive;
     private String isAdmin;
@@ -143,6 +151,24 @@ public class UserManagedBean {
     }
     
     //Getters And Setters
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+    
+    
     
     public VibeSessionBeanLocal getVibe() {
         return vibe;
@@ -412,6 +438,23 @@ public class UserManagedBean {
         setAccept(false);
     }
     
+    private void clearUpdate() {
+        this.userId = null;
+        this.mobile = null;
+        this.dob = null;
+        this.gender = null;
+        this.firstName = null;
+        this.middleName = null;
+        this.lastName = null;
+        this.email = null;
+        this.userName = null;
+        this.password = null;
+        this.profilePhoto = null;
+        this.coverPhoto = null;
+        this.countryId = null;
+        this.stateId = null;
+        this.cityId = null;
+    }
     
     private void setFalse() {
         this.accept = false;
@@ -526,6 +569,66 @@ public class UserManagedBean {
         };
         infoArrayList = (ArrayList<User>) response.readEntity(showAllinfo);
         return infoArrayList;
+    }
+    
+    public String editUserInfo(String id) {
+        
+        Response response = vibeClient.userFindById(Response.class, id);
+        ArrayList<User> infoArrayList = new ArrayList<>();
+        GenericType<List<User>> showAllinfo  = new GenericType<List<User>>() {
+        };
+        infoArrayList = (ArrayList<User>) response.readEntity(showAllinfo);
+        
+        for(User u : infoArrayList) {
+            this.userId = u.getUserid().toString();
+            this.mobile = String.valueOf(u.getMobile());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String DOB = dateFormat.format(u.getDob());
+            this.birth = DOB;
+            this.gender = u.getGender();
+            this.firstName = u.getFirstname();
+            this.middleName = u.getMiddlename();
+            this.lastName = u.getLastname();
+            this.email = u.getEmail();
+            this.userName = u.getUsername();
+            this.password = u.getPassword();
+            this.profilePhoto = u.getProfilephoto();
+            this.coverPhoto = u.getCoverphoto();
+            this.countryId = "101";
+            this.stateId = "12";
+            this.cityId = "1041";
+        }
+        
+        
+        return "/web/user-edit.xhtml?faces-redirect=true";
+        
+    }
+    
+    public String updateUserInfo() throws IOException {
+        
+        if(file != null) {
+            InputStream input = file.getInputStream();
+            String fullPath = "\\E:\\M.sc IT\\8th Sem\\(805)Project\\VIBE\\Vibe(JAVA)\\Vibe\\web\\Images\\ProfileImage\\";
+
+            Random random = new Random();
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(random.nextInt(9) + 1);
+            for (int i = 0; i < 11; i++) {
+                sb.append(random.nextInt(10));
+            }
+            String temp = sb.toString();
+
+            profilePhoto = "IMG_" + temp + ".jpg";
+            Files.copy(input, new File(fullPath, profilePhoto).toPath());
+        }
+        
+        String value = vibeClient.userUpdate(userId, firstName, middleName, lastName, gender, birth, email, userName, password, mobile, profilePhoto, coverPhoto, countryId, stateId, cityId);
+                
+        clearUpdate();
+        
+        return "/web/profile.xhtml?faces-redirect=true";
+        
     }
     
     //Page Profile

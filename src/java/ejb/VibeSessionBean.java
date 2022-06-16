@@ -582,14 +582,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
         try {
 
-            Country country = em.find(Country.class, countryId);
-            State state = em.find(State.class, stateId);
-            City city = em.find(City.class, cityId);
-
-            Collection<User> countryCollection = country.getUserCollection();
-            Collection<User> stateCollection = state.getUserCollection();
-            Collection<User> cityCollection = city.getUserCollection();
-
             User user = em.find(User.class, userId);
 
             user.setUserid(userId);
@@ -603,27 +595,14 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
 
             user.setEmail(email);
             user.setUsername(username);
-            user.setPassword(hashPassword.getHashPassword(password));
+            user.setPassword(password);
             user.setMobile(mobile);
             user.setProfilephoto(profilePhoto);
             user.setCoverphoto(coverPhoto);
-            user.setCountryid(country);
-            user.setStateid(state);
-            user.setCityid(city);
 
-            countryCollection.add(user);
-            stateCollection.add(user);
-            cityCollection.add(user);
-
-            country.setUserCollection(countryCollection);
-            state.setUserCollection(stateCollection);
-            city.setUserCollection(cityCollection);
-
+            
             em.persist(user);
-            em.merge(country);
-            em.merge(state);
-            em.merge(city);
-
+            
             return "User Updated";
 
         } catch (Exception e) {
