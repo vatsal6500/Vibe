@@ -49,9 +49,16 @@
                                 <h:form enctype="multipart/form-data">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
-                                            <div class="user-img">
-                                                <img src="../assets/images/user/1.jpg" alt="userimg" class="avatar-60 rounded-circle"/>
-                                            </div>
+                                            <c:if test="#{session.getAttribute('UImage') eq null }">
+                                                <div class="user-img">
+                                                    <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-60 rounded-circle" />
+                                                </div>
+                                            </c:if>
+                                            <c:if test="#{session.getAttribute('UImage') ne null}">
+                                                <div class="user-img">
+                                                    <img src="/Vibe/Images/ProfileImage/#{session.getAttribute('UImage')}" alt="profile-img" class="avatar-60 rounded-circle" />
+                                                </div>
+                                            </c:if>
                                             <h:inputText class="form-control rounded" value="#{postManagedBean.caption}" a:placeholder="Write something here..." style="border:none;" ></h:inputText>
                                         </div>
                                         <hr/>
@@ -74,11 +81,13 @@
                                                 <div class="card-body">
                                                     <div class="user-post-data">
                                                         <div class="d-flex justify-content-between">
-                                                            <div class="me-3">
-<!--                                                                <img class="rounded-circle img-fluid" src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt=""/>-->
-                                                                <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                            </div>
-                                                            <div class="w-100">
+                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                            </c:if>
+                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                            </c:if>
+                                                            <div class="w-100 mx-3">
                                                                 <div class="d-flex  justify-content-between">
                                                                     <div class="">
                                                                         <h:commandLink action="#{userManagedBean.showProfileInfo(feed.userid.userid)}">
@@ -167,10 +176,13 @@
                                                 <div class="card-body">
                                                     <div class="user-post-data">
                                                         <div class="d-flex justify-content-between">
-                                                            <div class="me-3">
-                                                                <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                            </div>
-                                                            <div class="w-100">
+                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                            </c:if>
+                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                            </c:if>
+                                                            <div class="w-100 mx-3">
                                                                 <div class="d-flex  justify-content-between">
                                                                     <div class="">
                                                                         <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
@@ -234,10 +246,13 @@
                                                 <div class="card-body">
                                                     <div class="user-post-data">
                                                         <div class="d-flex justify-content-between">
-                                                            <div class="me-3">
-                                                                <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                            </div>
-                                                            <div class="w-100">
+                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                            </c:if>
+                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                            </c:if>
+                                                            <div class="w-100 mx-3">
                                                                 <div class="d-flex  justify-content-between">
                                                                     <div class="">
                                                                         <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
@@ -301,10 +316,13 @@
                                                 <div class="card-body">
                                                     <div class="user-post-data">
                                                         <div class="d-flex justify-content-between">
-                                                            <div class="me-3">
-                                                                <img class="rounded-circle img-fluid" src="../assets/images/user/04.jpg" alt=""/>
-                                                            </div>
-                                                            <div class="w-100">
+                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                            </c:if>
+                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                            </c:if>
+                                                            <div class="w-100 mx-3">
                                                                 <div class=" d-flex  justify-content-between">
                                                                     <div class="">
                                                                         <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
@@ -356,42 +374,6 @@
                                                             </div>
                                                         </div>
                                                         <hr/>
-                                                        <!--                                                            <ul class="post-comments list-inline p-0 m-0">
-                                                                                                                        <li class="mb-2">
-                                                                                                                            <div class="d-flex">
-                                                                                                                                <div class="user-img">
-                                                                                                                                    <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                                                                </div>
-                                                                                                                                <div class="comment-data-block ms-3">
-                                                                                                                                    <h6>Monty Carlo</h6>
-                                                                                                                                    <p class="mb-0">Lorem ipsum dolor sit amet</p>
-                                                                                                                                    <div class="d-flex flex-wrap align-items-center comment-activity">
-                                                                                                                                        <a href="javascript:void();">like</a>
-                                                                                                                                        <a href="javascript:void();">reply</a>
-                                                                                                                                        <a href="javascript:void();">translate</a>
-                                                                                                                                        <span> 5 min </span>
-                                                                                                                                    </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </li>
-                                                                                                                        <li>
-                                                                                                                            <div class="d-flex ">
-                                                                                                                                <div class="user-img">
-                                                                                                                                    <img src="../assets/images/user/03.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                                                                </div>
-                                                                                                                                <div class="comment-data-block ms-3">
-                                                                                                                                    <h6>Paul Molive</h6>
-                                                                                                                                    <p class="mb-0">Lorem ipsum dolor sit amet</p>
-                                                                                                                                    <div class="d-flex flex-wrap align-items-center comment-activity">
-                                                                                                                                        <a href="javascript:void();">like</a>
-                                                                                                                                        <a href="javascript:void();">reply</a>
-                                                                                                                                        <a href="javascript:void();">translate</a>
-                                                                                                                                        <span> 5 min </span>
-                                                                                                                                    </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </li>
-                                                                                                                    </ul>-->
                                                         <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
                                                             <input type="text" class="form-control rounded" placeholder="Enter Your Comment"/>
                                                         </div>

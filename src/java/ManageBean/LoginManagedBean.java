@@ -181,6 +181,7 @@ public class LoginManagedBean {
                 adminSession.setAttribute("AfullName", users.getFirstname() + " " + users.getLastname());
                 adminSession.setAttribute("Aonline", true);
                 adminSession.setAttribute("Atype", users.getIsadmin());
+                adminSession.setAttribute("AImage", users.getProfilephoto());
                 
                 System.out.println(adminSession.getAttribute("AuserId").toString() + " " + 
                         adminSession.getAttribute("AfullName") + " " + 
@@ -203,6 +204,7 @@ public class LoginManagedBean {
                 userSession.setAttribute("UfullName", users.getFirstname() + " " + users.getLastname());
                 userSession.setAttribute("Uonline", true);
                 userSession.setAttribute("Utype", users.getIsadmin());
+                userSession.setAttribute("UImage", users.getProfilephoto());
                 
                 System.out.println(userSession.getAttribute("UuserId").toString() + " " + 
                         userSession.getAttribute("UfullName") + " " + 

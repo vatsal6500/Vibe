@@ -35,22 +35,6 @@
                                 </div>
                                 <div class="card-body">
                                     <ul class="request-list list-inline m-0 p-0">
-                                        <!--            <li class="d-flex align-items-center  justify-content-between flex-wrap">
-                                                        <div class="user-img img-fluid flex-shrink-0">
-                                                            <img src="../assets/images/user/05.jpg" alt="story-img" class="rounded-circle avatar-40"/>
-                                                        </div>
-                                                        <div class="flex-grow-1 ms-3">
-                                                            <h6>Jaques Amole</h6>
-                                                            <p class="mb-0">40  friends</p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center mt-2 mt-md-0">
-                                                            <div class="confirm-click-btn">
-                                                                <a href="#" class="me-3 btn btn-primary rounded confirm-btn">Confirm</a>
-                                                                <a href="../app/profile.html" class="me-3 btn btn-primary rounded request-btn" style="display: none;">View All</a>
-                                                            </div>
-                                                            <a href="#" class="btn btn-secondary rounded" data-extra-toggle="delete" data-closest-elem=".item">Delete Request</a>                                    
-                                                        </div>
-                                                    </li>-->
                                         <f:ajax event="click" render="@form" >
                                             <h:form>
                                                 <c:if test="#{friendManagedBean.showAllFriendRequest().size() eq 0}">
@@ -60,16 +44,14 @@
                                                 </c:if>
                                                 <c:if test="#{friendManagedBean.showAllFriendRequest().size() > 0}">
                                                     <c:forEach var="friendRequest" items="#{friendManagedBean.showAllFriendRequest()}">
-                                                        <!--                                                        <div>
-                                                                                                                    <span style="display: none">#{friendRequest.frId}</span>
-                                                                                                                    <span style="display: none">#{friendRequest.senderid.userid}</span>
-                                                                                                                    <span style="display: none">#{friendRequest.receiverid.userid}</span>
-                                                                                                                    <span style="display: none">#{friendRequest.status}</span>
-                                                                                                                    <span style="display: none">#{friendRequest.requestdate}</span>
-                                                                                                                </div>-->
                                                         <li class="d-flex align-items-center  flex-wrap">
                                                             <div class="user-img img-fluid flex-shrink-0">
-                                                                <img src="../assets/images/user/14.jpg" alt="story-img" class="rounded-circle avatar-40"/>
+                                                                <c:if test="#{friendRequest.senderid.profilephoto eq null }">
+                                                                    <img class="rounded-circle avatar-40" src="/Vibe/Images/ProfileImage/images.jpg" alt=""/>
+                                                                </c:if>
+                                                                <c:if test="#{friendRequest.senderid.profilephoto ne null}">
+                                                                    <img class="rounded-circle avatar-40" src="/Vibe/Images/ProfileImage/#{friendRequest.senderid.profilephoto}" alt=""/>
+                                                                </c:if>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
                                                                 <h6>#{friendRequest.senderid.firstname} #{friendRequest.senderid.lastname}</h6>
@@ -82,9 +64,6 @@
                                                         </li>
                                                         <hr/>
                                                     </c:forEach>
-                                                    <li class="d-block text-center mb-0 pb-0">
-                                                        <a href="#" class="me-3 btn">View More Request</a>
-                                                    </li>
                                                 </c:if>
                                             </h:form>
                                         </f:ajax>
@@ -106,7 +85,12 @@
                                                         <c:if test="#{friendManagedBean.checkStatus2(people.userid) ne 'requested'}">
                                                             <li class="d-flex align-items-center  flex-wrap">
                                                                 <div class="user-img img-fluid flex-shrink-0">
-                                                                    <img src="../assets/images/user/15.jpg" alt="story-img" class="rounded-circle avatar-40"/>
+                                                                    <c:if test="#{people.profilephoto eq null }">
+                                                                        <img class="rounded-circle avatar-40" src="/Vibe/Images/ProfileImage/images.jpg" alt=""/>
+                                                                    </c:if>
+                                                                    <c:if test="#{people.profilephoto ne null}">
+                                                                        <img class="rounded-circle avatar-40" src="/Vibe/Images/ProfileImage/#{people.profilephoto}" alt=""/>
+                                                                    </c:if>
                                                                 </div>
                                                                 <div class="flex-grow-1 ms-3">
                                                                     <h6>#{people.firstname} #{people.lastname}</h6>

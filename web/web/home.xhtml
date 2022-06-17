@@ -38,9 +38,16 @@
                                     <h:form enctype="multipart/form-data">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
-                                                <div class="user-img">
-                                                    <img src="../assets/images/user/1.jpg" alt="userimg" class="avatar-60 rounded-circle"/>
-                                                </div>
+                                                <c:if test="#{session.getAttribute('UImage') eq null }">
+                                                    <div class="user-img">
+                                                        <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-60 rounded-circle" />
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="#{session.getAttribute('UImage') ne null}">
+                                                    <div class="user-img">
+                                                        <img src="/Vibe/Images/ProfileImage/#{session.getAttribute('UImage')}" alt="profile-img" class="avatar-60 rounded-circle" />
+                                                    </div>
+                                                </c:if>
                                                 <h:inputText class="form-control rounded" value="#{postManagedBean.caption}" a:placeholder="Write something here..." style="border:none;" ></h:inputText>
                                             </div>
                                             <hr/>
@@ -55,391 +62,420 @@
                                         </div>
                                     </h:form>
                                 </div>
-                                    <c:forEach var="feed" items="#{postManagedBean.feedView()}">
-                                        <c:if test="#{feed.posttype eq 'Image'}">
-                                            <div class="col-sm-12">
-                                                <div class="card card-block card-stretch card-height">
-                                                    <div class="card-body">
-                                                        <div class="user-post-data">
-                                                            <div class="d-flex justify-content-between">
-                                                                <div class="me-3">
-    <!--                                                                <img class="rounded-circle img-fluid" src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt=""/>-->
-                                                                    <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                                </div>
-                                                                <div class="w-100">
-                                                                    <div class="d-flex  justify-content-between">
-                                                                        <div class="">
-                                                                            <h:commandLink action="#{userManagedBean.showProfileInfo(feed.userid.userid)}">
-                                                                                <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
-                                                                            </h:commandLink>
-                                                                            <p class="mb-0 d-inline-block"> Posted Photo</p>
-                                                                            <p class="mb-0 text-primary">Posted On #{feed.uploadDate.date}</p>
-                                                                        </div>
+                                <c:forEach var="feed" items="#{postManagedBean.feedView()}">
+                                    <c:if test="#{feed.posttype eq 'Image'}">
+                                        <div class="col-sm-12">
+                                            <div class="card card-block card-stretch card-height">
+                                                <div class="card-body">
+                                                    <div class="user-post-data">
+                                                        <div class="d-flex justify-content-between">
+                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                            </c:if>
+                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                            </c:if>
+                                                            <div class="w-100 mx-3">
+                                                                <div class="d-flex  justify-content-between">
+                                                                    <div class="">
+                                                                        <h:commandLink action="#{userManagedBean.showProfileInfo(feed.userid.userid)}">
+                                                                            <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
+                                                                        </h:commandLink>
+                                                                        <p class="mb-0 d-inline-block"> Posted Photo</p>
+                                                                        <p class="mb-0 text-primary">Posted On #{feed.uploadDate.date}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="mt-3">
-                                                            <c:if test="#{feed.caption ne 'null'}">
-                                                                <p>#{feed.caption}</p>
-                                                            </c:if>
-                                                        </div>
-                                                        <div class="user-post" width="600px">
-                                                            <img src="/Vibe/Images/Post/Images/#{feed.post}" alt="post-image" class="img-fluid rounded w-100"/>
-                                                        </div>
-                                                        <div class="comment-area mt-3">
-                                                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                                                <div class="like-block position-relative d-flex align-items-center">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="like-data">
-                                                                            <div class="dropdown">
-                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
-                                                                                    <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
-                                                                                </c:if>
-                                                                                <h:form id="Imagelike">
-                                                                                    <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
-                                                                                        <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
-                                                                                    </c:if>
-                                                                                </h:form>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="total-like-block ms-2 me-3">
-                                                                            <div class="dropdown">
-                                                                                <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                    #{likeManagedBean.likeCount(feed.postid).size()} Likes
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="total-comment-block">
-                                                                        <div class="dropdown">
-                                                                            <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                #{commentManagedBean.showcomments(feed.postid).size()} Comments
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr/>
-
-                                                            <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
-                                                                <ul class="post-comments list-inline p-0 m-0">
-                                                                    <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
-                                                                        <li class="mb-2">
-                                                                            <div class="d-flex">
-                                                                                <div class="user-img">
-                                                                                    <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                </div>
-                                                                                <div class="comment-data-block ms-3">
-                                                                                    <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
-                                                                                    <p class="mb-0">#{comms.comment}</p>
-                                                                                    <div class="d-flex flex-wrap align-items-center comment-activity">
-                                                                                        <span> #{comms.commentDate} </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </li>
-                                                                    </c:forEach>
-                                                                </ul>
-                                                            </c:if>
-                                                            <h:form id="Imagecomment">
-                                                                <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
-
-                                                                    <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
-                                                                    <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
-
-                                                                </div>
-                                                            </h:form>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </c:if>
-                                        <c:if test="#{feed.posttype eq 'Video'}">
-                                            <div class="col-sm-12">
-                                                <div class="card card-block card-stretch card-height">
-                                                    <div class="card-body">
-                                                        <div class="user-post-data">
-                                                            <div class="d-flex justify-content-between">
-                                                                <div class="me-3">
-                                                                    <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                                </div>
-                                                                <div class="w-100">
-                                                                    <div class="d-flex  justify-content-between">
-                                                                        <div class="">
-                                                                            <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
-                                                                            <p class="mb-0 d-inline-block"> Posted Video</p>
-                                                                            <p class="mb-0 text-primary">Posted On #{feed.uploadDate.date}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-3">
-                                                            <c:if test="#{feed.caption ne 'null'}">
-                                                                <p>#{feed.caption}</p>
-                                                            </c:if>
-                                                        </div>
-                                                        <div class="user-post">
-                                                            <video controls="controls" width="600px">
-                                                                <source src="/Vibe/Images/Post/Videos/#{feed.post}" type="video/mp4" />
-                                                            </video>
-                                                        </div>
-                                                        <div class="comment-area mt-3">
-                                                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                                                <div class="like-block position-relative d-flex align-items-center">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="like-data">
-                                                                            <div class="dropdown">
-                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
-                                                                                    <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
-                                                                                </c:if>
-                                                                                <h:form id="Videolike">
-                                                                                    <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
-                                                                                        <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
-                                                                                    </c:if>
-                                                                                </h:form>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="total-like-block ms-2 me-3">
-                                                                            <div class="dropdown">
-                                                                                <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                    #{likeManagedBean.likeCount(feed.postid).size()} Likes
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="total-comment-block">
-                                                                        <div class="dropdown">
-                                                                            <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                #{commentManagedBean.showcomments(feed.postid).size()} Comments
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr/>
-                                                            <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
-                                                                <ul class="post-comments list-inline p-0 m-0">
-                                                                    <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
-                                                                        <li class="mb-2">
-                                                                            <div class="d-flex">
-                                                                                <div class="user-img">
-                                                                                    <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                </div>
-                                                                                <div class="comment-data-block ms-3">
-                                                                                    <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
-                                                                                    <p class="mb-0">#{comms.comment}</p>
-                                                                                    <div class="d-flex flex-wrap align-items-center comment-activity">
-                                                                                        <span> #{comms.commentDate} </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </li>
-                                                                    </c:forEach>
-                                                                </ul>
-                                                            </c:if>
-                                                            <h:form id="VideoComment">
-                                                                <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
-
-                                                                    <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
-                                                                    <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
-
-                                                                </div>
-                                                            </h:form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:if>
-                                        <c:if test="#{feed.posttype eq 'Audio'}">
-                                            <div class="col-sm-12">
-                                                <div class="card card-block card-stretch card-height">
-                                                    <div class="card-body">
-                                                        <div class="user-post-data">
-                                                            <div class="d-flex justify-content-between">
-                                                                <div class="me-3">
-                                                                    <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                                </div>
-                                                                <div class="w-100">
-                                                                    <div class="d-flex  justify-content-between">
-                                                                        <div class="">
-                                                                            <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
-                                                                            <p class="mb-0 d-inline-block"> Posted Audio</p>
-                                                                            <p class="mb-0 text-primary">Posted On #{feed.uploadDate.date}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-3">
-                                                            <c:if test="#{feed.caption ne 'null'}">
-                                                                <p>#{feed.caption}</p>
-                                                            </c:if>
-                                                        </div>
-                                                        <div class="user-post">
-                                                            <audio controls="x">
-                                                                <source src="/Vibe/Images/Post/Audio/#{feed.post}" type="audio/ogg" />
-                                                            </audio>
-                                                        </div>
-                                                        <div class="comment-area mt-3">
-                                                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                                                <div class="like-block position-relative d-flex align-items-center">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="like-data">
-                                                                            <div class="dropdown">
-                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
-                                                                                    <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
-                                                                                </c:if>
-                                                                                <h:form id="Audiolike">
-                                                                                    <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
-                                                                                        <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
-                                                                                    </c:if>
-                                                                                </h:form>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="total-like-block ms-2 me-3">
-                                                                            <div class="dropdown">
-                                                                                <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                    #{likeManagedBean.likeCount(feed.postid).size()} Likes
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="total-comment-block">
-                                                                        <div class="dropdown">
-                                                                            <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                #{commentManagedBean.showcomments(feed.postid).size()} Comments
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr/>
-                                                            <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
-                                                                <ul class="post-comments list-inline p-0 m-0">
-                                                                    <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
-                                                                        <li class="mb-2">
-                                                                            <div class="d-flex">
-                                                                                <div class="user-img">
-                                                                                    <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                </div>
-                                                                                <div class="comment-data-block ms-3">
-                                                                                    <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
-                                                                                    <p class="mb-0">#{comms.comment}</p>
-                                                                                    <div class="d-flex flex-wrap align-items-center comment-activity">
-                                                                                        <span> #{comms.commentDate} </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </li>
-                                                                    </c:forEach>
-                                                                </ul>
-                                                            </c:if>
-                                                            <h:form id="AudioComment">
-                                                                <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
-
-                                                                    <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
-                                                                    <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
-
-                                                                </div>
-                                                            </h:form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:if>
-                                        <c:if test="#{feed.posttype eq 'Text'}">
-                                            <div class="col-sm-12">
-                                                <div class="card card-block card-stretch card-height">
-                                                    <div class="card-body">
-                                                        <div class="user-post-data">
-                                                            <div class="d-flex justify-content-between">
-                                                                <div class="me-3">
-                                                                    <img class="rounded-circle img-fluid" src="../assets/images/user/04.jpg" alt=""/>
-                                                                </div>
-                                                                <div class="w-100">
-                                                                    <div class=" d-flex  justify-content-between">
-                                                                        <div class="">
-                                                                            <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
-                                                                            <p class="mb-0 d-inline-block"> Shared Something With Us</p>
-                                                                            <p class="mb-0 text-primary">Posted On #{feed.uploadDate.date}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-3">
+                                                    <div class="mt-3">
+                                                        <c:if test="#{feed.caption ne 'null'}">
                                                             <p>#{feed.caption}</p>
-                                                        </div>
-                                                        <div class="comment-area mt-3">
-                                                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                                                <div class="like-block position-relative d-flex align-items-center">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="like-data">
-                                                                            <div class="dropdown">
-                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
-                                                                                    <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
+                                                        </c:if>
+                                                    </div>
+                                                    <div class="user-post" width="600px">
+                                                        <img src="/Vibe/Images/Post/Images/#{feed.post}" alt="post-image" class="img-fluid rounded w-100"/>
+                                                    </div>
+                                                    <div class="comment-area mt-3">
+                                                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                                            <div class="like-block position-relative d-flex align-items-center">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="like-data">
+                                                                        <div class="dropdown">
+                                                                            <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
+                                                                                <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
+                                                                            </c:if>
+                                                                            <h:form id="Imagelike">
+                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
+                                                                                    <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
                                                                                 </c:if>
-                                                                                <h:form id="textlike">
-                                                                                    <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
-                                                                                        <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
-                                                                                    </c:if>
-                                                                                </h:form>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="total-like-block ms-2 me-3">
-                                                                            <div class="dropdown">
-                                                                                <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                    #{likeManagedBean.likeCount(feed.postid).size()} Likes
-                                                                                </span>
-                                                                            </div>
+                                                                            </h:form>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="total-comment-block">
+                                                                    <div class="total-like-block ms-2 me-3">
                                                                         <div class="dropdown">
                                                                             <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                                                                #{commentManagedBean.showcomments(feed.postid).size()} Comments
+                                                                                #{likeManagedBean.likeCount(feed.postid).size()} Likes
                                                                             </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="total-comment-block">
+                                                                    <div class="dropdown">
+                                                                        <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                                                                            #{commentManagedBean.showcomments(feed.postid).size()} Comments
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <hr/>
-                                                            <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
-                                                                <ul class="post-comments list-inline p-0 m-0">
-                                                                    <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
-                                                                        <li class="mb-2">
-                                                                            <div class="d-flex">
-                                                                                <div class="user-img">
-                                                                                    <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                </div>
-                                                                                <div class="comment-data-block ms-3">
-                                                                                    <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
-                                                                                    <p class="mb-0">#{comms.comment}</p>
-                                                                                    <div class="d-flex flex-wrap align-items-center comment-activity">
-                                                                                        <span> #{comms.commentDate} </span>
-                                                                                    </div>
+                                                        </div>
+                                                        <hr/>
+
+                                                        <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
+                                                            <ul class="post-comments list-inline p-0 m-0">
+                                                                <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
+                                                                    <li class="mb-2">
+                                                                        <div class="d-flex">
+                                                                            <div class="user-img">
+                                                                                <c:if test="#{comms.senderid.profilephoto eq null}">
+                                                                                    <img src="/Vibe/Images/ProfileImage/images.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                </c:if>
+                                                                                <c:if test="#{comms.senderid.profilephoto ne null}">
+                                                                                    <img src="/Vibe/Images/ProfileImage/#{comms.senderid.profilephoto}" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                </c:if>
+                                                                            </div>
+                                                                            <div class="comment-data-block ms-3">
+                                                                                <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
+                                                                                <p class="mb-0">#{comms.comment}</p>
+                                                                                <div class="d-flex flex-wrap align-items-center comment-activity">
+                                                                                    <span> #{comms.commentDate} </span>
                                                                                 </div>
                                                                             </div>
-                                                                        </li>
-                                                                    </c:forEach>
-                                                                </ul>
-                                                            </c:if>
-                                                            <h:form id="testComment">
-                                                                <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
+                                                                        </div>
+                                                                    </li>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </c:if>
+                                                        <h:form id="Imagecomment">
+                                                            <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
 
-                                                                    <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
-                                                                    <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
+                                                                <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
+                                                                <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
 
-                                                                </div>
-                                                            </h:form>
-                                                        </div>
+                                                            </div>
+                                                        </h:form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </c:if>
-                                    </c:forEach>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{feed.posttype eq 'Video'}">
+                                        <div class="col-sm-12">
+                                            <div class="card card-block card-stretch card-height">
+                                                <div class="card-body">
+                                                    <div class="user-post-data">
+                                                        <div class="d-flex justify-content-between">
+                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                            </c:if>
+                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                            </c:if>
+                                                            <div class="w-100 mx-3">
+                                                                <div class="d-flex  justify-content-between">
+                                                                    <div class="">
+                                                                        <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
+                                                                        <p class="mb-0 d-inline-block"> Posted Video</p>
+                                                                        <p class="mb-0 text-primary">Posted On #{feed.uploadDate.date}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <c:if test="#{feed.caption ne 'null'}">
+                                                            <p>#{feed.caption}</p>
+                                                        </c:if>
+                                                    </div>
+                                                    <div class="user-post">
+                                                        <video controls="controls" width="600px">
+                                                            <source src="/Vibe/Images/Post/Videos/#{feed.post}" type="video/mp4" />
+                                                        </video>
+                                                    </div>
+                                                    <div class="comment-area mt-3">
+                                                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                                            <div class="like-block position-relative d-flex align-items-center">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="like-data">
+                                                                        <div class="dropdown">
+                                                                            <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
+                                                                                <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
+                                                                            </c:if>
+                                                                            <h:form id="Videolike">
+                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
+                                                                                    <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
+                                                                                </c:if>
+                                                                            </h:form>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="total-like-block ms-2 me-3">
+                                                                        <div class="dropdown">
+                                                                            <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                                                                                #{likeManagedBean.likeCount(feed.postid).size()} Likes
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="total-comment-block">
+                                                                    <div class="dropdown">
+                                                                        <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                                                                            #{commentManagedBean.showcomments(feed.postid).size()} Comments
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr/>
+                                                        <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
+                                                            <ul class="post-comments list-inline p-0 m-0">
+                                                                <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
+                                                                    <li class="mb-2">
+                                                                        <div class="d-flex">
+                                                                            <div class="user-img">
+                                                                                <c:if test="#{comms.senderid.profilephoto eq null}">
+                                                                                    <img src="/Vibe/Images/ProfileImage/images.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                </c:if>
+                                                                                <c:if test="#{comms.senderid.profilephoto ne null}">
+                                                                                    <img src="/Vibe/Images/ProfileImage/#{comms.senderid.profilephoto}" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                </c:if>
+                                                                            </div>
+                                                                            <div class="comment-data-block ms-3">
+                                                                                <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
+                                                                                <p class="mb-0">#{comms.comment}</p>
+                                                                                <div class="d-flex flex-wrap align-items-center comment-activity">
+                                                                                    <span> #{comms.commentDate} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </c:if>
+                                                        <h:form id="VideoComment">
+                                                            <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
+
+                                                                <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
+                                                                <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
+
+                                                            </div>
+                                                        </h:form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{feed.posttype eq 'Audio'}">
+                                        <div class="col-sm-12">
+                                            <div class="card card-block card-stretch card-height">
+                                                <div class="card-body">
+                                                    <div class="user-post-data">
+                                                        <div class="d-flex justify-content-between">
+                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                            </c:if>
+                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                            </c:if>
+                                                            <div class="w-100 mx-3">
+                                                                <div class="d-flex  justify-content-between">
+                                                                    <div class="">
+                                                                        <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
+                                                                        <p class="mb-0 d-inline-block"> Posted Audio</p>
+                                                                        <p class="mb-0 text-primary">Posted On #{feed.uploadDate.date}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <c:if test="#{feed.caption ne 'null'}">
+                                                            <p>#{feed.caption}</p>
+                                                        </c:if>
+                                                    </div>
+                                                    <div class="user-post">
+                                                        <audio controls="x">
+                                                            <source src="/Vibe/Images/Post/Audio/#{feed.post}" type="audio/ogg" />
+                                                        </audio>
+                                                    </div>
+                                                    <div class="comment-area mt-3">
+                                                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                                            <div class="like-block position-relative d-flex align-items-center">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="like-data">
+                                                                        <div class="dropdown">
+                                                                            <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
+                                                                                <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
+                                                                            </c:if>
+                                                                            <h:form id="Audiolike">
+                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
+                                                                                    <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
+                                                                                </c:if>
+                                                                            </h:form>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="total-like-block ms-2 me-3">
+                                                                        <div class="dropdown">
+                                                                            <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                                                                                #{likeManagedBean.likeCount(feed.postid).size()} Likes
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="total-comment-block">
+                                                                    <div class="dropdown">
+                                                                        <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                                                                            #{commentManagedBean.showcomments(feed.postid).size()} Comments
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr/>
+                                                        <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
+                                                            <ul class="post-comments list-inline p-0 m-0">
+                                                                <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
+                                                                    <li class="mb-2">
+                                                                        <div class="d-flex">
+                                                                            <div class="user-img">
+                                                                                <c:if test="#{comms.senderid.profilephoto eq null}">
+                                                                                    <img src="/Vibe/Images/ProfileImage/images.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                </c:if>
+                                                                                <c:if test="#{comms.senderid.profilephoto ne null}">
+                                                                                    <img src="/Vibe/Images/ProfileImage/#{comms.senderid.profilephoto}" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                </c:if>
+                                                                            </div>
+                                                                            <div class="comment-data-block ms-3">
+                                                                                <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
+                                                                                <p class="mb-0">#{comms.comment}</p>
+                                                                                <div class="d-flex flex-wrap align-items-center comment-activity">
+                                                                                    <span> #{comms.commentDate} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </c:if>
+                                                        <h:form id="AudioComment">
+                                                            <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
+
+                                                                <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
+                                                                <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
+
+                                                            </div>
+                                                        </h:form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{feed.posttype eq 'Text'}">
+                                        <div class="col-sm-12">
+                                            <div class="card card-block card-stretch card-height">
+                                                <div class="card-body">
+                                                    <div class="user-post-data">
+                                                        <div class="d-flex justify-content-between">
+                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                            </c:if>
+                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                            </c:if>
+                                                            <div class="w-100 mx-3">
+                                                                <div class=" d-flex  justify-content-between">
+                                                                    <div class="">
+                                                                        <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
+                                                                        <p class="mb-0 d-inline-block"> Shared Something With Us</p>
+                                                                        <p class="mb-0 text-primary">Posted On #{feed.uploadDate.date}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <p>#{feed.caption}</p>
+                                                    </div>
+                                                    <div class="comment-area mt-3">
+                                                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                                            <div class="like-block position-relative d-flex align-items-center">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="like-data">
+                                                                        <div class="dropdown">
+                                                                            <c:if test="#{likeManagedBean.isliked(feed.postid).size() > 0}">
+                                                                                <h:commandButton id="btn_liked" class="btn btn-success" value="Liked !"/><br/><br/>   
+                                                                            </c:if>
+                                                                            <h:form id="textlike">
+                                                                                <c:if test="#{likeManagedBean.isliked(feed.postid).size() eq 0}">
+                                                                                    <h:commandButton id="btn_insert" class="btn btn-primary" action="#{likeManagedBean.likepost(feed.postid)}" value="Like"/><br/><br/>
+                                                                                </c:if>
+                                                                            </h:form>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="total-like-block ms-2 me-3">
+                                                                        <div class="dropdown">
+                                                                            <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                                                                                #{likeManagedBean.likeCount(feed.postid).size()} Likes
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="total-comment-block">
+                                                                    <div class="dropdown">
+                                                                        <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                                                                            #{commentManagedBean.showcomments(feed.postid).size()} Comments
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr/>
+                                                        <c:if test="#{commentManagedBean.showcomments(feed.postid).size() > 0}">
+                                                            <ul class="post-comments list-inline p-0 m-0">
+                                                                <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
+                                                                    <li class="mb-2">
+                                                                        <div class="d-flex">
+                                                                            <c:if test="#{comms.senderid.profilephoto eq null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                            </c:if>
+                                                                            <c:if test="#{comms.senderid.profilephoto ne null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/#{comms.senderid.profilephoto}" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                            </c:if>
+                                                                            <div class="comment-data-block ms-3">
+                                                                                <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
+                                                                                <p class="mb-0">#{comms.comment}</p>
+                                                                                <div class="d-flex flex-wrap align-items-center comment-activity">
+                                                                                    <span> #{comms.commentDate} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </c:if>
+                                                        <h:form id="testComment">
+                                                            <div class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
+
+                                                                <h:inputText class="form-control rounded" a:placeholder="Enter Your Comment" value="#{commentManagedBean.comment}"/>
+                                                                <h:commandButton  id="btn_update" class="btn btn-primary"  action="#{commentManagedBean.sendcomment(feed.postid)}" value="Add"/><br/><br/>
+
+                                                            </div>
+                                                        </h:form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
                             </div>
                         </div>
                         <div class="col-lg-4">

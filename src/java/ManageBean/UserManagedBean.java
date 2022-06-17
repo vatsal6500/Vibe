@@ -625,6 +625,11 @@ public class UserManagedBean {
         
         String value = vibeClient.userUpdate(userId, firstName, middleName, lastName, gender, birth, email, userName, password, mobile, profilePhoto, coverPhoto, countryId, stateId, cityId);
                 
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest();
+        HttpSession userSession = request.getSession();
+        userSession.setAttribute("UImage", profilePhoto);
+        
         clearUpdate();
         
         return "/web/profile.xhtml?faces-redirect=true";

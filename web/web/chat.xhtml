@@ -37,11 +37,15 @@
                                                 <div class="chat-search pt-3 ps-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="chat-profile me-3">
-                                                            <img src="../assets/images/user/1.jpg" alt="chat-user" class="avatar-60 "/>
+                                                            <c:if test="#{session.getAttribute('UImage') eq null }">
+                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-60" />
+                                                            </c:if>
+                                                            <c:if test="#{session.getAttribute('UImage') ne null}">
+                                                                <img src="/Vibe/Images/ProfileImage/#{session.getAttribute('UImage')}" alt="profile-img" class="avatar-60" />
+                                                            </c:if>
                                                         </div>
                                                         <div class="chat-caption">
-                                                            <h5 class="mb-0">Bni Jordan</h5>
-                                                            <p class="m-0">Web Designer</p>
+                                                            <h5 class="mb-0">#{session.getAttribute("UfullName")}</h5>
                                                         </div>
                                                         <button type="submit" class="close-btn-res p-3"><i class="ri-close-fill"></i></button>
                                                     </div>
@@ -54,7 +58,12 @@
                                                                 <a  data-bs-toggle="pill" href="#chat#{friendlist.friendid.userid}">
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="avatar me-2">
-                                                                            <img src="../assets/images/user/05.jpg" alt="chatuserimage" class="avatar-50 "/>
+                                                                            <c:if test="#{friendlist.friendid.profilephoto eq null }">
+                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-50" />
+                                                                            </c:if>
+                                                                            <c:if test="#{friendlist.friendid.profilephoto ne null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/#{friendlist.friendid.profilephoto}" alt="profile-img" class="avatar-50" />
+                                                                            </c:if>
                                                                             <span class="avatar-status"><i class="ri-checkbox-blank-circle-fill text-success"></i></span>
                                                                         </div>
                                                                         <div class="chat-sidebar-name">
@@ -90,64 +99,30 @@
                                                                             <i class="ri-menu-3-line"></i>
                                                                         </div>
                                                                         <div class="avatar chat-user-profile m-0 me-3">
-                                                                            <img src="../assets/images/user/05.jpg" alt="avatar" class="avatar-50 "/>
+                                                                            <c:if test="#{friendchat.friendid.profilephoto eq null }">
+                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-50" />
+                                                                            </c:if>
+                                                                            <c:if test="#{friendchat.friendid.profilephoto ne null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/#{friendchat.friendid.profilephoto}" alt="profile-img" class="avatar-50" />
+                                                                            </c:if>
                                                                             <span class="avatar-status"><i class="ri-checkbox-blank-circle-fill text-success"></i></span>
                                                                         </div>
                                                                         <h5 class="mb-0">#{friendchat.friendid.firstname} #{friendchat.friendid.lastname}</h5>
                                                                     </div>
-                                                                    <div class="chat-user-detail-popup scroller">
-                                                                        <div class="user-profile">
-                                                                            <button type="submit" class="close-popup p-3"><i class="ri-close-fill"></i></button>
-                                                                            <div class="user mb-4  text-center">
-                                                                                <a class="avatar m-0">
-                                                                                    <img src="../assets/images/user/05.jpg" alt="avatar"/>
-                                                                                </a>
-                                                                                <div class="user-name mt-4">
-                                                                                    <h4>Bni Jordan</h4>
-                                                                                </div>
-                                                                                <div class="user-desc">
-                                                                                    <p>Cape Town, RSA</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <hr/>
-                                                                            <div class="chatuser-detail text-left mt-4">
-                                                                                <div class="row">
-                                                                                    <div class="col-6 col-md-6 title">Bni Name:</div>
-                                                                                    <div class="col-6 col-md-6 text-right">Bni</div>
-                                                                                </div>
-                                                                                <hr/>
-                                                                                <div class="row">
-                                                                                    <div class="col-6 col-md-6 title">Tel:</div>
-                                                                                    <div class="col-6 col-md-6 text-right">072 143 9920</div>
-                                                                                </div>
-                                                                                <hr/>
-                                                                                <div class="row">
-                                                                                    <div class="col-6 col-md-6 title">Date Of Birth:</div>
-                                                                                    <div class="col-6 col-md-6 text-right">July 12, 1989</div>
-                                                                                </div>
-                                                                                <hr/>
-                                                                                <div class="row">
-                                                                                    <div class="col-6 col-md-6 title">Gender:</div>
-                                                                                    <div class="col-6 col-md-6 text-right">Male</div>
-                                                                                </div>
-                                                                                <hr/>
-                                                                                <div class="row">
-                                                                                    <div class="col-6 col-md-6 title">Language:</div>
-                                                                                    <div class="col-6 col-md-6 text-right">Engliah</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                                 </header>
                                                             </div>
                                                             <div class="chat-content scroller">
-
                                                                 <c:forEach id="chatlist" var="chat" items="#{chatManagedBean.chatList(friendchat.friendid.userid)}">
                                                                     <c:if test="#{chat.senderid.userid ne friendchat.friendid.userid}">
                                                                         <div class="chat d-flex other-user">
                                                                             <div class="chat-user">
                                                                                 <a class="avatar m-0">
-                                                                                    <img src="../assets/images/user/1.jpg" alt="avatar" class="avatar-35 "/>
+                                                                                    <c:if test="#{chat.senderid.profilephoto eq null }">
+                                                                                        <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-35" />
+                                                                                    </c:if>
+                                                                                    <c:if test="#{chat.senderid.profilephoto ne null}">
+                                                                                        <img src="/Vibe/Images/ProfileImage/#{chat.senderid.profilephoto}" alt="profile-img" class="avatar-35" />
+                                                                                    </c:if>
                                                                                 </a>
                                                                                 <span class="chat-time mt-1">#{chat.datetime.hours}:#{chat.datetime.minutes}</span>
                                                                             </div>
@@ -162,7 +137,12 @@
                                                                         <div class="chat chat-left">
                                                                             <div class="chat-user">
                                                                                 <a class="avatar m-0">
-                                                                                    <img src="../assets/images/user/05.jpg" alt="avatar" class="avatar-35 "/>
+                                                                                    <c:if test="#{friendchat.friendid.profilephoto eq null }">
+                                                                                        <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-35" />
+                                                                                    </c:if>
+                                                                                    <c:if test="#{friendchat.friendid.profilephoto ne null}">
+                                                                                        <img src="/Vibe/Images/ProfileImage/#{chat.senderid.profilephoto}" alt="profile-img" class="avatar-35" />
+                                                                                    </c:if>
                                                                                 </a>
                                                                                 <span class="chat-time mt-1">#{chat.datetime.hours}:#{chat.datetime.minutes}</span>
                                                                             </div>

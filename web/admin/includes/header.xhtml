@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Header</title>
     </h:head>
@@ -32,8 +33,13 @@
                             </h:form>
                             <li class="nav-item dropdown">
                                 <a href="#" class="   d-flex align-items-center dropdown-toggle" id="drop-down-arrow" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="../assets/images/user/1.jpg" class="img-fluid rounded-circle me-3" alt="user"/>
-                                    <div class="caption mx-3">
+                                    <c:if test="#{session.getAttribute('AImage') eq null }">
+                                        <img src="/Vibe/Images/ProfileImage/images.jpg" class="img-fluid rounded-circle me-3" alt="user"/>
+                                    </c:if>
+                                    <c:if test="#{session.getAttribute('AImage') ne null}">
+                                        <img src="/Vibe/Images/ProfileImage/#{session.getAttribute('UImage')}" class="img-fluid rounded-circle me-3" alt="user"/>
+                                    </c:if>
+                                    <div class="caption">
                                         <h6 class="mb-0 line-height">#{session.getAttribute('AfullName')}</h6>
                                     </div>
                                 </a>

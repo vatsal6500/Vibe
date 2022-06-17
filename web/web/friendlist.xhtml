@@ -51,7 +51,12 @@
                                                         <div class="d-flex flex-wrap justify-content-between align-items-start">
                                                             <div class="profile-detail d-flex">
                                                                 <div class="profile-img pe-4">
-                                                                    <img src="../assets/images/user/05.jpg" alt="profile-img" class="avatar-130 img-fluid" />
+                                                                    <c:if test="#{friends.friendid.profilephoto eq null }">
+                                                                        <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-130 img-fluid" alt="user"/>
+                                                                    </c:if>
+                                                                    <c:if test="#{friends.friendid.profilephoto ne null}">
+                                                                        <img src="/Vibe/Images/ProfileImage/#{friends.friendid.profilephoto}" class="avatar-130 img-fluid" alt="user"/>
+                                                                    </c:if>
                                                                 </div>
                                                                 <div class="user-data-block">
                                                                     <h4>

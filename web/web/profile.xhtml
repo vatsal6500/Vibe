@@ -32,15 +32,18 @@
                                     <div class="profile-header">
                                         <div class="position-relative">
                                             <img src="../assets/images/page-img/profile-bg1.jpg" alt="profile-bg" class="rounded img-fluid"/>
-                                            <ul class="header-nav list-inline d-flex flex-wrap justify-end p-0 m-0">
-                                                <li><a href="#"><i class="ri-pencil-line"></i></a></li>
-                                                <li><a href="#"><i class="ri-settings-4-line"></i></a></li>
-                                            </ul>
                                         </div>
                                         <div class="user-detail text-center mb-3">
-                                            <div class="profile-img">
-                                                <img src="../assets/images/user/11.png" alt="profile-img" class="avatar-130 img-fluid" />
-                                            </div>
+                                            <c:if test="#{session.getAttribute('UImage') eq null }">
+                                                <div class="profile-img">
+                                                    <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-130 img-fluid" />
+                                                </div>
+                                            </c:if>
+                                            <c:if test="#{session.getAttribute('UImage') ne null}">
+                                                <div class="profile-img">
+                                                    <img src="/Vibe/Images/ProfileImage/#{session.getAttribute('UImage')}" alt="profile-img" class="avatar-130 img-fluid" />
+                                                </div>
+                                            </c:if>
                                             <div class="profile-detail">
                                                 <h3 class="">#{session.getAttribute("UfullName")}</h3>
                                             </div>
@@ -142,7 +145,13 @@
                                                             <c:forEach var="myfriend" items="#{friendManagedBean.showAllFriends()}">
                                                                 <li class="">
                                                                     <a href="#">
-                                                                        <img src="../assets/images/user/05.jpg" alt="gallary-image" class="img-fluid" /></a>
+                                                                        <c:if test="#{myfriend.friendid.profilephoto eq null}">
+                                                                            <img src="/Vibe/Images/ProfileImage/images.jpg" class="img-fluid" alt="user"/>
+                                                                        </c:if>
+                                                                        <c:if test="#{myfriend.friendid.profilephoto ne null}">
+                                                                            <img src="/Vibe/Images/ProfileImage/#{myfriend.friendid.profilephoto}" alt="gallary-image" class="img-fluid" />
+                                                                        </c:if>
+                                                                    </a>
                                                                     <h6 class="mt-2 text-center">#{myfriend.friendid.firstname} #{myfriend.friendid.lastname}</h6>
                                                                 </li>
                                                             </c:forEach>
@@ -158,11 +167,13 @@
                                                                 <div class="card-body">
                                                                     <div class="user-post-data">
                                                                         <div class="d-flex justify-content-between">
-                                                                            <div class="me-3">
-                <!--                                                                <img class="rounded-circle img-fluid" src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt=""/>-->
-                                                                                <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                                            </div>
-                                                                            <div class="w-100">
+                                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" class="avatar-50 rounded-circle" alt="user"/>
+                                                                            </c:if>
+                                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" alt="gallary-image" class="avatar-50 rounded-circle" />
+                                                                            </c:if>
+                                                                            <div class="w-100 mx-3">
                                                                                 <div class="d-flex  justify-content-between">
                                                                                     <div class="">
                                                                                         <h:commandLink action="#{userManagedBean.showProfileInfo(feed.userid.userid)}">
@@ -211,9 +222,12 @@
                                                                                 <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
                                                                                     <li class="mb-2">
                                                                                         <div class="d-flex">
-                                                                                            <div class="user-img">
-                                                                                                <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                            </div>
+                                                                                            <c:if test="#{comms.senderid.profilephoto eq null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                            </c:if>
+                                                                                            <c:if test="#{comms.senderid.profilephoto ne null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/#{comms.senderid.profilephoto}" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                            </c:if>
                                                                                             <div class="comment-data-block ms-3">
                                                                                                 <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
                                                                                                 <p class="mb-0">#{comms.comment}</p>
@@ -237,10 +251,13 @@
                                                                 <div class="card-body">
                                                                     <div class="user-post-data">
                                                                         <div class="d-flex justify-content-between">
-                                                                            <div class="me-3">
-                                                                                <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                                            </div>
-                                                                            <div class="w-100">
+                                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" width="60px" height="60px" class="rounded-circle" alt="user"/>
+                                                                            </c:if>
+                                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" width="60px" height="60px" alt="gallary-image" class="img-fluid rounded-circle" />
+                                                                            </c:if>
+                                                                            <div class="w-100 mx-3">
                                                                                 <div class="d-flex  justify-content-between">
                                                                                     <div class="">
                                                                                         <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
@@ -288,9 +305,12 @@
                                                                                 <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
                                                                                     <li class="mb-2">
                                                                                         <div class="d-flex">
-                                                                                            <div class="user-img">
-                                                                                                <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                            </div>
+                                                                                            <c:if test="#{comms.senderid.profilephoto eq null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                            </c:if>
+                                                                                            <c:if test="#{comms.senderid.profilephoto ne null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/#{comms.senderid.profilephoto}" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                            </c:if>
                                                                                             <div class="comment-data-block ms-3">
                                                                                                 <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
                                                                                                 <p class="mb-0">#{comms.comment}</p>
@@ -314,10 +334,13 @@
                                                                 <div class="card-body">
                                                                     <div class="user-post-data">
                                                                         <div class="d-flex justify-content-between">
-                                                                            <div class="me-3">
-                                                                                <img class="rounded-circle img-fluid" src="../assets/images/user/03.jpg" alt=""/>
-                                                                            </div>
-                                                                            <div class="w-100">
+                                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" width="60px" height="60px" class="rounded-circle" alt="user"/>
+                                                                            </c:if>
+                                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" width="60px" height="60px" alt="gallary-image" class="img-fluid rounded-circle" />
+                                                                            </c:if>
+                                                                            <div class="w-100 mx-3">
                                                                                 <div class="d-flex  justify-content-between">
                                                                                     <div class="">
                                                                                         <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
@@ -365,9 +388,12 @@
                                                                                 <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
                                                                                     <li class="mb-2">
                                                                                         <div class="d-flex">
-                                                                                            <div class="user-img">
-                                                                                                <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                            </div>
+                                                                                            <c:if test="#{comms.senderid.profilephoto eq null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                            </c:if>
+                                                                                            <c:if test="#{comms.senderid.profilephoto ne null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/#{comms.senderid.profilephoto}" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                            </c:if>
                                                                                             <div class="comment-data-block ms-3">
                                                                                                 <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
                                                                                                 <p class="mb-0">#{comms.comment}</p>
@@ -391,10 +417,13 @@
                                                                 <div class="card-body">
                                                                     <div class="user-post-data">
                                                                         <div class="d-flex justify-content-between">
-                                                                            <div class="me-3">
-                                                                                <img class="rounded-circle img-fluid" src="../assets/images/user/04.jpg" alt=""/>
-                                                                            </div>
-                                                                            <div class="w-100">
+                                                                            <c:if test="#{feed.userid.profilephoto eq null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" width="60px" height="60px" class="rounded-circle" alt="user"/>
+                                                                            </c:if>
+                                                                            <c:if test="#{feed.userid.profilephoto ne null}">
+                                                                                <img src="/Vibe/Images/ProfileImage/#{feed.userid.profilephoto}" width="60px" height="60px" alt="gallary-image" class="img-fluid rounded-circle" />
+                                                                            </c:if>
+                                                                            <div class="w-100 mx-3">
                                                                                 <div class=" d-flex  justify-content-between">
                                                                                     <div class="">
                                                                                         <h5 class="mb-0 d-inline-block">#{feed.userid.firstname} #{feed.userid.lastname}</h5>
@@ -435,9 +464,12 @@
                                                                                 <c:forEach var="comms" items="#{commentManagedBean.showcomments(feed.postid)}">
                                                                                     <li class="mb-2">
                                                                                         <div class="d-flex">
-                                                                                            <div class="user-img">
-                                                                                                <img src="../assets/images/user/02.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
-                                                                                            </div>
+                                                                                            <c:if test="#{comms.senderid.profilephoto eq null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                            </c:if>
+                                                                                            <c:if test="#{comms.senderid.profilephoto ne null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/#{comms.senderid.profilephoto}" alt="userimg" class="avatar-35 rounded-circle img-fluid"/>
+                                                                                            </c:if>
                                                                                             <div class="comment-data-block ms-3">
                                                                                                 <h6>#{comms.senderid.firstname} #{comms.senderid.lastname}</h6>
                                                                                                 <p class="mb-0">#{comms.comment}</p>
@@ -693,7 +725,12 @@
                                                                                 <div class="d-flex align-items-center justify-content-between">
                                                                                     <div class="d-flex align-items-center">
                                                                                         <a href="#">
-                                                                                            <img src="../assets/images/user/05.jpg" alt="profile-img" class="img-fluid"/>
+                                                                                            <c:if test="#{friendsinfo.friendid.profilephoto eq null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/images.jpg" width="150px" height="150px" class="img-fluid" alt="user"/>
+                                                                                            </c:if>
+                                                                                            <c:if test="#{friendsinfo.friendid.profilephoto ne null}">
+                                                                                                <img src="/Vibe/Images/ProfileImage/#{friendsinfo.friendid.profilephoto}" alt="gallary-image" class="img-fluid" />
+                                                                                            </c:if>
                                                                                         </a>
                                                                                         <div class="friend-info ms-3"> 
                                                                                             <h:form>
