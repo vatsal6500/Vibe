@@ -654,6 +654,7 @@ public class UserManagedBean {
             lastName = ui.getLastname();
             email = ui.getEmail();
             dob = ui.getDob();
+            profilePhoto = ui.getProfilephoto();
             
         }
         return "/web/profileinfo.xhtml?faces-redirect=true";
