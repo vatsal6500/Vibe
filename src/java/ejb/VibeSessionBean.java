@@ -867,10 +867,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     .setParameter("userid", userId)
                     .getResultList();
 
-            if (usercontact.isEmpty()) {
-                return null;
-            }
-
             return usercontact;
 
         } catch (Exception e) {
@@ -1016,10 +1012,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     .setParameter("userid", userId)
                     .getResultList();
 
-            if (useredu.isEmpty()) {
-                return null;
-            }
-
             return useredu;
 
         } catch (Exception e) {
@@ -1155,10 +1147,6 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
             List<UserSkills> userskill = em.createNamedQuery("UserSkills.findByUserId")
                     .setParameter("userid", userId)
                     .getResultList();
-
-            if (userskill.isEmpty()) {
-                return null;
-            }
 
             return userskill;
 
@@ -1304,10 +1292,7 @@ public class VibeSessionBean implements VibeSessionBeanLocal {
                     .setParameter("userid", userId)
                     .getResultList();
 
-            if (userwork.isEmpty()) {
-                return null;
-            }
-
+            
             return userwork;
 
         } catch (Exception e) {

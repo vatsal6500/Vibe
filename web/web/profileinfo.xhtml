@@ -34,14 +34,14 @@
                                             <img src="../assets/images/page-img/profile-bg1.jpg" alt="profile-bg" class="rounded img-fluid"/>
                                         </div>
                                         <div class="user-detail text-center mb-3">
-                                            <c:if test="#{session.getAttribute('UImage') eq null }">
+                                            <c:if test="#{userManagedBean.profilePhoto eq null }">
                                                 <div class="profile-img">
                                                     <img src="/Vibe/Images/ProfileImage/images.jpg" alt="profile-img" class="avatar-130 img-fluid" />
                                                 </div>
                                             </c:if>
-                                            <c:if test="#{session.getAttribute('UImage') ne null}">
+                                            <c:if test="#{userManagedBean.profilePhoto ne null}">
                                                 <div class="profile-img">
-                                                    <img src="/Vibe/Images/ProfileImage/#{session.getAttribute('UImage')}" alt="profile-img" class="avatar-130 img-fluid" />
+                                                    <img src="/Vibe/Images/ProfileImage/#{userManagedBean.profilePhoto}" alt="profile-img" class="avatar-130 img-fluid" />
                                                 </div>
                                             </c:if>
                                         </div>

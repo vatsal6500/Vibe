@@ -7,6 +7,7 @@ package ManageBean;
 
 import client.VibeClient;
 import ejb.VibeSessionBeanLocal;
+import entity.User;
 import entity.UserContactInfo;
 import entity.UserEducation;
 import entity.UserSkills;
@@ -43,6 +44,8 @@ public class UInfoManagedBean {
     private List<UserEducation> edulist;
     private List<UserWork> worklist;
     
+    private String profilephoto;
+    
     private String uci_id;
     private String userid;
     private String website;
@@ -69,6 +72,15 @@ public class UInfoManagedBean {
     private String workendingdate;
     private String companyaddress;
 
+    public String getProfilephoto() {
+        return profilephoto;
+    }
+
+    public void setProfilephoto(String profilephoto) {
+        this.profilephoto = profilephoto;
+    }
+
+    
     public String getUw_id() {
         return uw_id;
     }
@@ -369,52 +381,83 @@ public class UInfoManagedBean {
     
     public String showUserContact(String Id) {
         
-        Response response = vibeClient.user_contact_info_FindById(Response.class, Id);
-        UserContactInfo contactArrayList = new UserContactInfo();
-        GenericType<UserContactInfo> showAllcontact  = new GenericType<UserContactInfo>() {
+        Response resuser = vibeClient.userFindById(Response.class, Id);
+        ArrayList<User> userArrayList = new ArrayList<>();
+        GenericType<List<User>> showAlluserinfo  = new GenericType<List<User>>() {
         };
-        contactArrayList = (UserContactInfo) response.readEntity(showAllcontact);
-        uci_id = contactArrayList.getUciId().toString();
-        userid = contactArrayList.getUserid().getUserid().toString();
-        website = contactArrayList.getWebsite();
-        language = contactArrayList.getLanguage();
-        intrested_in = contactArrayList.getIntrestedIn();
-        fb_link = contactArrayList.getFbLink();
-        insta_link = contactArrayList.getInstaLink();
-        bio = contactArrayList.getBio();
+        userArrayList = (ArrayList<User>) resuser.readEntity(showAlluserinfo);
+        
+        for(User u : userArrayList)
+        {
+            profilephoto = u.getProfilephoto();
+        }
+        
+        Response response = vibeClient.user_contact_info_FindByUserId(Response.class, Id);
+        ArrayList<UserContactInfo> contactArrayList = new ArrayList<>();
+        GenericType<List<UserContactInfo>> showAllcontact  = new GenericType<List<UserContactInfo>>() {
+        };
+        contactArrayList = (ArrayList<UserContactInfo>) response.readEntity(showAllcontact);
+        
+        for(UserContactInfo eci : contactArrayList)
+        {
+           uci_id = eci.getUciId().toString();
+            userid = eci.getUserid().getUserid().toString();
+            website = eci.getWebsite();
+            language = eci.getLanguage();
+            intrested_in = eci.getIntrestedIn();
+            fb_link = eci.getFbLink();
+            insta_link = eci.getInstaLink();
+            bio = eci.getBio(); 
+        }
         
         
-        Response resedu = vibeClient.user_education_FindById(Response.class, Id);
-        UserEducation eduArrayList = new UserEducation();
-        GenericType<UserEducation> showAlledu  = new GenericType<UserEducation>() {
-        };
-        eduArrayList = (UserEducation) resedu.readEntity(showAlledu); 
-        ue_id = eduArrayList.getUeId().toString();
-        institutename = eduArrayList.getInstitutename();
-        joiningdate = eduArrayList.getJoiningdate().toString();
-        endingdate = eduArrayList.getEndingdate().toString();
-        instituteaddress = eduArrayList.getInstituteaddress();
         
-        Response resskill = vibeClient.user_skills_FindById(Response.class, Id);
-        UserSkills skillArrayList = new UserSkills();
-        GenericType<UserSkills> showAllskill  = new GenericType<UserSkills>() {
+        Response resedu = vibeClient.user_education_FindByUserId(Response.class, Id);
+        ArrayList<UserEducation> eduArrayList = new ArrayList<>();
+        GenericType<List<UserEducation>> showAlledu  = new GenericType<List<UserEducation>>() {
         };
-        skillArrayList = (UserSkills) resskill.readEntity(showAllskill); 
-        us_id = skillArrayList.getUsId().toString();
-        skillname = skillArrayList.getSkillname();
-        skillinfo = skillArrayList.getSkillinfo();
-        skillportfolio = skillArrayList.getSkillportfolio();
+        eduArrayList = (ArrayList<UserEducation>) resedu.readEntity(showAlledu); 
         
-        Response reswork = vibeClient.user_work_FindById(Response.class, Id);
-        UserWork workArrayList = new UserWork();
-        GenericType<UserWork> showAllwork  = new GenericType<UserWork>() {
+        for(UserEducation eu : eduArrayList)
+        {
+            ue_id = eu.getUeId().toString();
+        institutename = eu.getInstitutename();
+        joiningdate = eu.getJoiningdate().toString();
+        endingdate = eu.getEndingdate().toString();
+        instituteaddress = eu.getInstituteaddress();
+        }
+        
+        
+        Response resskill = vibeClient.user_skills_FindByUserId(Response.class, Id);
+        ArrayList<UserSkills> skillArrayList = new ArrayList<>();
+        GenericType<List<UserSkills>> showAllskill  = new GenericType<List<UserSkills>>() {
         };
-        workArrayList = (UserWork) reswork.readEntity(showAllwork); 
-        uw_id =  workArrayList.getUwId().toString();
-        companyname = workArrayList.getCompanyname();
-        workjoiningdate = workArrayList.getJoiningdate().toString();
-        workendingdate = workArrayList.getEndingdate().toString();
-        companyaddress = workArrayList.getCompanyaddress();
+        skillArrayList = (ArrayList<UserSkills>) resskill.readEntity(showAllskill); 
+        
+        for(UserSkills us : skillArrayList)
+        {
+            us_id = us.getUsId().toString();
+        skillname = us.getSkillname();
+        skillinfo = us.getSkillinfo();
+        skillportfolio = us.getSkillportfolio();
+        }
+        
+        
+        Response reswork = vibeClient.user_work_FindByUserId(Response.class, Id);
+        ArrayList<UserWork> workArrayList = new ArrayList<>();
+        GenericType<List<UserWork>> showAllwork  = new GenericType<List<UserWork>>() {
+        };
+        workArrayList = (ArrayList<UserWork>) reswork.readEntity(showAllwork); 
+        
+        for(UserWork uw : workArrayList)
+        {
+            uw_id =  uw.getUwId().toString();
+        companyname = uw.getCompanyname();
+        workjoiningdate = uw.getJoiningdate().toString();
+        workendingdate = uw.getEndingdate().toString();
+        companyaddress = uw.getCompanyaddress();
+        }
+        
         
         return "/admin/userinfo.xhtml?faces-redirect=true";
     }
